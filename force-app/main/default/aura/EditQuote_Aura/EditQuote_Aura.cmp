@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global">
+	
+    
+    <c:editQuote_LWC recordId="{!v.recordId}" onclose="{!c.closeMethodInAuraController}"></c:editQuote_LWC>
+</aura:component>

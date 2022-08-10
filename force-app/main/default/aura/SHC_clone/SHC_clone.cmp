@@ -1,0 +1,3 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+	 <c:shcEditable recordId="{!v.recordId}" isEdit="true" isClone="true" onclose="{!c.closeQA}"></c:shcEditable>
+</aura:component>

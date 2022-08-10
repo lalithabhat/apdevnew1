@@ -1,0 +1,119 @@
+<template>
+    <!--<header class="slds-modal__header">
+        <table>
+        <tr> 
+            <td align="left" style="font-size:medium;">
+            <lightning-button variant="base" label="Cancel" title="Cancel" onclick={cancelQuote} class="slds-m-left_x-small"></lightning-button>
+            </td>
+            <td align="center">
+            <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Quotes Details</h2>
+            </td>
+        </tr>
+        </table>
+    </header>-->
+    <lightning-card>
+        <lightning-accordion class="quote-accordion" allow-multiple-sections-open>
+            <lightning-accordion-section name="Quotes" icon-name="standard:home" label="Quote detail with products">
+                <template for:each={mapData} for:item="item">
+                    <!--<table class="slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right" key={item.quoteNumber}>-->
+                     <table class="table2" style="border-collapse:collaspe;" key={item.quoteNumber}>  
+                        <thead>
+                          <tr> <!-- class="slds-line-height_reset" -->
+                            <th style="text-align:center;" colspan="5" scope="col">
+                                Quote Number : {item.quoteNumber}
+                            </th>
+                          </tr>  
+                          <tr>
+                            <th class="" scope="col">
+                                Tier
+                            </th>
+                            <th class="" scope="col">
+                                New Services
+                            </th>
+                            <th class="" scope="col">
+                                Quote Amount
+                            </th>
+                            <th class="" scope="col">
+                                Received Amount
+                            </th>
+                            <th class="" scope="col">
+                                Balance Amount
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                                <td>
+                                    {item.tier}
+                                </td>
+                                <td>
+                                    {item.newServices}
+                                </td>
+                                <td>
+                                    <lightning-formatted-number value={item.quoteAmount}></lightning-formatted-number>
+                                </td>
+                                <td>
+                                    <lightning-formatted-number value={item.receivedAmount}></lightning-formatted-number>
+                                </td>
+                                <td>
+                                    <lightning-formatted-number value={item.balanceAmount}></lightning-formatted-number>
+                                </td>
+                            </tr>
+                              
+                            <tr>
+                                <td colspan="5">
+                                    <table class="table3">
+                                        <tr>
+                                            <th style="text-align:center;" colspan="5" scope="col">
+                                                Product Details
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">
+                                                Product Name
+                                            </th>
+                                            <th scope="col">
+                                                Quantity
+                                            </th>
+                                            <th scope="col">
+                                                Consumed Quantity
+                                            </th>
+                                            <th scope="col">
+                                                Balance Quantity
+                                            </th>
+                                            <th scope="col">
+                                                Is Mandatory Product
+                                            </th>
+                                          </tr>
+                                        <template for:each={item.quoteItems} for:item="q">
+                                            <tr key={q.productName}>
+                                                <td class="">
+                                                    {q.productName}
+                                                </td>
+                                                <td class="">
+                                                    {q.quantity}
+                                                </td>
+                                                <td class="">
+                                                    {q.consumedQuantity}
+                                                </td>
+                                                <td class="">
+                                                    {q.balanceQuantity}
+                                                </td>
+                                                <td class="">
+                                                    {q.mandatoryProduct}
+                                                </td>
+                                            </tr>
+                                            
+                                        </template>
+                                    </table>
+                                    
+                                </td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      <br key={item.quoteNumber}/>
+                </template>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </lightning-card>
+</template>

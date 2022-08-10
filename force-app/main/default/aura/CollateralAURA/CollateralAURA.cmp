@@ -1,0 +1,123 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" controller="CollateralController">
+	<aura:attribute name="email" type="String"/>
+    <aura:attribute name="services" type="String[]"/>
+    <aura:attribute name="selectedService" type="String"/>
+    <aura:attribute name="subServices" type="String[]"/>
+    <aura:attribute name="selectedSubService" type="String"/>
+    <aura:attribute name="categories" type="String[]"/>
+    <aura:attribute name="selectedCategory" type="String"/>
+    
+    <aura:attribute name="collateralList" type="Collateral__c[]"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedCollateralList" type="List"/>
+    
+    <aura:attribute name="otherMails" type="String"/>
+    <aura:attribute name="showError" type="Boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 95vw;
+        max-width: 1280px !important;
+        }
+        .slds-form-element_horizontal .slds-form-element__label, .slds-form_horizontal .slds-form-element .slds-form-element__label, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__label {
+        float: inherit !important;
+        max-width: 200px !important;
+        flex-basis: inherit !important;
+        margin-bottom: 0 !important;
+        position: relative !important;
+        z-index: 1;
+        left: 0px !important;
+        padding-bottom:6px !important;
+        }
+        .slds-form-element_horizontal .slds-form-element__control, .slds-form_horizontal .slds-form-element .slds-form-element__control, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__control {
+        padding-left: 0%;
+        }
+    </aura:html> 
+    
+    <lightning:card variant="Narrow" title="Collateral Details" iconName="standard:account">
+      
+        <div aura:id="email"  style="text-align:center;">
+            Recipient Email ID : <ui:outputEmail aura:id="oEmail" value="{!v.email}" />
+        </div>
+       
+        
+        <br/>
+       <!-- <lightning:layout horizontalAlign="space" verticalAlign="center" multipleRows="true">
+          <lightning:layoutItem flexibility="auto" size="4" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="4">
+            <lightning:select aura:id="service" name="service" label="Select a Service" required="true" onchange="{!c.onServiceChange}">
+                <aura:iteration items="{!v.services}" var="service">
+                        <option text="{!service}"></option>
+                    </aura:iteration>
+            </lightning:select>
+          </lightning:layoutItem>
+          <lightning:layoutItem flexibility="auto" size="4" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="4">
+              <lightning:select aura:id="subservice" name="subservice" label="Select a Sub-Service" required="true" onchange="{!c.onSubServiceChange}">
+                  <aura:iteration items="{!v.subServices}" var="subservice">
+                      <option text="{!subservice}"></option>
+                  </aura:iteration>
+              </lightning:select>
+          </lightning:layoutItem>  
+          <lightning:layoutItem flexibility="auto" size="4" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="4">
+            <lightning:select aura:id="category" name="category" label="Select a Category" required="true" onchange="{!c.onCategoryChange}">
+                <aura:iteration items="{!v.categories}" var="category">
+                        <option text="{!category}"></option>
+                    </aura:iteration>
+            </lightning:select>
+          </lightning:layoutItem>  
+             
+      </lightning:layout> -->
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+          <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+            	<lightning:select aura:id="service" name="service" label="Select a Service" required="true" onchange="{!c.onServiceChange}">
+                    <aura:iteration items="{!v.services}" var="service">
+                            <option text="{!service}"></option>
+                        </aura:iteration>
+                </lightning:select>  
+            </div>
+          </div>
+            
+          <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+            	<lightning:select aura:id="subservice" name="subservice" label="Select a Sub-Service" required="true" onchange="{!c.onSubServiceChange}">
+                  <aura:iteration items="{!v.subServices}" var="subservice">
+                      <option text="{!subservice}"></option>
+                  </aura:iteration>
+                </lightning:select>  
+            </div>
+          </div>
+            
+          <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+            	<lightning:select aura:id="category" name="category" label="Select a Category" required="true" onchange="{!c.onCategoryChange}">
+                    <aura:iteration items="{!v.categories}" var="category">
+                            <option text="{!category}"></option>
+                        </aura:iteration>
+                </lightning:select>  
+            </div>
+          </div>  
+        </div>
+        <br/> <br/>
+        <h1>Selected Rows: {! v.selectedRowsCount }</h1>
+        <lightning:datatable
+            columns="{! v.mycolumns }"
+            data="{! v.collateralList }"
+            keyField="id"           
+            onrowselection="{! c.onRowSelection }"/>
+        <br/><br/>
+        <aura:set attribute="footer">
+            <lightning:button label="Cancel" onclick="{!c.closeMethodInAuraController}"/> &nbsp;&nbsp;
+            <lightning:button variant="brand" title="Send" onclick="{! c.sendCollateral }"  label="Send"/>
+        </aura:set>
+        
+        <!--<footer class="slds-modal__footer">
+        <button class="slds-button slds-button_brand">
+          Save
+        </button>
+        </footer> -->
+    </lightning:card>
+</aura:component>

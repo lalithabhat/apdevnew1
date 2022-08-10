@@ -1,0 +1,341 @@
+<apex:page controller="Shade_Controller" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" >
+    <html>
+        <head>       
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                font-size:12px !important;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                background:#ededed;
+                }
+                @page :first {
+                margin-top:-14px;
+                }
+                @page {
+                size: 7.70in 12.60in;
+                }
+                .table1{
+                width:100%;
+                
+                }
+                .table1 tr td{
+                font-size:11px;
+                padding:2px;
+                }
+               
+                
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                
+                }
+                .table2 tr th{
+                border:1px solid #502E87;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table2 tr td{
+                border:1px solid #502E87;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table3{
+                width:100%;
+                border-collapse:collapse;
+                
+                }
+                .table3 tr td{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:left;
+                }
+                .table3 tr th{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:center;
+                }
+                a{
+                color:#502E87;
+                }
+                p,h5{
+                line-height:22px;
+                }
+                .main_Content{
+                position:relative;
+                }
+                .main_Content p{
+                line-height:26px;
+                font-size:16px;
+                }
+                .LampDiv img{
+                position:absolute;
+                top:-15px;
+                right:4px;
+                width:120px;
+                }
+                .Short1{
+                width:440px;
+                margin-top:20px;
+                }
+                .Color_Table{
+                width:100%;
+                }
+                .Color_Table tr td span{
+                display:block;
+                font-size:10px;
+                padding:2px 0 0 7px;
+                margin:2px;
+                }
+                .ColorImg{
+                width:120px;
+                height:120px;
+                margin:auto;
+                }
+                .SPS_Footer1{
+                width:100%;
+                }                
+                .ColorImg2{
+                width:150px;
+                height:200px;
+                }
+                
+                .Right_Side_Lamp{
+                position:relative;
+                }
+                .LampDiv11 img{
+                position:absolute;
+                top:-80px;
+                right:-19px;
+                width:140px;
+                z-index:-999;
+                }
+                .Right_Side_Lamp p{
+                width:480px;
+                padding:0;
+                position:absolute;
+                top:70px;
+                font-size:13px;
+                
+                }
+                
+                
+                
+                 @page {                
+                margin-top:20px;
+                margin-bottom:200px;
+                background-color:#ededed;
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .header{
+                position: running(header);
+                background-color:#ededed;
+                }
+                .footer {
+                display:block;
+                position: running(footer);
+                z-index:-999;
+                }         
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------footer-------------------------------------------------->
+                    <div class="footer" style="background-color:#ededed;">
+                        <apex:image url="{!$Resource.SPS_Footer1}" style="width:758px; height:200px;"/>
+                    </div>
+                <!------------------------------------------- Page 1 ------------------------------------------------>
+                <div class="page-break-after:always;">
+                    <div style="margin:-9px 5px 8px 7px;background-color:#502E87;color:#FFF;height:174px;z-index:-999;" >
+                        <table width="100%">
+                            <tr>                            
+                                <td width="50%">
+                                    <div style="height:170px;z-index:-999;margin-top:30px;">
+                                        <div style="position:relative;left:20px;bottom:13px;z-index:999;">
+                                            <h3 style="text-align:left;color:#fff;margin:0;font-size:20px;">&nbsp;SHADE SELECTION CARD</h3>
+                                            
+                                            <table class="table1" style="border:1px solid #fff;padding:3px 3px;width:100%;margin-top:4px;">
+                                                <tr>
+                                                    <td colspan="2" >Customer Name:{!acc.Name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="65%">Date:<apex:outputText value="{0,date,dd-MM-yyyy}"><apex:param value="{!Today }" />
+
+</apex:outputText></td>
+                                                    <td width="35%">Mobile No:{!acc.PersonMobilePhone}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Visited By:{!acc.Name}</td>
+                                                    <td>Site ID: {!acc.PersonMobilePhone}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colaspn="2">Address:{!custAdd} </td>
+                                                </tr> 
+                                            </table>
+                                            
+                                            <div style="position:absolute;color:#000;left:520px;top:20px;bottom:0px;width:100%;">
+                                                <table width="100%" style="color:#000;z-index:999;">
+                                                    <tr>
+                                                        <td style="font-size:10px;"><b>Dealer Name:</b><br/>
+                                                            {!dealer.Name}
+                                                        </td>                                                    
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-size:10px;"><b>Dealer Address:</b><br/>
+                                                            <div style="width:130px;word-wrap: break-word;">{!dealerAdd}<br/><br/></div> 
+                                                        </td>
+                                                    </tr>                                                
+                                                    <tr>
+                                                        <td style="font-size:10px;"><b>Mobile No.:</b>
+                                                           {!dealer.Phone}
+                                                        </td>
+                                                        
+                                                    </tr>                                                
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td width="50%" valign="top" align="right">
+                                    <apex:image value="{!$Resource.SPSShadeSelectionBanner}" style="width:370px;"  />
+                                </td>
+                            </tr>
+                        </table>  
+                    </div>
+                    
+                    <div style="margin:0px 34px 8px 44px;padding:20px 20px;" class="main_Content" > 
+                        <table style="width:100%">
+                            <tr>
+                                <td width="90%">
+                                    <p>Greetings <u style="color:#F16469">{!acc.Name}</u></p>
+                                    <p>Thank you for being our valuable customer.</p>
+                                    <p>In reference to your home painting service please find below the final
+                                        shades as finalised.</p>
+                                </td>
+                                <td width="10%">
+                                    <apex:image value="{!$Resource.SPS_Lamp}" width="132px;" style="position:relative;left:40.4px;bottom:18px;"/>
+                                </td>
+                            </tr>
+                        </table>                        
+                        <div Class="Banner1">
+                            <apex:image value="{!$Resource.SPS_Short_Interior1}" styleClass="Short1" />                            
+                        </div>
+                        <apex:repeat value="{!imageList}" var="v"   >
+                            <div style="float:left;margin:14px 22px;height:100%;box-sizing: border-box;"><!---display:inline-block;-->
+                                <apex:image height="130" width="160" value="{!v.url}" />
+                                <p style="padding:0;margin:0;text-align:center;">{!v.name}</p>                                
+                            </div>
+                        </apex:repeat>
+                        
+                    </div> 
+                </div>                
+                <!------------------------------------------- Page 4 ------------------------------------------------>
+                <div style="display:block;clear:both;">
+                    <div style="margin:0px 5px 0px 5px;background-color:#502E87;height:180px;z-index:-999;page-break-before:always !important;" >
+                        <table width="100%">
+                            <tr>
+                                <td width="100%" valign="top" align="center">
+                                    <apex:image value="{!$Resource.SPS_Shade_Selection_Banner4}" style="width:738px; height:100%;"  />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="margin:0px 34px 0px 34px;padding:0px 10px;z-index:-999;" >
+                        <table width="100%">
+                            <tr>
+                                <td> 
+                                    <!--<apex:image value="{!$Resource.SPS_Short_Interior}" styleClass="Short1" /><br/>--> 
+                                    We continuously strive to improve our servcies, if you have any query
+                                        that needs to be answered or are unsatisfied with the progress of the
+                                        work, please feel free to contact details as mentioned below
+                                </td>
+                                <td>
+                                    <apex:image value="{!$Resource.SPS_Lamp2}" width="140px;" style="position:relative;left:12px;"/>                                
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        
+                        <table class="table2" style="width:90%;margin: 5    0px auto 0 0;" >
+                            <tr>
+                                <th width="30%" style="color:#FFF;border:1px solid #000;background:#502E87;padding:4px 6px;font-size:13px;">DESIGNATION</th>
+                                <th width="30%" style="color:#FFF;border:1px solid #000;background:#502E87;padding:4px 6px;font-size:13px;">NAME</th>
+                                <th width="30%" style="color:#FFF;border:1px solid #000;background:#502E87;padding:4px 6px;font-size:13px;">CONTACT DETAILS</th>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">Associate</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!associate.Name}</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!associate.MobilePhone}</td>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">Technical Associate</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!techassociate.Name}</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!techassociate.MobilePhone}</td>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">Team Leader</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!techlead.Name}</td>
+                                <td width="30%" style="border:1px solid #000;padding:4px 6px;font-size:13px;">{!techlead.MobilePhone}</td>
+                            </tr>                           
+                        </table>
+                        
+                        <p style="font-size:13px;"><b style="font-size:16px;">Disclaimer: </b><br/>Colours &amp; Shades shown in the image are Indicative only. Pleases refer to Asian Paints<br/>
+                            colour spectra / Cosmos, for exact colour reference.</p>
+                        <p style="font-size:13px;">Please note change in shade post tinting will cost extra on paint material.</p>
+                        <p style="font-size:13px;">Nilaya Wall coverings are available in selected cities. To check the availability please visit our<br/>
+                            website:<a href="https://www.asianpaints.com/store-locator.html">https://www.asianpaints.com/store-locator.html</a></p>
+                        <p style="font-size:13px;">
+                            In case of any further query, you can reach us at <a href="mailto:customercare@asianpaints.com">customercare@asianpaints.com</a> or Call us at or Call us at <a href="#">1800-209-5678</a>
+                        </p>                        
+                        
+                        <table width="100%" class="table3" style="background:#fff;padding:5px;">  
+                            <tr>
+                                <td style="padding:6px 10px;">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" style="font-size:12px;border:none;">For More Information on Service &amp; Products, Please click on the below Links:</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Safepainting service Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Product details Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/products/paints-and-textures.html">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Waterproofing Solutions Link: </td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/products/waterproofing-solutions.html">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Product Warranty Details Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/more/warranty.html">Register To Activate Warranty For Asian Paints Products</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Website Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="www.asianpaints.com">www.asianpaints.com</a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        
+                    </div>
+                    
+                </div>
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

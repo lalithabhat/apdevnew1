@@ -1,0 +1,5 @@
+<template>
+    <template for:each={pickListValueList} for:item="pickListValues">
+            <button  key={pickListValues.label}  data-target-id={pickListValues.label} name= {pickListValues.value} onclick={handleClick} class={pickListValues.classVal}>{pickListValues.label}</button>
+    </template>
+</template>

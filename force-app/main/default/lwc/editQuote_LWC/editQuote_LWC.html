@@ -1,0 +1,491 @@
+<template>
+    <header class="slds-modal__header">
+        <table>
+        <tr> 
+            <td align="left" style="font-size:medium;">
+            <lightning-button variant="base" label="Cancel" title="Cancel" onclick={cancelQuote} class="slds-m-left_x-small"></lightning-button>
+            </td>
+            <td align="center" colspan="2">
+            <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Edit Quote</h2>
+            </td>
+        </tr>
+        </table>
+    </header>
+    <lightning-card if:false={isSave}>
+      <lightning-spinner size="small" if:true={showSpinner}></lightning-spinner>
+        <lightning-record-edit-form object-api-name="Quote" record-id={quoteId} density="compact">
+            <lightning-messages></lightning-messages>
+        
+            <lightning-input-field field-name="Name" onchange={fetchQuoteName} required>
+            </lightning-input-field>
+            <lightning-input-field field-name="Tier__c" onchange={tierChange} required>
+                </lightning-input-field>
+            <lightning-input-field field-name="New_Services__c" onchange={newServiceseChange} required>
+                </lightning-input-field> 
+            <lightning-input-field field-name="ExpirationDate" onchange={expirationDateChange} required>
+                </lightning-input-field>
+            
+          </lightning-record-edit-form>
+
+<!-- ---------------------  Recommendation List  ------------------  -->
+          <lightning-accordion class="Recommendation-accordion" allow-multiple-sections-open >
+            <lightning-accordion-section name="Recommendation" icon-name="standard:home" label="Recommendation">
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                    <div class="slds-size_3-of-3">
+                      <div class="slds-text-align_center">
+                        <table class="slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right">
+                          <thead>
+                            <tr class="slds-line-height_reset">
+                              <th class="" scope="col">
+                                  Symptom
+                              </th>
+                              <th class="" scope="col">
+                                  Recommendation
+                            </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <template for:each={RecommendationList} for:item="rw">
+                                  <tr key={rw.Symptom} class="slds-line-height_reset">
+                                      <td class="">
+                                        {rw.Symptom}
+                                      </td>
+                                      <td class="">
+                                        {rw.Recommendation}
+                                      </td>
+                                  </tr>
+                              </template>
+                              </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+
+            <!-- ------------------------------------ Add Romm Section ------------------------------- -->
+            <div class="slds-form-element">&nbsp;</div>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                <button class="slds-button slds-button_brand btnclass" onclick={showModalBox}>+ Add Room</button>
+                </div>
+            </div>
+            <lightning-accordion class="room-accordion" allow-multiple-sections-open>
+                <table> 
+                    <template for:each={mapData} for:item="seq">
+                      <tr key={seq.key}> <td>
+                      <lightning-accordion-section name={seq.key} icon-name="standard:home" label={seq.key} key={seq.key}>
+                     <!----------------------         ADD SURFACE    ---------------->     
+                        <lightning-accordion class="example-accordion" allow-multiple-sections-open> 
+                            <table>  
+                              <template for:each={seq.value} for:item="ql">
+                                <tr key={ql.sequence}> <td>
+                                <lightning-accordion-section name={ql.quoteItem.Surface__c} icon-name="standard:home" label={ql.quoteItem.Surface__c} key={ql.sequence}>
+                                    <lightning-record-edit-form object-api-name="QuoteLineItem" record-id={ql.quoteItem.Id}>
+                                      <lightning-messages></lightning-messages>
+                    
+                                      <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+                                      <lightning-input-field field-name="Quantity" onchange={areaChange} name={seq.key} data-id={ql.sequence} variant="label-hidden">
+                                          </lightning-input-field>
+                    
+                                      <label class="slds-form-element__label">Pricing Model</label>    
+                                      <lightning-input-field field-name="Pricing_Modal__c" onchange={productModelChange} name={seq.key} data-id={ql.sequence} variant="label-hidden">
+                                        </lightning-input-field>
+                                        
+                                      <label class="required-field1 slds-form-element__label">Price</label>
+                                      <lightning-input-field field-name="UnitPrice" variant="label-hidden" data-id={ql.sequence} name={seq.key} onchange={priceChange}>
+                                          </lightning-input-field>
+                                       
+                                      <div class="slds-form-element">
+                                      <label class="required-field1 slds-form-element__label">Product</label>
+                                      <div class="slds-form-element__control" >
+                                      <c-custom-lookup obj-name="Product2" selected-name={ql.productName} product-id={ql.quoteItem.Product2Id} is-value-selected={ql.isExist}
+                                       search-placeholder="Search Product" icon-name="standard:product" data-id={ql.sequence} name={seq.key} onlookupselected={productChange}
+                                       onupperproductchange={handleupperproductchange}
+                                       > 
+                                      </c-custom-lookup>
+                                    </div></div>  <br/>
+                                      
+                                      <label class="required-field1 slds-form-element__label">Product Volume</label>    
+                                      <lightning-input type="number" variant="label-hidden" value={ql.quoteItem.Quantity__c} data-id={ql.sequence} name={seq.key} onchange={quantityChange}
+                                          max-length="4">
+                                      </lightning-input>   
+                    
+                                      <label class="slds-form-element__label">Remarks - Painting System</label>    
+                                      <lightning-input-field field-name="Description" onchange={remarksChange} data-id={ql.sequence} name={seq.key} variant="label-hidden">
+                                          </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </lightning-accordion-section>  
+                              </td>
+                              <td align="right" style="vertical-align: top;">
+                                <lightning-button-icon icon-name="utility:delete" data-id={ql.sequence} name={seq.key} alternative-text="Delete" class="test slds-m-left_xx-small" title="Delete"
+                                    onclick={deleteSurface}
+                                >
+                                </lightning-button-icon>
+                              </td>
+                              </tr>
+                              </template>
+                          </table>
+                        </lightning-accordion>
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                              <button class="slds-button slds-button_brand btnclass2" data-id={seq.key} onclick={showSurfaceModalBox}>+ Add Surface</button>
+                            </div>
+                        </div>
+                      </lightning-accordion-section>
+                    </td>
+                    <td align="right" style="vertical-align: top;">
+                      <lightning-button-icon icon-name="utility:delete" data-id={seq.key} alternative-text="Delete" class="test slds-m-left_xx-small" title="Delete"
+                          onclick={deleteRoom}
+                      >
+                      </lightning-button-icon>
+                    </td>
+                    </tr>
+                    </template>
+                </table>
+            </lightning-accordion> 
+            
+            <!-- ----------------------------- PRODUCT LEVEL Discount ------------ -->
+            <lightning-accordion class="product-discount-accordion" allow-multiple-sections-open>     
+              <lightning-accordion-section name="Product Level Discount" icon-name="standard:home" label="Product Level Discount">
+                <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                  <tbody>
+                      <template for:each={productDiscountList} for:item="pd">
+                          <tr key={pd.sequence} class="slds-line-height_reset">
+                              <td width="43%"> 
+                                  <lightning-combobox name="Product Discount" key={pd.sequence}
+                                                      value={pd.selectedProduct} 
+                                                      onchange={discountProductChange} 
+                                                      options={productList}
+                                                      placeholder="Select Product"
+                                                      data-id={pd.sequence}
+                                                      label="Product">
+                                  </lightning-combobox>
+                                  <!--<div class="slds-truncate"></div> --></td>
+          
+                              <td width="33%">
+                                  <div class="slds-truncate">
+                                      <lightning-input type="number" data-id={pd.sequence} name="Product Discount" placeholder="Value.." label="Value" 
+                                      value={pd.discountPrice}
+                                      onchange={discountAmountChange}
+                                      >
+          
+                                      </lightning-input>
+                                  </div>
+                              </td>
+          
+                              <td width="22%">
+                                  <lightning-combobox name="Product Discount" key={pd.sequence}
+                                                      value={pd.discountType} 
+                                                      onchange={discountTypeChange} 
+                                                      options={discountTypeList}
+                                                      placeholder={pd.discountType}
+                                                      data-id={pd.sequence}
+                                                      label="Type">
+                                  </lightning-combobox>
+                              </td>
+                              <td width="2%" class="slds-m-top_xx-large">
+                                  <lightning-button-icon icon-name="utility:close" name="Product Discount" data-id={pd.sequence} variant="bare" size="medium" alternative-text="Delete" title="Delete"
+                                  onclick={deleteDiscount}
+                                  ></lightning-button-icon>
+                              </td>
+                          </tr>
+                      </template>
+                  </tbody>
+               </table><br/>
+               <div class="slds-form-element slds-p-bottom_large">
+                  <div class="slds-form-element__control">
+                    <button class="slds-button slds-button_brand btnproductDiscount" name="Product Discount" onclick={addDiscount}>+ Product Discount</button>
+                  </div>
+              </div>
+              </lightning-accordion-section>
+            </lightning-accordion>
+
+            <!-- ----------------------------- QUOTE LEVEL Discount ------------ -->
+            <lightning-accordion class="quote-discount-accordion" allow-multiple-sections-open>     
+              <lightning-accordion-section name="Quote Level Discount" icon-name="standard:home" label="Quote Level Discount">
+                <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                  <tbody>
+                      <template for:each={quoteDiscountList} for:item="d">
+                          <tr key={d.sequence} class="slds-line-height_reset">
+                              <td width="43%"> 
+                                  <div class="slds-truncate">
+                                      <lightning-input type="text" data-id={d.sequence} name="Quote Discount" placeholder="Name.." label="Name" 
+                                      value={d.discountName}
+                                      onchange={discountNameChange}
+                                      >
+                                      </lightning-input>
+                                  </div> </td>
+          
+                              <td width="33%">
+                                  <div class="slds-truncate">
+                                      <lightning-input type="number" data-id={d.sequence} name="Quote Discount" placeholder="Value.." label="Value" 
+                                      value={d.discountPrice}
+                                      onchange={discountAmountChange}
+                                      >
+                                      </lightning-input>
+                                  </div>
+                              </td>
+          
+                              <td width="22%">
+                                  <lightning-combobox name="Quote Discount" key={d.sequence}
+                                                      value={d.discountType} 
+                                                      onchange={discountTypeChange} 
+                                                      options={discountTypeList}
+                                                      placeholder={d.discountType}
+                                                      data-id={d.sequence}
+                                                      label="Type">
+                                  </lightning-combobox>
+                              </td>
+                              <td width="2%" class="slds-m-top_xx-large">
+                                  <lightning-button-icon icon-name="utility:close" data-id={d.sequence} name="Quote Discount" variant="bare" size="medium" alternative-text="Delete" title="Delete"
+                                  onclick={deleteDiscount}
+                                  ></lightning-button-icon>
+                              </td>
+                          </tr>
+                      </template>
+                    </tbody>
+                </table><br/>
+               <div class="slds-form-element slds-p-bottom_large">
+                  <div class="slds-form-element__control">
+                    <button class="slds-button slds-button_brand btnproductDiscount" name="Quote Discount" onclick={addDiscount}>+ Quote Discount</button>
+                  </div>
+              </div>
+              </lightning-accordion-section>
+            </lightning-accordion>
+
+            <!-- ----------------------------- Other Charge Details -------------- -->
+            <lightning-accordion class="other-charge-accordion" allow-multiple-sections-open>
+              <lightning-accordion-section name="Other Charge" icon-name="standard:home" label="Other Charge">
+                  <lightning-record-edit-form object-api-name="QuoteLineItem" record-id={otherchargeId}>
+                    <lightning-messages></lightning-messages>
+        
+                    <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+                    <lightning-input-field field-name="Quantity" onchange={otherChargeAreaChange} variant="label-hidden">
+                        </lightning-input-field>
+                            
+                    <label class="slds-form-element__label">Pricing Model</label>    
+                    <lightning-input-field field-name="Pricing_Modal__c" onchange={otherChargeProductModelChange} variant="label-hidden">
+                        </lightning-input-field> 
+                        
+                    <label class="required-field1 slds-form-element__label">Price</label>
+                    <lightning-input-field field-name="UnitPrice" variant="label-hidden" onchange={otherChargePriceChange}>
+                        </lightning-input-field>
+        
+                    <label class="required-field1 slds-form-element__label">Product</label>
+                    <c-custom-lookup obj-name="Product2"  is-value-selected={otherchargeExist} selected-name={otherchargeProductName} product-id={otherchargeProductId}
+                                               search-placeholder="Search Product" icon-name="standard:product" onlookupselected={otherChargeProductChange}
+                                               > 
+                    </c-custom-lookup>                   
+                     <label class="required-field1 slds-form-element__label">Product Volume</label>    
+                    <lightning-input type="number" value={otherchargeQuantity} variant="label-hidden" onchange={otherChargeQuantityChange}
+                        max-length="4">
+                    </lightning-input>
+        
+                    <label class="slds-form-element__label">Remarks - Painting System</label>    
+                    <lightning-input-field field-name="Description" onchange={otherChargeRemarksChange} variant="label-hidden">
+                        </lightning-input-field>
+                  </lightning-record-edit-form>
+              </lightning-accordion-section>
+            </lightning-accordion>
+
+            <!-- ----------------------------- Payment Details Section ------------------- -->
+            <lightning-accordion class="payment-details-accordion" allow-multiple-sections-open>     
+              <lightning-accordion-section name="Payment Detail" icon-name="standard:home" label="Payment Detail">
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label required-field" for="form-element-help-01">Total Percentage should be 100%</label>
+              </div>   
+              <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                  <tbody>
+                      <template for:each={paymentList} for:item="pd">
+                          <tr key={pd.sequence} class="slds-line-height_reset">
+                              <td width="43%"> 
+                                  <div class="slds-truncate">
+                                      <lightning-input type="number" data-id={pd.sequence} name="input1"  label="Percentage" 
+                                      value={pd.milestonePercentage}
+                                      onchange={percentageSelect}
+                                      >
+          
+                                      </lightning-input>
+                                  </div>
+                              </td>
+          
+                              <td width="33%">
+                                  <div class="slds-truncate">
+                                      <lightning-input type="text" data-id={pd.sequence} name="input2" label="Stage" 
+                                      value={pd.milestoneStage}
+                                      onchange={stageSelect}
+                                      >
+          
+                                      </lightning-input>
+                                  </div>
+                              </td>
+          
+                              <td width="2%" class="slds-m-top_xx-large">
+                                  <lightning-button-icon icon-name="utility:close" data-id={pd.sequence} variant="bare" size="medium" alternative-text="Delete" title="Delete"
+                                  onclick={deletePaymentRow}
+                                  ></lightning-button-icon>
+                              </td>
+          
+                          </tr>
+                      </template>
+                  </tbody>
+              </table><br/>
+              <div class="slds-form-element slds-p-bottom_large">
+                <div class="slds-form-element__control">
+                  <button class="slds-button slds-button_brand btnclass" onclick={addPaymentdetail}>+ Payment Detail</button>
+                </div>
+              </div> 
+              </lightning-accordion-section>
+            </lightning-accordion>
+
+            <!-- ---------------------------- Other Quote Details ------------------------- -->
+            <lightning-accordion class="Other-Quote-Details-accordion" allow-multiple-sections-open >
+              <lightning-accordion-section name="Other Details" icon-name="standard:home" label="Other Details">
+                <lightning-record-edit-form object-api-name="Quote" record-id={quoteId}>
+                  <lightning-messages></lightning-messages>
+        
+                  <lightning-input-field field-name="Number_of_Painters__c" onchange={numberOfPainterChange}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Area_Applied_per_Painter_Day__c" onchange={areaAppliedPerPainterChange}>
+                      </lightning-input-field>
+                  
+                  <lightning-input-field field-name="Site_Type__c" onchange={siteTypeChange}>
+                    </lightning-input-field>
+        
+                  <lightning-input-field field-name="Buffer_Time__c" onchange={bufferTimeChange}>
+                      </lightning-input-field>
+                </lightning-record-edit-form>  
+              </lightning-accordion-section>
+
+        <!-- ------------------------------- Customer Details -------------------------------- -->      
+              <lightning-accordion-section name="Customer Details" icon-name="standard:home" label="Customer Details">
+                <lightning-record-edit-form object-api-name="Quote" record-id={quoteId}>
+                  <lightning-messages></lightning-messages>
+        
+                  <lightning-input-field field-name="Total_Sq_ft_of_Home__c" onchange={totalAreaSqft}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Total_BHK__c" onchange={totalBHK}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Gender__c" onchange={genderSelect}>
+                      </lightning-input-field>
+                  
+                  <lightning-input-field field-name="Age_Band__c" onchange={ageBandSelect}>
+                    </lightning-input-field>
+        
+                  <lightning-input-field field-name="Marital_Status__c" onchange={maritalStatusSelect}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Profession__c" onchange={professionSelect}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Family_Type__c" onchange={familytypeSelect}>
+                      </lightning-input-field>
+        
+                  <lightning-input-field field-name="Kids__c" onchange={kidsSelect}>
+                      </lightning-input-field>
+                      
+                </lightning-record-edit-form>
+              </lightning-accordion-section>
+            </lightning-accordion>
+            <!-- ----------------------------- ADD ROOM Pop up box -----------------------  -->
+            <template if:true={isShowModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                    <!-- modal header start -->
+                      <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                            <lightning-icon icon-name="utility:close"
+                              alternative-text="close"
+                              variant="inverse"
+                              size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Room</h2>
+                      </header>
+            
+                      <!-- modal body start -->
+                      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <p>
+                              <lightning-radio-group name="radioGroup"
+                                    label=""
+                                    options={roomOptions}
+                                    onchange={selectRoom}
+                                    type="radio"
+                              > 
+                              </lightning-radio-group>
+                            </p>
+                      </div>
+            
+                      <!-- modal footer start-->
+                      <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                      </footer>
+            
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+            <!-- ---------------------------- ADD Surface POp up box -----------------------   -->
+            <template if:true={isShowSurfaceModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                    <!-- modal header start -->
+                      <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideSurfaceModalBox}>
+                            <lightning-icon icon-name="utility:close"
+                              alternative-text="close"
+                              variant="inverse"
+                              size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Select Surface</h2>
+                      </header>
+            
+                      <!-- modal body start -->
+                      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                            <p>
+                              <lightning-radio-group name="radioGroup"
+                                    label=""
+                                    options={surfaceOptions}
+                                    onchange={selectSurface}
+                                    type="radio"
+                              > 
+                              </lightning-radio-group>
+                            </p>
+                      </div>
+            
+                      <!-- modal footer start-->
+                      <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={hideSurfaceModalBox}>Cancel</button>
+                      </footer>
+            
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    </lightning-card>
+
+    <lightning-card if:true={isSave}>
+      <c-share-Panel-Global
+      obj-name="Quote"
+      record-id={newQuoteId}
+      hide-payment-button=true
+      ></c-share-Panel-Global>
+    </lightning-card>
+    <footer class="slds-modal__footer">
+      <p style="text-align: left;color:red">
+        <template for:each={validationList} for:item="seq">
+          <lightning-formatted-text value={seq} key={seq}>
+          </lightning-formatted-text><br key={seq}/>
+        </template>
+       </p>
+      <button class="slds-button slds-button_brand" onclick={saveQuote} if:false={isSave}>
+        Save
+      </button>
+      </footer>
+</template>

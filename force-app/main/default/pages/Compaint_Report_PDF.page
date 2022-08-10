@@ -1,0 +1,336 @@
+<apex:page Controller="Complaint_Report_Card" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head>       
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                font-size:12px !important;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                }
+                @page {
+                size: 9.60in 22.90in;
+                } 
+                .table1{
+                width:100%;
+                }
+                .table1 tr td{
+                font-size:12px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#512C8D;
+                color:#fff;
+                padding:25px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr td,th{
+                border:1px solid #9E9C9D;
+                padding:6px 3px;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Main Page ------------------------------------------------>
+                <div style="margin:-9px 8px 8px 7px;background-color:#502E87;color:#FFF;height:150px;z-index:-999;" >
+                    <table width="100%">
+                        <tr>
+                            <td width="20%"  style="" >
+                                <div style="position:relative;left:15px;bottom:10px;z-index:999;">
+                                    <img width="145px" src="https://asianpaints123--apldev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&versionId=06872000001WiRx&operationContext=DELIVERY&contentId=05T72000002fJaD&page=0&d=/a/720000003zlJ/ARHKo1ODdAEISF4qZP7rKXMUx2.Hd5by5J.8p4X3I5g&oid=00D72000000QEaP&dpt=null&viewId="  />
+                                </div>                                
+                            </td>
+                            <td width="40%">
+                                <div style="height:110px;z-index:-999;">
+                                    <div style="position:relative;left:5px;bottom:12px;z-index:999;">
+                                        <table class="table1" style="border:1px solid #fff;padding:10px 6px;">
+                                            <tr>
+                                                <td>Customer Name:{!customerName}</td>
+                                                <td>Mobile No.:{!customerMobile}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">Date:{!Today_Date}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Visited By:{!customerName}</td>
+                                                <td>Mobile No.:{!customerMobile}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Contractor Name:{!contractorName}</td>
+                                                <td>Mobile No.:{!contractorMobile}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colaspn="2">Site ID:</td>
+                                            </tr> 
+                                        </table>
+                                        
+                                        <div style="position:absolute;color:#000;left:558px;bottom:10px;width:100%;">                                            
+                                            <table width="100%" style="color:#000;z-index:999;">
+                                                <tr>
+                                                    <td style="font-size:10px;">Dealer Name:<br/>
+                                                    	{!dealerName}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size:10px;">Dealer Address:<br/>
+                                                        <apex:outputText value="{!dealerAddress}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size:10px;">Mobile No.:<br/>
+                                                    	{!dealerMobile}
+                                                    </td>
+                                                </tr>                                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td width="40%" valign="top">
+                                <div>
+                                    <img style="width:370px;" src="https://asianpaints123--apldev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&versionId=06872000001WjO1&operationContext=DELIVERY&contentId=05T72000002fKxh&page=0&d=/a/720000003zq9/ktF3R1gcrV6KzKnmWhrOTbBCNyAH1ZoeiKer9LQLqvc&oid=00D72000000QEaP&dpt=null&viewId="  />
+                                </div>     
+                                
+                            </td>
+                        </tr>
+                    </table>  
+                </div>
+                
+                <div style="margin:20px 34px 8px 30px;" >
+                    <h3 style="text-align:center;color:#502E87;"><u>COMPLAINT REPORT</u></h3>
+                    <p style="font-size:12px;">Thank you for being our Valuable customer,</p>
+                    <p style="font-size:12px;">With reference to the complaint raised. Sharing the details about the complaint</p>
+                    <table class="table2" style="border-collapse:collaspe;">
+                        <tr>
+                            <th width="25%" style="font-size:10px;">COMPLAINT NO:</th>
+                            <th width="75%" style="font-size:10px;">{!caseR.CaseNumber}</th>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="font-size:10px;">COMPLAINT REGISTRATION DATE:</td>
+                            <td width="75%" style="font-size:10px;"><apex:outputText value="{0,date,dd/MM/yyyy}"><apex:param value="{!caseR.CreatedDate}" /></apex:outputText></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:11px;">Source of Complaint:</td>
+                            <td style="font-size:11px;">{!caseR.Source_Of_Complaint__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:11px;">Complaint description/Voice of customer</td>
+                            <td style="font-size:11px;">{!caseR.Description}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:11px;">Observations at site ::</td>
+                            <td style="font-size:11px;">{!caseR.Observation_at_Site__c}</td>
+                        </tr>
+                    </table><br/>
+                    <table width="100%" class="table2"  style="border-collapse:collapse;">
+                        <tr>
+                            <th style="font-size:10px;width:25%;color:#502E87;background:#F0F0F1;">Surface details</th>
+                            <th style="font-size:10px;color:#502E87;background:#F0F0F1;"></th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Masonry surface</td>
+                            <td style="font-size:10px;">{!caseR.Masonry__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Wooden surface</td>
+                            <td style="font-size:10px;">{!caseR.Wooden_Surface__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Metal surface</td>
+                            <td style="font-size:10px;">{!caseR.Metal_Surface__c}</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%;color:#502E87;background:#F0F0F1;">Painting system followed</th>
+                            <th style="font-size:10px;color:#502E87;background:#F0F0F1;"></th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Nature of Complaint:</td>
+                            <td style="font-size:10px;">{!caseR.L1_Category__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Nature of defect</td>
+                            <td style="font-size:10px;">{!caseR.L2_Category__c}</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%;color:#502E87;background:#F0F0F1;">Root cause of the issue</th>
+                            <th style="font-size:10px;color:#502E87;background:#F0F0F1;"></th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Surface related</td>
+                            <td style="font-size:10px;">{! If(caseR.Root_Cause_of__c=='Surface Related' ,True,'')}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Product related</td>
+                            <td style="font-size:10px;">{! If(caseR.Root_Cause_of__c=='Product Related' ,True,'')}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Application related</td>
+                            <td style="font-size:10px;">{! If(caseR.Root_Cause_of__c=='Application Related' ,True,'')}</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%;color:#502E87;background:#F0F0F1;">In case of product complaint</th>
+                            <th style="font-size:10px;color:#502E87;background:#F0F0F1;"></th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Name of product</td>
+                            <td style="font-size:10px;">{!caseR.CaseNumber}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Shade code</td>
+                            <td style="font-size:10px;">{!caseR.Shade__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Batch no</td>
+                            <td style="font-size:10px;">{!caseR.Batch_No__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Mfg date</td>
+                            <td style="font-size:10px;">{!caseR.Mfg_No__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Affected area</td>
+                            <td style="font-size:10px;">{!caseR.Affected_Area__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;width:25%">Product volume consumed</td>
+                            <td style="font-size:10px;"></td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%">Final remarks/concusion</th>
+                            <td style="font-size:10px;">{!caseR.Final_remarks_Conclusion__c}</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%">Next action to be taken</th>
+                            <td style="font-size:10px;">{!caseR.Next_action_to_be_taken__c}</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%">Complaint status</th>
+                            <td style="font-size:10px;">{!caseR.Status}</td>
+                        </tr>
+                        <!--<tr>
+                            <th style="font-size:10px;width:25%"></th>
+                            <td style="font-size:10px;">WIP</td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;width:25%"></th>
+                            <td style="font-size:10px;">Closed</td>
+                        </tr>-->
+                    </table>           
+                    <br/>
+                    <!--<p style="font-size:10px;">Flow for image capture and Controller for PDF output.</p>-->
+                    <p style="font-size:10px;">In case of any further query, you can reach us at customercare@asianpaints.com or Call us at 1800-209-5678</p>
+                     <table width="100%" class="table2">  
+                        <tr>
+                            <td style="padding:6px 10px;">
+                                <table>
+                                    <tr>
+                                        <td colspan="2" style="font-size:10px;border:none;">For More Information on Service &amp; Products, Please click on the below Links:</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;border:none;">Safepainting service Link:</td>
+                                        <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;border:none;">Product details Link:</td>
+                                        <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/products/paints-and-textures.html">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints </a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;border:none;">Waterproofing Solutions Link: </td>
+                                        <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/products/waterproofing-solutions.html">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints </a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;border:none;">Product Warranty Details Link:</td>
+                                        <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/more/warranty.html">Register To Activate Warranty For Asian Paints Products</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;border:none;">Website Link:</td>
+                                        <td style="font-size:10px;border:none;"><a href="www.asianpaints.com">www.asianpaints.com</a></td>
+                                    </tr>
+                                </table>
+                                
+                                
+                            </td>
+                        </tr>
+                    </table>   <br/>               
+                    <table width="100%"  style="border-collapse:collapse;">
+                        <tr>
+                            <th style=" width:25%;font-size:10px;border:none;">Site Image Capture:</th>
+                            <td style="font-size:10px;border:none;"></td>
+                        </tr>
+                        <tr>
+                            <th style="font-size:10px;border:none;">Confirmation:</th>
+                            <td style="font-size:10px;border:none;">Approval ok to share by User</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    
+                    <table width="100%" style="border-collapse:collapse;">
+                        <apex:repeat value="{!imageMap}" var="v">
+                        	<tr>
+                                <td style="font-size:10px;text-align:center;border:1px solid #9E9C9D;">
+                                    
+                                    <apex:image url="{!imageMap[v].beforeImageLink}" height="100px" width="100px"/><br/>
+                                    Description:{!imageMap[v].description}
+                                </td>
+                                <td style="font-size:10px;text-align:center;border:1px solid #9E9C9D;">
+                                    
+                                    <apex:image url="{!imageMap[v].afterImageLink}" height="100px" width="100px"/><br/>
+                                    Description:{!imageMap[v].description}
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        <!--<tr>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 1 : Descreption:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 2 : Description:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 1 : Descreption:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 2 : Description:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 1 : Descreption:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 2 : Description:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 1 : Descreption:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 2 : Description:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 1 : Descreption:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                            <td style="font-size:10px;text-align:center;padding:100px 30px 0 30px;border:1px solid #9E9C9D;">IMAGE 2 : Description:…..........<br/>(sufficient space to be given to capture mobile shot image)</td>
+                        </tr>-->
+                    </table>
+                    
+                    
+                </div>
+                
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

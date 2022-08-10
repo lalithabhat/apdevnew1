@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+       <!-- <c:siteHealthCard recordId="{!v.recordId}" onclose="{!c.closeQA}"></c:siteHealthCard>-->
+    <c:shcEditable recordId="{!v.recordId}" isEdit="false" onclose="{!c.closeQA}"></c:shcEditable>
+</aura:component>

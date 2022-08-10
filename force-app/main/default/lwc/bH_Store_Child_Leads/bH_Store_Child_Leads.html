@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title="Create Child Leads ">
+
+
+        <lightning-button-icon icon-name="utility:refresh" slot="actions" onclick={refreshWire}></lightning-button-icon>
+        <lightning-spinner size="small" alternative-text="loading" if:true={showSpinner}></lightning-spinner>
+        <!-- <lightning-checkbox-group name="Select Leads to be created" label="Checkbox Group" options={options}
+            value={value} onchange={handleChange}>
+        </lightning-checkbox-group> -->
+        <template for:each={childLeadOptions} for:item="i">
+            <div  key={i} class=" slds-m-horizontal_small">
+
+                <lightning-input if:true={i.isValid} type="Checkbox" label={i.BU} data-bu={i.BU_API}
+                    onchange={handleCheckbox}></lightning-input>
+                <lightning-input if:false={i.isValid} disabled type="Checkbox" label={i.BU} data-bu={i.BU_API}
+                    onchange={handleCheckbox}></lightning-input>
+                <!-- <p class="slds-m-left_medium">{i.validationMsg}</p> -->
+                <div class="slds-m-left_medium">
+                    <lightning-formatted-rich-text if:false={i.isValid} value={i.validationMsg}>
+                    </lightning-formatted-rich-text>
+                </div>
+            </div>
+        </template>
+
+        <div slot="footer">
+            <lightning-button class="slds-m-top_small" label="Create Leads" variant="brand" onclick={createLeadsHandler}
+                disabled={disabled}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

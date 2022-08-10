@@ -1,0 +1,183 @@
+<apex:page Controller="SamplePostChatPageController"  sidebar="false" showHeader="false" applyHtmlTag="true" standardStylesheets="false" docType="html-5.0">
+    <apex:form >
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta http-equiv="X-UA-Compatible" content="ie=edge" />            
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>           
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                
+                <style>                                      
+                    body{
+                    margin: 0;
+                    padding: 0;                    
+                    }
+                    .navbar img{
+                    width:70px;
+                    }
+                    .navbar{
+                    background: #FFF;
+                    border-bottom:1px solid #723F59;
+                    }
+                    label{
+                    font-weight:600;
+                    font-size:20px;
+                    }
+                    .mainDiv{
+                    padding:8px 20px;
+                    border-radius:5px;
+                    -webkit-box-shadow: 10px 10px 16px -10px rgba(0,0,0,0.62);
+                    -moz-box-shadow: 10px 10px 16px -10px rgba(0,0,0,0.62);
+                    box-shadow: 10px 10px 16px -10px rgba(0,0,0,0.62);
+                    }
+                    .form-control:focus {
+                    background-color: #fff;
+                    border-color: #bc8b2d;
+                    outline: 0;
+                    box-shadow: 0 0 0 1px rgb(188, 139, 45);
+                    }
+                    .btn{
+                    padding:8px 10px;
+                    color: #fff;
+                    cursor: pointer !important;
+                    border: solid 1px #723F59;
+                    width: 100%;
+                    display: inline-block;
+                    background-color: #723F59;
+                    width: 85px;
+                    font-size: 16px;
+                    font-weight:400;
+                    transition:0.2s;
+                    }
+                    .btn:hover{
+                    padding:8px 10px;
+                    color:A8822B;
+                    background-color: #fff;
+                    border:1px solid #723F59;
+                    }
+                    .custom-control label img{
+                    width: 45px;
+                    }
+                    /*------------ Mobile -----------------*/
+                    @media screen and (max-width: 480px) {
+                    .navbar img{
+                    width:50px;
+                    text-align:center;
+                    }
+                    .navbar{
+                    background: #000;
+                    }
+                    .custom-control {
+                    padding-bottom: 20px;
+                    }
+                    label{
+                    font-weight:500;
+                    font-size:18px;
+                    }
+                    .custom-control label img{
+                    width: 40px;
+                    }
+                    }
+                    /*------------ Ipad -----------------*/
+                    @media screen and (max-width: 768px) {
+                    .navbar img{
+                    width:65px;
+                    text-align:center;
+                    }
+                    .custom-control label img{
+                    width: 40px;
+                    }
+                    }
+                </style> 
+            </head>   
+            <body>  <!--                
+<a class="navbar">                    
+<img src ="https://asianpaints123--apldev--c.documentforce.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&versionId=06872000000fQEf&operationContext=DELIVERY&contentId=05T72000001Fdzl&page=0&d=/a/720000005TUP/lmVwp_M.kNuhgvGvBWalfPgtpMZTg6L8vQd3oCXq59o&oid=00D72000000QEaP&dpt=null&viewId="  alt="logo"/>
+</a> -->
+                <apex:outputPanel rendered="{!isRendered}">
+                    <div class="container pt-3">
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col-sm-12 col-md-8 col-lg-6">
+                                <div class="border mainDiv">
+                                    <!--
+                                    <center><h3><u>Feedback Form</u></h3></center>
+                                    
+                                    <div class="form-row">                                    
+                                        <div class="form-group col-md-12">
+                                            <label for="MobNo" >Chat Key: </label>
+                                            <apex:outputText value="{!$CurrentPage.parameters.chatKey}" style="background:#f8f5f5 !important;" styleClass="form-control" id="Chatkey1"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="MobNo">Chat Key: </label>
+                                            <apex:outputText value="{!chatKey}" styleClass="form-control" style="background:#f8f5f5 !important;" id="Chatkey2"/>
+                                        </div>
+                                    </div>-->
+                                    <div class="form-row mt-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="MobNo">How Was Your Experience?</label>
+                                            <div class="row ml-2 form-inline">
+                                                <div class="custom-control custom-radio col-sm-12 col-md-2">
+                                                    <input type="radio" value="1" checked="{!flag1}" id="excellent" name="Feedback" class="custom-control-input"/>
+                                                    <label class="custom-control-label" for="excellent">
+                                                        <img src="{!$Resource.Likepng}" title="Excellent"/>
+                                                        <img src="https://1ap--c.vf.force.com/resource/1643009073000/Likepng?" title="Excellent"/>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio col-sm-12 col-md-2">
+                                                    <input type="radio" value="2"  id="verypoor" name="Feedback" class="custom-control-input"/>                                                    <label class="custom-control-label" for="verypoor">
+                                                       <img src="{!$Resource.DislikePng}"  title="Poor"/>
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-2">
+                                        <div class="form-group col-md-12">
+                                            <label for="Description">Leave a comment (optional)</label>
+                                            <apex:inputTextarea id="comment" value="{!Comment}" rows="2" cols="40" styleClass="form-control"/>
+                                        </div>
+                                    </div>
+                                    <center>
+                                        <apex:commandButton action="{!save}" value="Submit" styleClass="btn"></apex:commandButton>
+                                    </center>
+                                    
+                                </div>
+                                <br/>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!(!isRendered)}">
+                    <div class="border mainDiv">
+                        <h4 align="center">Thank you for your valuable feedback!!   </h4>
+                    </div>
+                </apex:outputPanel>
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                <script></script>
+            </body>
+        </html>
+    </apex:form>
+</apex:page>
+<!--
+<apex:form >
+<apex:image url="https://1ap--c.vf.force.com/resource/1643009073000/Likepng?"/>
+<apex:image url="https://1ap--c.vf.force.com/resource/1643009073000/Dislikepng?"/>
+<apex:selectRadio layout="pageDirection" >
+<apex:selectOption itemLabel="Like" itemValue="{!isLike}"></apex:selectOption>
+<apex:selectOption itemLabel="Dislike" itemValue="{!isDislike}" ></apex:selectOption>
+</apex:selectRadio>
+Leave a comment (optional)<br/>
+<apex:inputTextarea id="comment" value="{!Comment}" rows="4" cols="40"/><br/>
+<apex:commandButton action="{!save}" value="Submit" />
+</apex:form>
+
+</apex:page>-->

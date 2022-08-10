@@ -1,0 +1,95 @@
+<aura:component implements="force:appHostable,force:hasRecordId" controller="UserAttritionController" access="global">
+	<aura:registerEvent name="contactSearch" type="c:ContactSearch"/>
+   <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <aura:attribute name="contactList" type="Contact[]"/>
+    <aura:attribute name="oldContact" type="String"/>
+    <aura:attribute name="selectedContactName" type="String"/>
+    <aura:attribute name="selectedContactId" type="String"/>
+    
+    <aura:attribute name="showSearch" type="Boolean" default="true"/>
+    <aura:attribute name="hideBoxResult" type="Boolean" default="true"/>
+    <aura:attribute name="fromParent" type="string"/>
+    <aura:attribute name="layoutTitle" type="string"/>
+    <aura:attribute name="isRequired" type="Boolean"/>
+    
+    <!--<lightning:card title="User Attrition" iconName="standard:contact">
+        <lightning:layout horizontalAlign="space" multipleRows="true">
+            <lightning:layoutItem size="12"
+                              mediumDeviceSize="6"
+                              padding="around-small"> -->
+               <aura:if isTrue="{!v.showSearch}">
+                   <div class="slds-form slds-p-around_x-small">
+                    <lightning:input
+                        label="{!v.layoutTitle}"
+                        variant="standard"
+                        value="{!v.oldContact}"
+                        placeholder="Search by name, phone or position Id"
+                        onchange="{!c.onOldContactChange}"
+                        required="{!v.isRequired}"
+                        onblur="{!c.hideResult}"/>
+                   </div>
+                   <aura:set attribute="else">
+                       <div class="slds-form slds-p-around_x-small">
+                        <lightning:input
+                            label="Selected Contact"
+                            variant="standard"
+                            value="{!v.selectedContactName}"
+                            disabled="false"  
+                            readonly="true"             
+                            onclick="{!c.changeContact}"             
+                            />
+                   		</div> 
+                   </aura:set>
+               </aura:if> 
+               <aura:if isTrue="{!v.hideBoxResult}"> 
+                <!--<div class="slds-form-element_control">
+            	<div class="slds-combobox_container">
+                    <div id="listbox-id-11" class="slds-dropdown slds-dropdown_fluid" role="listbox">
+                     --> <ul class="slds-listbox slds-listbox_vertical slds-dropdown_length-5 customClass" tabindex="0"
+                            role="presentation">
+                          <aura:iteration items="{!v.contactList}" var="singleRec">
+                  				<li role="presentation" class="slds-listbox__item"
+                                     data-id="{!singleRec.Id}" data-div="{!singleRec.Name}" onclick="{!c.optionsClickHandler}"
+                                    >
+                                    <div 
+                                        class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                        role="option">
+                                        <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                        <span class="slds-truncate">
+                                            <span>
+                                                
+                                                <table><tr>
+                                                    <td>
+                                                        <lightning:icon iconName="standard:contact" size="small" alternativeText="Contact" title="Contact"/>
+                                                    </td>
+                                                    <td align="right"> &nbsp;&nbsp;{!singleRec.FirstName} {!singleRec.LastName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td align="right">&nbsp;&nbsp;
+                                                        	{!singleRec.PositionID__c}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td align="right">&nbsp;&nbsp;
+                                                        	{!singleRec.Email}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </span>
+                                        </span>
+                                        
+                                    </div>
+                                </li>
+                		  </aura:iteration>
+                        </ul>
+                   <!--</div>
+                    
+               
+                     </div></div> --> </aura:if>
+        	<!--</lightning:layoutItem>
+        	
+        </lightning:layout>
+    </lightning:card>-->
+</aura:component>

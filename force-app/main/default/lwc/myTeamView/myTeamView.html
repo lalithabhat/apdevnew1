@@ -1,0 +1,40 @@
+<template>
+    
+    <lightning-card title="My Team" icon-name="standard:team_member">
+        <!-- <div class="slds-scrollable_x">
+    <lightning-datatable
+    column-widths-mode="auto"
+            key-field="id"
+            columns={columns}
+            data={data}
+            hide-checkbox-column
+            default-sort-direction={defaultSortDirection}
+            sorted-direction={sortDirection}
+            sorted-by={sortedBy}
+            onsort={onHandleSort}>
+    </lightning-datatable>
+   </div> -->
+<p if:true={noData} class ="slds-text-color_destructive slds-m-around_medium">No Users Found</p>
+        <lightning-layout if:false={noData} multiple-rows>
+            <template for:each={data} for:item="d">
+                <lightning-layout-item key={d} size="12" large-device-size="4">
+                    <div class="slds-box">
+                        <!-- <p class="slds-text-heading_small slds-m-bottom_small">{d.name}</p> -->
+                        <span class="slds-text-heading_small slds-m-bottom_small slds-text-link_faux" data-id={d.contactId} onclick={handleClick}>{d.name}</span>
+                        <!-- <lightning-button varient="brand-outline" label={d.Name} data-id={d.contactId} onclick={handleClick}></lightning-button>
+                        -->   <ul class=""> 
+                            <!-- <li class="slds-item slds-text-heading_small">Name :   {d.name}</li> -->
+                            <li class="slds-item">Position Id :  {d.positionId}</li>
+                            <li class="slds-item">Dealer :  {d.dealer}</li>
+                            <li class="slds-item">Role :  {d.role}</li>
+                            <li class="slds-item">MTD Value : ₹ {d.mtd}</li>
+                            <li class="slds-item">YTD Value: ₹ {d.ytd}</li>
+                        </ul>
+                      
+                                     </div>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+
+    </lightning-card>
+</template>

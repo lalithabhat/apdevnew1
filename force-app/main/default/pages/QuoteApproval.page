@@ -1,0 +1,73 @@
+<apex:page controller="QuoteApprovalController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"> 
+    
+    <div align="center" draggable="false" style="width:100% background: rgb(91,43,192); color: #ffffff; padding: 20px;
+                                                 background: linear-gradient(140deg, rgba(91,43,192,1) 0%, rgba(91,43,192,1) 35%, rgba(249,188,38,1) 100%);">
+        
+        
+        <h1 style="text-align:center; font-family: sans-serif; padding: 20px;  ">
+            Asian Paints Safe Painting Service
+        </h1> 
+        <apex:pageBlock >
+            <apex:pageBlockSection rendered="{!showSuccess}">
+                <h2 style="text-align:center; font-family: sans-serif;" >
+                    Thank you for approving your Quote for Asian Paints Safe Painting Service!
+                </h2> 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection rendered="{!showRejected}">
+                <h2 style="text-align:center; font-family: sans-serif;" >
+                    Quote Was Rejected!
+                </h2> 
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection rendered="{!alreadyApproved}">
+                <h2 style="text-align:center; font-family: sans-serif;" >
+                    Quote Already Accepted!
+                </h2> 
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection rendered="{!alreadyRejected}">
+                <h2 style="text-align:center; font-family: sans-serif;" >
+                    Quote Already Denied!
+                </h2> 
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        <apex:form rendered="{!(!showSuccess && !showError && !alreadyApproved && !alreadyRejected)}">  
+            
+            <apex:commandButton action="{!Approve}" value="Accept Quote" id="theButton" style="padding: 20px;font-family: sans-serif; font-size: 30px; 
+                                                                                                 background: #ffffff;
+                                                                                                 Color :#000 ! important;
+                                                                                                 border: 2px solid #ffffff;
+                                                                                                 border-radius: 25px;" />
+                                                                    &nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!Reject}" value="Reject Quote" id="rejectBtn" style="padding: 20px;font-family: sans-serif; font-size: 30px; 
+                                                                                                 background: #ffffff;
+                                                                                                 Color :#000 ! important;
+                                                                                                 border: 2px solid #ffffff;
+                                                                                                 border-radius: 25px;" />               
+            
+        </apex:form>
+        
+        <apex:pageBlock >
+            <div width="100%" style="color: #ff0000; background: #ffffff;">
+                 <apex:pageBlockSection rendered="{!showError}">
+             <h2 style="text-align:center; font-family: sans-serif; color: #ff0000; background: #ffffff;">
+                Error Occured! 
+            </h2> 
+            <h3 style="text-align:center; font-family: sans-serif; color: #ff0000; background: #ffffff;" >
+                Some unexpected error occured. 
+            </h3>
+        </apex:pageBlockSection>
+      
+            </div>
+    </apex:pageBlock>
+    </div>
+   
+    <div>
+        &nbsp;
+        
+    </div>
+    <iframe  src="{!pdf}"  width="100%" height="2000px" ></iframe> 
+    
+    
+</apex:page>

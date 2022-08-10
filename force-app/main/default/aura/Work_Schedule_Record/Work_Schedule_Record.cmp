@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global">
+    <c:generate_PDF_Generic_LWC recordId="{!v.recordId}" objName="Milestone1_Milestone__c" buttonName="Work Schedule">
+    
+    </c:generate_PDF_Generic_LWC>
+</aura:component>

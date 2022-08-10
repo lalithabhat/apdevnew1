@@ -1,0 +1,134 @@
+<apex:page controller="SanAssureController" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head> 
+            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                
+                background:#CFF6F4;
+                color:#002D31;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                font-size:17px !important;
+                }
+                @page {
+                size: 8.30in 11.00in;
+                } 
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table1 tr td{
+                font-size:16px;
+                border:1px solid #837060;
+                padding:8px 25px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#115570;
+                color:#fff;
+                padding:30px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr td,th{
+                padding:6px 3px;
+                font-size:13px;
+                }
+                p{
+                line-height:24px;
+                padding:1px 0;
+                }
+                ol li{
+                line-height:25px;
+                }
+                ol.overlineRange li{
+                line-height:21px !important;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Page 1 ---------------------------------------------->
+                <div class="page1" >
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureImageNew}" width="800px;" />
+                    </div>                
+                    <div style="margin:35px 50px 8px 50px;" >                      
+                        
+                        <div style="border:2px solid #115570; padding:20px 42px;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <p style="text-align:justify">This is to certify that your premises have been sanitized using Asian Paints
+                                Viroprotek range of surface sanitizer and space disinfectant spray under the expert
+                                supervision of trained professionals ensuring the most effective performance** of
+                                Viroprotek range of surface sanitizer and space disinfectant spray.</p>
+                            <p>These disinfectants with enhanced chemistry offer the best solution for disinfecting
+                                large spaces and surfaces.</p>
+                            <p>Your premises have rightly been given the San Assure+ Certification.
+                            </p>
+                            <table width="100%" class="table12">
+                                <tr>
+                                    <td width="20%" style="padding:5px;line-height:24px;">Issued to :</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:24px;padding:0px;">{!site.Account__r.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%" style="padding:5px;line-height:24px;">Date:</td>
+                                    <td style="border-bottom:1px solid #115570;padding:0px;line-height:24px;">{!cDate}</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%" style="padding:5px;line-height:24px;">Dealer Name :</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:24px;padding:0px;">{!site.Dealer__r.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td width="20%" style="padding:5px;line-height:24px;">&nbsp;</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:24px;padding:0px;">	</td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <p >
+                                *These claims are pertaining to the Viroprotek Max. As tested by NABL accredited
+                                Laboratory.
+                            </p>
+                            <p style="text-align:justify">
+                                **Please note: Sanitization service has to be carried out regularly for complete
+                                protection, especially for spaces which witness frequently accessed areas
+                                and common contact surfaces. The Sanitization services are not intended to
+                                treat, cure or prevent any diseases and the services are not meant to substitute
+                                medical advice and / or care.
+                            </p>
+                            <p>
+                                #Follow the recommended application process.
+                            </p>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+               
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

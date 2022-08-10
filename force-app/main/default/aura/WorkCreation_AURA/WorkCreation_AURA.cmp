@@ -1,0 +1,6 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global">
+	
+    
+    <!--<c:workCreationLWC recordId="{!v.recordId}" onclose="{!c.closeMethodInAuraController}"></c:workCreationLWC>-->
+    <c:editWorkCreation_LWC recordId="{!v.recordId}" onclose="{!c.closeMethodInAuraController}"></c:editWorkCreation_LWC>
+</aura:component>

@@ -1,0 +1,379 @@
+<template>
+  <lightning-spinner size="small" if:true={showSpinner}></lightning-spinner>
+  <header class="slds-modal__header">
+    <table>
+      <tr>
+        <td align="left" style="font-size:medium;">
+          <lightning-button variant="base" label="Cancel" title="Cancel" onclick={cancelWork}
+            class="slds-m-left_x-small"></lightning-button>
+        </td>
+        <td align="center" colspan="2">
+          <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate" if:false={isEdit}>Create Work</h2>
+          <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate" if:true={isEdit}>Edit Work</h1>
+        </td>
+      </tr>
+    </table>
+  </header>
+
+  <lightning-card if:true={siteMissing} title=''>
+    <p style="text-align: left;color:red">
+      <lightning-formatted-text value="On Quote Site is missing, Please tag site on Quote and then add Work.">
+
+      </lightning-formatted-text>
+    </p>
+  </lightning-card>
+
+  <lightning-card if:true={quoteNotValid} title=''>
+    <p style="text-align: center;color:red">
+      <lightning-formatted-text value="Quote is not accepted.">
+
+      </lightning-formatted-text>
+    </p>
+  </lightning-card>
+
+  <template if:false={quoteNotValid}>
+    <template if:false={siteMissing}>
+    <lightning-card title='Quote Details' >
+      <!-- <template if:false={quoteNotValid}> -->
+      <div class="slds-m-horizontal_small">
+        <lightning-record-view-form record-id={quoteNumber} object-api-name="Quote" density="compact">
+          <lightning-output-field field-name="QuoteNumber" label="Quote Details">
+          </lightning-output-field>
+
+          <lightning-output-field field-name="Site__c">
+          </lightning-output-field>
+
+          <lightning-output-field field-name="OpportunityId">
+          </lightning-output-field>
+
+          <lightning-output-field field-name="Site_Health_Card__c">
+          </lightning-output-field>
+
+          <lightning-output-field field-name="Status">
+          </lightning-output-field>
+
+          <lightning-output-field field-name="Subtotal">
+          </lightning-output-field>
+          <lightning-output-field field-name="Total_Discount__c">
+          </lightning-output-field>
+          <lightning-output-field field-name="Total_Amount_after_discount__c">
+          </lightning-output-field>
+          <!--<lightning-output-field field-name="Total_Money_Received__c">
+                </lightning-output-field> -->
+          <!-- <div class="slds-grid">
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning-output-field field-name="QuoteNumber">
+                    </lightning-output-field>
+
+                    <lightning-output-field field-name="OpportunityId">
+                    </lightning-output-field>
+
+                    <lightning-output-field field-name="Site_Health_Card__c">
+                    </lightning-output-field>
+
+                    <lightning-output-field field-name="Status">
+                    </lightning-output-field>
+
+                  </div>
+                 
+                  <div class="slds-col slds-size_1-of-2">
+                    
+                    <lightning-output-field field-name="Subtotal">
+                    </lightning-output-field>
+                    <lightning-output-field field-name="Discount">
+                    </lightning-output-field>
+                    <lightning-output-field field-name="GrandTotal">
+                    </lightning-output-field>
+                  </div>
+                  
+              </div>-->
+
+        </lightning-record-view-form>
+      </div>
+    </lightning-card>
+    &nbsp;
+
+    <lightning-card title="Work Details">
+      <div class="slds-p-horizontal_small">
+        <lightning-combobox class="slds-m-horizontal_xx-small" name="ContractorList" label="Select Contractor"
+          value={selectedContractor} placeholder="Select Contractor" onchange={contractorChange}
+          options={contractorList} required>
+        </lightning-combobox>
+
+
+
+
+        <!-- <div class="slds-form-element" if:false={workAdded}>
+        <div class="slds-form-element__control">
+          <button class="slds-button slds-button_brand btnclass" onclick={addWork}>+ Add Work</button>
+        </div>
+      </div> -->
+        <!-- <lightning-accordion class="work-accordion" allow-multiple-sections-open active-section-name="Work Details"> -->
+        <!-- if:true={workAdded}> -->
+        <!-- <lightning-accordion-section name="Work Details" icon-name="standard:home" label="Work Details"> -->
+        <lightning-record-edit-form object-api-name="Milestone1_Milestone__c" record-id={workId}>
+          <lightning-messages></lightning-messages>
+
+          <!--<lightning-input-field field-name="Money_Collected__c" onchange={moneyCollectedChange} required max-length="4">
+                    </lightning-input-field> -->
+          <label class="required-field1 slds-form-element__label">Money Collected</label>
+          <lightning-input class="slds-m-horizontal_xx-small" type="number" variant="label-hidden"
+            onchange={moneyCollectedChange} max-length="7">
+          </lightning-input>
+
+          <lightning-input-field field-name="Kickoff__c" onchange={kickOffChange} required>
+          </lightning-input-field>
+
+          <lightning-input-field field-name="Deadline__c" onchange={deadLineChange} required>
+          </lightning-input-field>
+
+          <lightning-input-field field-name="Description__c" onchange={descriptionChange}>
+          </lightning-input-field>
+
+          <!-- <lightning-input-field field-name="Shade_Code__c" onchange={shadeCodeChange} required>
+        </lightning-input-field> -->
+        </lightning-record-edit-form>
+      </div>
+      <!-- ////////////////////////////////////////////////////////////////////////////////////////////-->
+    </lightning-card>
+    &nbsp;
+    <lightning-card title="Shade Search">
+      <div class="slds-m-horizontal_small">
+        <div class="slds-is-relative">
+          <lightning-spinner if:true={imgSpinner} size="small"></lightning-spinner>
+
+          <lightning-layout>
+            <lightning-layout-item size="10">
+              <lightning-input type="text" label="Enter Shade Code" variant="label-hidden"
+                placeholder="Seach Shade Code" onchange={handleShadeIp}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="2">
+              <lightning-button disabled={disableAdd} variant="Brand" label="Add" onclick={addImage}></lightning-button>
+
+            </lightning-layout-item>
+          </lightning-layout>
+
+          <lightning-layout if:true={imageValue}>
+            
+            <lightning-layout-item  size="4">
+              <img  src={imageValue} />
+            </lightning-layout-item>
+          </lightning-layout>
+          <!-- <img if:true={imageValue} src={imageValue} /> -->
+          <div if:true={imageError} class="slds-box slds-theme_shade slds-theme_alert-texture slds-theme_warning">
+            {imageError}
+          </div>
+        </div>
+      </div>
+    </lightning-card>
+    <lightning-card title="Selected Shades">
+      <div class="slds-m-horizontal_small">
+
+        <lightning-layout multiple-rows>
+          <template for:each={imageList} for:item="i">
+            <lightning-layout-item key={i} size="4">
+
+              <img src={i.imageVal} width="100%" />
+
+            </lightning-layout-item>
+            <lightning-layout-item key={i} size="4" class="slds-text-align_center slds-p-vertical_x-large">
+              <strong>{i.shadeCode}</strong>
+            </lightning-layout-item>
+            <lightning-layout-item key={i} size="4" class=" slds-p-vertical_large  slds-p-horizontal_x-large">
+
+              <lightning-button-icon onclick={deleteImage} icon-name="utility:delete" data-index={i.index}>
+              </lightning-button-icon>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </div>
+      <!-- </template> -->
+    </lightning-card>
+
+    <!-- </lightning-record-edit-form> -->
+    <!-- </lightning-accordion-section>
+      </lightning-accordion> -->
+    <!-- </lightning-card> -->
+    &nbsp;
+    <lightning-card title="Quote Level Products">
+      <!-- <lightning-accordion class="Recommendation-accordion" active-section-name="QuoteLevelproducts"
+        allow-multiple-sections-open> -->
+      <!-- if:true={workAdded}> -->
+      <!-- <lightning-accordion-section name="QuoteLevelproducts" icon-name="standard:home" label="Quote Level Products"> -->
+      <div class="demo-only demo-only--sizing slds-grid slds-wrap" data-id="consumption">
+        <div class="slds-size_3-of-3">
+          <div class="slds-text-align_center">
+            <table class="slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right">
+              <thead>
+                <tr class="slds-line-height_reset">
+                  <th class="" scope="col">
+                    Product Name
+                  </th>
+                  <th class="" scope="col">
+                    Product Code
+                  </th>
+                  <th class="" scope="col">
+                    Product Family
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={quoteLevelProducts} for:item="rw">
+                  <tr key={rw.productName} class="slds-line-height_reset">
+                    <td class="">
+                      {rw.productName}
+                    </td>
+                    <td class="">
+                      {rw.productCode}
+                    </td>
+                    <td class="">
+                      {rw.productFamily}
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- </lightning-accordion-section>
+      </lightning-accordion> -->
+
+      <br>
+
+      <lightning-accordion class="product-accordion" allow-multiple-sections-open
+        active-section-name={selectedConsumption}>
+        <!-- allow-multiple-sections-open -->
+        <table>
+          <template for:each={productList} for:item="seq">
+            <tr key={seq.sequence}>
+              <td>
+                <lightning-accordion-section name={seq.consumption.Name} icon-name="standard:home"
+                  label={seq.consumption.Name}>
+                  <lightning-record-edit-form object-api-name="Consumption__c" record-id={seq.consumption.Id}>
+                    <lightning-messages></lightning-messages>
+
+                    <label class="required-field1 slds-form-element__label">Product Family</label>
+                    <lightning-input-field field-name="Product_Family__c" onchange={productFamilyChane}
+                      data-id={seq.sequence} variant="label-hidden">
+                    </lightning-input-field>
+
+                    <div class="slds-form-element">
+                      <label class="required-field1 slds-form-element__label">Product</label>
+                      <div class="slds-form-element__control">
+                        <c-reusable-Custom-Dropdown-With-Search-Lwc options={productItems} seq={seq.sequence}
+                          productfamily={seq.consumption.Product_Family__c} value={seq.consumption.Product__c}
+                          onchange={productChange}>
+                        </c-reusable-Custom-Dropdown-With-Search-Lwc>
+                      </div>
+                    </div>
+                    <div class="slds-m-top_x-small">
+                      <lightning-badge if:true={seq.service} label={seq.service} class="slds-badge_inverse">
+                      </lightning-badge>
+                    </div>
+                    <!-- <label class="required-field1 slds-form-element__label">For Products: Volume in Kg/lts | For
+                      Services: Value in Rs.</label> -->
+
+                    <lightning-input type="number" required label="Volume in Kg/lts" data-id={seq.sequence}
+                      onchange={quantityChange} max-length="6">
+                    </lightning-input>
+                    <lightning-input type="number" label="Value in Rs." data-id={seq.sequence} onchange={amountChange}
+                      max-length="6">
+                    </lightning-input>
+                  </lightning-record-edit-form>
+
+
+                </lightning-accordion-section>
+              </td>
+              <td align="right" style="vertical-align: top;">
+                <lightning-button-icon icon-name="utility:delete" data-id={seq.sequence} alternative-text="Delete"
+                  class="test slds-m-left_xx-small" title="Delete" onclick={deleteProduct}>
+                </lightning-button-icon>
+              </td>
+            </tr>
+          </template>
+        </table>
+
+
+
+      </lightning-accordion>
+      <!-- <div class="slds-form-element"> -->
+      <!-- if:true={workAdded}> -->
+      <!-- <div class="slds-form-element__control"> -->
+      <!-- <button class="slds-button slds-button_brand btnproductDiscount" onclick={addProduct}>+ Add Product</button> -->
+      <lightning-button variant="Brand" label="Add Products" class="slds-m-horizontal_small" onclick={addProduct}>
+      </lightning-button>
+      <!-- </div> -->
+      <!-- </div> -->
+
+
+
+      <!-- lightning button for open modal window 
+    <lightning-button variant="brand" label="Modal Button" onclick={showModalBox} 
+    class="slds-m-left_x-small">
+    </lightning-button>
+  -->
+      <!--Use template if:true to display/hide popup based on isModalOpen value-->
+      <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                </lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Review Details </h2>
+            </header>
+
+            <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <!-- Rich text editor and formatted output -->
+              <p if:true={approvalMessage} class="slds-text-color_destructive">
+                <lightning-formatted-text value={approvalMessage}></lightning-formatted-text>
+              </p>
+              <p if:true={consumptionError} class="slds-text-color_destructive">
+                <lightning-formatted-text value={consumptionError}></lightning-formatted-text>
+              </p>
+            </div>
+
+            <!-- modal footer start-->
+            <footer class="slds-modal__footer">
+              <lightning-button variant="brand-outline" label="Cancel" onclick={hideModalBox}
+                class="slds-m-left_x-small"></lightning-button>
+
+              <lightning-button variant="brand" label="Save" style="margin:5px;" data-consumption="true"
+                onclick={callSaveWork}></lightning-button>
+            </footer>
+
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </template>
+
+
+
+
+
+      <!-- </template> -->
+    </lightning-card>
+  </template>
+  <footer class="slds-modal__footer">
+    <template if:false={quoteNotValid}>
+      <!--<button class="slds-button slds-button_neutral" onclick={cancelWork}>Cancel</button> -->
+      <button class="slds-button slds-button_brand" onclick={saveWork} if:false={isEdit}>
+        Save
+      </button>
+      <button class="slds-button slds-button_brand" onclick={updateWork} if:true={isEdit}>
+        Update
+      </button>
+    </template>
+  </footer>
+
+</template>
+
+
+</template>

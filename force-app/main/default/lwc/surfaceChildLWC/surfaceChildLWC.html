@@ -1,0 +1,106 @@
+<template>
+  <lightning-card> 
+    
+    <lightning-accordion class="example-accordion" allow-multiple-sections-open active-section-name={selectedSurface}> <!-- allow-multiple-sections-open -->
+      <table>  
+        <template for:each={quoteLineItemRecordList} for:item="seq">
+          <tr key={seq.sequence}> <td>
+          <lightning-accordion-section name={seq.surface} icon-name="standard:home" label={seq.surface} key={seq.surface}>
+              <lightning-record-edit-form object-api-name="QuoteLineItem">
+                <lightning-messages></lightning-messages>
+                <div class="slds-form-element">
+                  <label class="required-field1 slds-form-element__label">Product</label>
+                  
+                  <div class="slds-form-element__control" >
+                  <c-custom-lookup obj-name="Product2" search-placeholder="Search Product" icon-name="standard:product" data-id={seq.sequence} onlookupselected={productChange}
+                    onupperproductchange={handleChangeCheckbox}
+                  > </c-custom-lookup>
+                  <lightning-badge label={seq.service} if:true={seq.service} ></lightning-badge>
+                 
+                </div></div>  <br/>
+
+                <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+                <lightning-input type="number"  onchange={areaChange} data-id={seq.sequence} variant="label-hidden" max-length="7">
+                    </lightning-input>
+
+                <label class="slds-form-element__label">Pricing Model</label>    
+                <lightning-input-field field-name="Pricing_Modal__c" onchange={productModelChange} data-id={seq.sequence} variant="label-hidden">
+                  </lightning-input-field>
+                  <div>
+                  <lightning-badge  label={seq.productCost} if:true={seq.productCost}  class="slds-m-vertical_small"></lightning-badge> 
+                  </div>
+                <label class="required-field1 slds-form-element__label">Price</label>
+                <lightning-input type="number" step="0.01" max="9999999" max-length="10" field-name="UnitPrice" variant="label-hidden" data-id={seq.sequence}   onchange={priceChange} >
+                    </lightning-input>
+                 
+               
+                <!--<c-checkbox-l-w-c oncheckboxvalueupdate={handleChangeCheckbox} class-val={productId} data-id={seq.sequence} if:true={productSelected}>{productId}</c-checkbox-l-w-c> <br/>-->
+                
+                <label class="required-field1 slds-form-element__label">Product Volume</label>    
+                <lightning-input type="number" variant="label-hidden" data-id={seq.sequence} onchange={quantityChange}
+                    max-length="4">
+                </lightning-input> 
+              
+
+                <label class="slds-form-element__label">Remarks - Painting System</label>    
+                <lightning-input-field field-name="Description" onchange={remarksChange} data-id={seq.sequence} variant="label-hidden">
+                    </lightning-input-field>
+              </lightning-record-edit-form>
+          </lightning-accordion-section>  
+        </td>
+        <td align="right" style="vertical-align: top;">
+          <!-- <lightning-button-icon icon-name="utility:delete" data-id={seq.sequence} alternative-text="Delete" class="test slds-m-left_xx-small" title="Delete"
+              onclick={deleteSurface}
+          >
+          </lightning-button-icon> -->
+        </td>
+        </tr>
+        </template>
+    </table>
+  </lightning-accordion>
+  <div class="slds-form-element">
+      <div class="slds-form-element__control">
+        <button class="slds-button slds-button_brand btnclass" onclick={showModalBox}>+ Add Surface</button>
+      </div>
+  </div>
+
+<template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close"
+                  alternative-text="close"
+                  variant="inverse"
+                  size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Surface</h2>
+          </header>
+
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>
+                  <lightning-radio-group name="radioGroup"
+                        label=""
+                        options={surfaceOptions}
+                        value={selectedSurface}
+                        onchange={selectSurface}
+                        type="radio"
+                  > 
+                  </lightning-radio-group>
+                </p>
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+          </footer>
+
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+    </lightning-card>
+</template>

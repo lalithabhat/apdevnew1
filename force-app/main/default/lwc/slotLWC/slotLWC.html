@@ -1,0 +1,11 @@
+<template>
+    <lightning-radio-group name="radioGroup"
+                                        label=""
+                                        options={slotList.value}  
+                                        value={selectedSlot}
+                                        onchange={selectSlots}
+                                        type="radio" style="margin-left: 30px;"
+                                        data-id={slotList.key}
+                                        >
+    </lightning-radio-group>
+</template>

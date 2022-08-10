@@ -1,0 +1,633 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" controller="QuoteOutput_WideRangeServices">
+    <head> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>    
+        <style>
+            @page {
+            size: A4;
+            margin:0mm;
+            size: 8.79in 20.60in;
+            font-family: Arial, Helvetica, sans-serif;
+            @bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+            }
+            }
+            body{
+            margin:0;
+            padding:0;
+            font-family: Arial, Helvetica, sans-serif;
+            
+            }            
+            
+            .table1{
+            width:100%;
+            border-collapse:collapse;                       
+            }
+            .table1 tr td{
+            color:#000 !important;
+            font-size:14px ;
+            border:2px solid #C6C6C6;
+            background:#F2F2F2;
+            padding:5px 10px;
+            }
+            .table1 tr th{
+            color:#000;
+            font-size:14px ;
+            background:#F32B2B;
+            color:#fff;
+            padding:5px 10px;
+            }
+            .footer{
+            position:fixed;
+            bottom:0;
+            width:100%;
+            background-color:#512C8D;
+            color:#fff;
+            padding:35px 25px;
+            z-index:-999;
+            }
+            }	
+            
+            
+            
+            
+            @page {
+            @top-center { content: element(header) }
+            }
+            @page { 
+            @bottom-center { content: element(footer) }
+            }
+        </style>   
+    </head>
+    <apex:form >
+        <body>
+            <!------------------------------------------- Header & Footer----------------------------------------------------->
+            <div class="footer">
+                <div>
+                    <h4>&nbsp;</h4>                    
+                </div>
+            </div>
+            <!-------------------------------------------First Page------------------------------------------------->
+            <div class="Page1" style="page-break-after:always;">
+                <div>
+                    <apex:image url="{!$Resource.ServiceEstimateImg}" style="position:relative;width:843px;"/> 
+                </div>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:795px;">
+                    <tr>
+                        <td width="13%"></td>
+                        <td  style="padding:0; Margin:0; background-color:#0f5878">
+                            <p style="color: #ffffff;font-size: 18px;margin: 12px;">Date: {!quoteDate}</p>
+                        </td>
+                        <td width="56%"></td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:700px; color:#231f20; border:2px solid #0f5878; border-radius: 15px;">
+                    <tr>
+                        <td align="left" style="padding:20px 40px 0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                Greetings <span>{!customerName}</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                In Ref to your enquiry for Safe Painting Service.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                Thank you for your interest in Safe Painting Service.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                This refers to your enquiry received pertaining to your requirement for home painting / sanitization service. We at Asian Paints are here to facilitate a professional experience and to that end, have partnered with service providers and painting professionals all over India. The Safe Painting Service connects you with a service provider/ painting professional who will help deliver safe and hygienic home painting/ Sanitization services using genuine and quality Asian Paints products. The service also allows for free consultation with our representative to assist in the selection of paint products, shades, textures, etc.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: left;padding:10px;margin:0;">
+                                As part of this service, our representative has connected with you to understand your painting needs. Based on the site evaluation and your painting / Sanitization requirements, attached herewith is the service provider’s quotation for painting your premises. The service provider’s contact details are mentioned in the said quotation. Should you find the quotation to be satisfactory, you may contact the service provider and confirm the same to him. Alternatively, you may reach out to our representative on <span>{!CA_Mobile}</span> for assistance in this regard.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: left;padding:10px;margin:0;">
+                                The Safe Painting Service /San Assure is subject to certain terms and conditions which are mentioned herein below. By contacting the Service Provider and accepting the quotation, you are agreeing to abide by the same.<br/><br/>
+                                Sincerely,<br/><br/>
+                                Team Asian Paints
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-------------------------------------------Second Page------------------------------------------------->
+            <div class="Page2" style="page-break-after:always;">
+                <div>
+                    <apex:image url="{!$Resource.ServiceEstimateImg}" style="position:relative;width:843px;"/> 
+                </div>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:795px;">
+                    <tr>
+                        <td width="13%"></td>
+                        <td  style="padding:0; Margin:0; background-color:#0f5878">
+                            <p style="color: #ffffff;font-size: 18px;margin: 12px;">Terms &amp; Conditions -</p>
+                        </td>
+                        <td width="56%"></td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:700px; color:#231f20; border:2px solid #0f5878; border-radius: 15px;">
+                    <tr>
+                        <td align="left" style="padding:20px 40px 0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                “Asian Paints Safe Painting Services” (“APSPS”) are subject to the below mentioned terms &amp; conditions. In proceeding with the services, you, the customer hereby accepts that you have read and understood these terms and conditions, including those incorporated herein by reference, and AGREE to the same.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                In Ref to your enquiry for Safe Painting Service.
+                            </p>
+                        </td>
+                    </tr>	
+                    
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">
+                            <p style="color: #000000;text-align: justify;text-justify: inter-word;"></p>
+                            <ol style="marginleft:0;">
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Asian Paints’ role is limited to that of a facilitator, helping customers connect with professionals for a seamless home painting and sanitization experience with genuine Asian Paints products. Asian Paints’ role is restricted to that of supply of paints only and introduction of the service provider. The final call of appointing the service provider will rest with you, the customer. </li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Asian Paints does not investigate, assess, validate, or certify any Service Providers / contractors / painters (Service Provider) and nor do we make any certification, representations or warranties as to their professional competency, training, experience. It is recommended that all the relevant checks, assessments and due diligence be done by the customer prior to choosing and engaging the service provider. </li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Asian Paints does not receive any commission through any transaction between the service provider and the customer. It is further clarified that any work undertaken and performed by service provider will be in their capacity as an independent contractor(s) and there exists no agency between Asian Paints and the service providers. The service providers are not bound to Asian Paints in any manner by virtue and are free to advise the customer in all respects as per their professional opinion.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Asian Paints disclaims all liability in respect of any service or work undertaken and executed by the service provider. It is expressly understood by the customer that any service performed by the service provider, will be an independent contractual arrangement to which Asian Paints shall bear no role or liability towards the services.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Mode of Payment: Asian Paints recommends that all payments to be made under this service to the service provider be done by way of RTGS / NEFT / Cheque / Demand Drafts/ <span style="color:#eb1c24;">E Payment only.</span></li>
+                                <li style="color: #000000;">Warranty for products is subject to the terms and conditions mentioned in the warranty booklet. Kindly visit Asian Paints’ website <a href="https://www.asianpaints.com/" target="_black"> https://www.asianpaints.com/</a> for more information, product details and <a href="https://www.asianpaints.com/more/warranty.html" target="_black"> https://www.asianpaints.com/more/warranty.html</a> for the terms and conditions for warranty.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">LIABILITY: Asian Paints’ liability shall be limited to the warranty provided and shall be subject to the terms and conditions of warranty for the products supplied. Under no event shall APL be liable for any indirect, incidental, special, exemplary, punitive, or consequential damages and quality issues, whatsoever.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Governing Law and Jurisdiction: The services under APSPS shall be governed and construed in accordance with the laws of India. Any dispute arising hereunder shall be subject to the exclusive jurisdiction of the courts in Mumbai, India.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">Customer may contact our representative on <span>{!CA_Mobile}</span> or <span>1800- 209-5678</span> or speak to the Service Provider for any queries, concerns or clarifications.</li>
+                                <li style="color: #000000;text-align: justify;text-justify: inter-word;">This service is subject to force majeure conditions and in the event or occurrence of any force majeure event including but not limited to fire, explosions, natural calamities, state emergency, riots, epidemics, pandemics, public health emergencies, etc., Asian Paints shall not be responsible for any delays caused in executing the services, nor shall Asian Paints be liable to bear any penalty as per the said offer/services.</li>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+            </div>            
+            
+            <!-------------------------------------------Third Page----------------------------------------------- -->           
+            <div  class="Page3" style="page-break-after:always;position:relative;">
+                <div class="MainContainer" style="float:left;">
+                    <apex:image url="{!$Resource.CommonServiceImg}" style="position:relative;width:843px;z-index:-999;"/>
+                </div>
+                <div style="line-height: 10px;position:absolute;left:550px;top:40px;z-index:999;">
+                    <!--<span style="font-size: 13px;color:#502e87;font-weight:700;text-transform: uppercase;">{!dealerName}</span><br/>
+                    <span style="font-size: 14px;color:#502e87;display:block; line-height: 15px; text-decoration: underline;font-family: Proxima-Nova-Regular;">
+                        {!dealerAddress}<br/>
+                        PHONE - {!dealerPhone}<br/>
+                        ECA – {!CA_Name}<br/>
+                        Mobile No:{!dealerMobile}</span>-->
+                    <table width="100%" style="color:#000;z-index:999;">
+                        <tr>
+                            <td style="font-size: 13px;color:#502e87;font-weight:700;text-transform: uppercase;">
+                                {!dealerName}
+                            </td>                                                    
+                        </tr>
+                        <tr>
+                            <td style="font-size: 13px;color:#502e87;display:block; line-height: 14px; font-family: Proxima-Nova-Regular;">
+                                <div style="width:250px;word-wrap: break-word;">{!dealerAddress}</div> 
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td style="font-size: 14px;color:#502e87;display:block; line-height: 15px; font-family: Proxima-Nova-Regular;"><b>PHONE:</b>
+                                {!dealerPhone}
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="font-size: 14px;color:#502e87;display:block; line-height: 15px; font-family: Proxima-Nova-Regular;"><b>Associate Name:</b>
+                                {!CA_Name}
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="font-size: 14px;color:#502e87;display:block; line-height: 15px; font-family: Proxima-Nova-Regular;"><b>Mobile No.:</b>
+                                {!CA_Mobile}
+                            </td>
+                        </tr>                                                
+                    </table>
+                </div>  
+                <div style="clear: both; width:260px;position:relative;top:20px;left:80px;">
+                    <br/>
+                    <p style="color: #ffffff;font-size: 18px;padding:10px;margin: 12px;background-color:#0f5878">Date: {!quoteDate}</p>
+                    
+                </div>
+            <apex:image url="{!$Resource.brush}" style="position:absolute;right:30px;top:194px;width:50px;z-index:999;"/>
+            <table width="90%" style="clear: both;margin:2% 5%">
+                <tr>
+                    <td style="padding:10px;border: 2px solid #0f5878; background:#fff;border-radius:10px;">
+                        <div>
+                            <p style="padding:6px 8px;font-size:14px;">Greetings <span>{!customerName}</span></p>
+                            <p style="padding:6px 8px;font-size:14px;">Subject: Quotation for services</p>
+                            <p style="padding:6px 8px;font-size:14px;">Service Tier: {!tier}</p>
+                            <p style="padding:6px 8px;font-size:14px;">Service Variants:<span>{!newServices}</span></p>
+                            <!--<p style="padding:6px 8px;font-size:14px;"><strong>Service Variants:</strong> ___<span style="color:#eb1c24;text-decoration: underline;">Common Service</span>__________________________</p>-->
+                            <p style="padding:6px 8px;font-size:14px;">In Reference to your above service variant enquiry Quotation No.: {!quoteNumber}</p>
+                            <p style="padding:6px 8px;font-size:14px;">is valid till : {!expirationDate}</p> 
+                            <p style="padding:6px 8px;font-size:14px;">Please find our quotation based on preliminary site inspection, workable area and</p>
+                            <p style="padding:6px 8px;font-size:14px;">product /system finalized.</p>
+                        </div>
+                        <table width="100%" style="border-collapse:collapse;">
+                            <tr style="background-color: #0f5878;">
+                                <td width="20%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Product</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Paintable Area</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Pricing Model </td>
+                                <td width="20%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Remarks - Painting System</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Area in Sq.Ft</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Rate Per Sq.Ft</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Discounts@</td>
+                                <td width="10%" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Cost*</td>
+                            </tr>
+                            <apex:repeat value="{!lineItemsMap}" var="qp">
+                            	<tr>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:15px;color:#000;" colspan="8">{!qp}</td>
+                                </tr>
+                                <apex:repeat value="{!lineItemsMap[qp]}" var="q">
+                            	<tr>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">
+                                    	<apex:outputField value="{!q.Product2.Name}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Surface__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Pricing_Modal__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Description}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Quantity}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.UnitPrice}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Total_Discount__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Subtotal}"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                                <tr>
+                                    <td colspan="8" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            
+                            
+                            <!--<apex:repeat value="{!QuoteLineItems}" var="q">
+                            	<tr>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">
+                                    	<apex:outputField value="{!q.Product2.Name}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Surface__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Pricing_Modal__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Description}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Quantity}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.UnitPrice}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Total_Discount__c}"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!q.Subtotal}"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>-->
+                           <!-- <tr>
+                                <td colspan="8" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    INTERIOR-INTERIOR
+                                </td>
+                            </tr>
+                            <tr style="color: #eb1c24;">
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">AP TRACTOR EMULSION</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Ceiling</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Labour &nbsp; Material</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">1 Coat Dsi + 2 Coats Tractor Emulsion</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">2821</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">11</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">0</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">31031</td>
+                            </tr>
+                            <tr style="color: #eb1c24;">
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    GARAGE-EXTERIOR
+                                </td>
+                            </tr>
+                            <tr style="color: #eb1c24;">
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">ACE ADVANCED</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Wall</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Labour &amp; Material</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Material 2 coat putty + 1coat primer + 2coats Ace Exterior emulsion</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">450</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">21</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">0</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">9450</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>-->
+                            
+                            <tr style="display:{!IF(maskingKitChrge != '0','table-row','none')}">
+                                <td colspan="6" align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    Masking Kit Charges *
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    {!maskingKitChrge}
+                                </td>
+                            </tr>
+                            <tr style="display:{!IF(mechanisedCharge != '0','table-row','none')}">
+                                <td colspan="6" align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    Mechanised Charges *
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    {!mechanisedCharge}
+                                </td>
+                            </tr>
+                            <tr style="display:{!IF(qRecord[0].Total_Discount__c > 0,'table-row','none')}">
+                                <td colspan="6" align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    Discounts
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    <apex:outputField value="{!qRecord[0].Total_Discount__c}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    *Total
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    &nbsp;
+                                </td>
+                                <td style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    {!total_Quote_Line_Item_Amount}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8"  style="padding:8px 4px;font-size:14px;">
+                                    *Cost Excluding GST
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                <div style="font-size: 16px; color: #502E87; background-color:#ffffff; padding:10px 9px;font-weight: bold;">PAYMENT DETAILS:</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-collapse:collapse;">
+                            <tr style="background-color: #0f5878;">
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Percentage Payment</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Stage</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color: #fff;">Amount (in Rs.)</td>
+                            </tr>
+                            <apex:repeat value="{!pmList}" var="pm">
+                            	<tr>
+                                    <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">
+                                    	<apex:outputField value="{!pm.Milestone_Percentage__c}"/>
+                                    </td>
+                                    <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!pm.Stage__c}"/>
+                                    </td>
+                                    <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">
+                                    	<apex:outputField value="{!pm.Amount__c}"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            <!--<tr style="color: #eb1c24;">
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">75%</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Advance</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>
+                            <tr style="color: #eb1c24;">
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;color:#000;">25%</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">Before Final coat of Painting</td>
+                                <td align="center" style="border: 1px solid #000;padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>-->
+                            <tr style="color: #eb1c24;">
+                                <td align="center" style="padding:10px 6px;font-size:14px;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="3" style="padding:10px 6px;font-size:14px;">
+                                    <apex:image url="{!$Resource.CommonImg}" style="width:730px;"/>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            
+            <!-------------------------------------------Fourth Page------------------------------------------------->
+            <div class="Page4" style="page-break-after:always;">
+                <div>
+                    <apex:image url="{!$Resource.ServiceEstimateImg}" style="position:relative;width:843px;"/> 
+                </div>
+                <div style="padding:20px 40px 0 40px; Margin:0;">
+                    <p style="color: #502e87;"><strong>Please ask sales associate for more details on our various service offerings.</strong><br/></p>
+                    <ol type="A">
+                        <li style="font-size:16px;">Asian Paint Safe Painting Service has Platinum tier, Gold tier and Classic tier of Painting Service.</li>
+                        <li style="font-size:16px;">Are you planning to sanitize your home? We have 3 variants of sanitization service - San Assure Advance, San Assure + and San Assure Service.</li>
+                        <li style="font-size:16px;">We do also have New service variants under SPS: Quick Home Makeover, Designer Wall Service, Wood Solution Service, Waterproofing Solutions.</li>
+                    </ol>
+                    <p style="color: #ffffff;background:#0f5878;padding:6px;">For More Information on our Service &amp; Products, Please click on the below Links:</p>
+                    <table width="100%" class="table2">  
+                        <tr>
+                            <td style="padding:6px 10px;">
+                                <table>
+                                    <tr>
+                                        <td colspan="2" style="font-size:16px;border:none;">For More Information on Service &amp; Products, Please click on the below Links:</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:16px;border:none;">Safepainting service Link:</td>
+                                        <td style="font-size:16px;border:none;"><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:16px;border:none;">Product details Link:</td>
+                                        <td style="font-size:16px;border:none;"><a href="https://www.asianpaints.com/products/paints-and-textures.html">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints </a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:16px;border:none;">Waterproofing Solutions Link: </td>
+                                        <td style="font-size:16px;border:none;"><a href="https://www.asianpaints.com/products/waterproofing-solutions.html">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints </a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:16px;border:none;">Product Warranty Details Link:</td>
+                                        <td style="font-size:16px;border:none;"><a href="https://www.asianpaints.com/more/warranty.html">Register To Activate Warranty For Asian Paints Products</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:16px;border:none;">Website Link:</td>
+                                        <td style="font-size:16px;border:none;"><a href="https://www.asianpaints.com">www.asianpaints.com</a></td>
+                                    </tr>
+                                </table>
+                                
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="color: #ffffff;background:#0f5878;padding:6px;">To download brochure, click on the below link:</p>
+                    <ol>
+                        <li style="padding:5px;line-height:25px;">Asian Paints Safe Painting: <br/>Get information about a hassle - free and safe painting experience at Asian Paints.<br/><a href="https://www.asianpaints.com/content/dam/asian_paints/products/booklets/safe-painting-brochure-new.pdf">AP_SPF_Brochure_Compilation_3 for WEB (asianpaints.com)</a></li>
+                        <li style="padding:5px;line-height:25px;">Asian Paints San Assure:<br/> Get information about the best and safest solution for all your sanitization needs, only at Asian Paints. <a href="https://www.asianpaints.com/content/dam/asian_paints/products/booklets/san-assure-service-brochure.pdf">san-assure-service-brochure.pdf (asianpaints.com)</a></li>
+                    </ol>
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left" style="padding:5px;">
+                                    <span style="color: #502e87;"><strong>To make your home interior look beautiful, try our latest wall texture.</strong></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding:5px;">
+                                    <span>Click the link <a href="https://www.asianpaints.com/campaign/royale-play-new.html?abc=12">Royale Play (asianpaints.com) </a>to download the latest Royale Play catalog for free.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding:5px;">
+                                    <span style="color: #502e87;"><strong>Snapshot video for Asian Paints Safe Painting Service:</strong></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding:5px;">
+                                    <span><a href="https://www.asianpaints.com/services/asian-paints-safe-painting-service.html">Safe Home Painting Services, Sanitization &amp; Disinfection - Asian Paints</a></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-------------------------------------------Five Page------------------------------------------------->
+            <div class="Page5" >
+                <div>
+                    <apex:image url="{!$Resource.ServiceEstimateImg}" style="position:relative;width:843px;"/> 
+                </div>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:795px;">
+                    <tr>
+                        <td width="13%"></td>
+                        <td  style="padding:0; Margin:0; background-color:#0f5878">
+                            <p style="color: #ffffff;font-size: 18px;margin: 12px;">Terms &amp; Conditions -</p>
+                        </td>
+                        <td width="56%"></td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="table-layout: fixed; width:700px; color:#231f20; border:2px solid #0f5878; border-radius: 15px;">
+                    <tr>
+                        <td align="left" style="padding:20px 40px 0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                “Asian Paints Safe Painting Services” (“APSPS”) are subject to the below mentioned terms &amp; conditions. In proceeding with the services, you, the customer hereby accepts that you have read and understood these terms and conditions, including those incorporated herein by reference, and AGREE to the same.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:0 40px; Margin:0;">                            
+                            <ol>
+                                <li style="color: #000000;">All payments are to be made as per stated milestones mentioned in the Payment Terms. It is recommended that all payments be made by way of E-payment or cheque. </li>
+                                <li style="color: #000000;">Commencement of painting work is subject to realization of payments as stated in the quotation and the site being made available free from all hindrances, for carrying out the said painting work, until completion. Timelines for completion of the painting work indicative and subject to the customer handing over the site fit to start work, free of any encumbrance. We reserve the right to stop the work if amount is not paid as per above payment terms and / or to exit the site till such time as dues are cleared by the customer. </li>
+                                <li style="color: #000000;">We shall not be held responsible or liable for any delays due to:    <ol type= 'a'>
+                                    <li style="color: #000000;">Delay by customer in handing over the site or disruption of work caused by the customer.</li>
+                                    <li style="color: #000000;">Delay attributable to intervention of some other agency engaged by the cus tomer to work on the site.</li>
+                                    <li style="color: #000000;">Delay attributable to any force majeure event, or circumstances which are beyond our control.</li></ol></li>
+                                <li style="color: #000000;">We reserve the right to terminate this contract and exit the site in case of unreasonable delays, changes, arbitrary demands, or misbehavior on the part of the customer. In such case, customer shall not be entitled to any refund for products and painting work completed on site</li>
+                                <li style="color: #000000;">Permissions: The customer is solely responsible for arranging for all permissions required for the purposes of executing the painting work at site, including but not limited to any permissions, authorizations to be taken from the housing society, or other authorities.</li>
+                                <li style="color: #000000;">Cost for Scaffolding, Water, Electricity, storage for paints and any additional cost /charges not specifically mentioned in the quotation shall be borne by the customer and charges for the same are not inclusive and do not form part of this quotation.</li>
+                                <li style="color: #000000;">Once the material is tinted, paint / shades cannot be changed, cancelled or taken back. In case a new shade is selected, the price of new shade product shall be charged additionally to the customer and invoice for the same shall be issued. Refund shall be at our sole discretion.</li>
+                                <li style="color: #000000;">In case any additional work is to be done at the site, other than the work mentioned in the quotation, customer hereby agrees to pay for the same, over and above the quotation.</li>
+                                <li style="color: #000000;">Governing Law and Jurisdiction: Services provided hereunder shall be governed and construed in accordance with the laws of India. Any dispute arising hereunder shall be subject to the exclusive jurisdiction of the courts in Mumbai, India.</li>
+                                <li style="color: #000000;">This service is subject to force majeure conditions and in the event or occurrence of any force majeure event including but not limited to fire, explosions, natural calamities, state emergency, riots, epidemics, pandemics, public health emergencies, etc., Asian Paints shall not be responsible for any delays caused in executing the services, nor shall Asian Paints be liable to bear any penalty as per the said offer/services.</li>
+                            </ol>
+                        </td>
+                    </tr>	
+                    <tr>
+                        <td align="left" style="padding:20px 40px 0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: justify;text-justify: inter-word;padding:10px;margin:0;">
+                                Looking forward to hearing from youLooking forward to hearing from you
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding:20px 40px 0 40px; Margin:0;">
+                            <p style="color: #000000; text-align: left;padding:10px;margin:0;">
+                                Regards,<br/>
+                                <span> {!dealerName} <br/> <br/>
+								{!dealerAddress}</span>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>            
+
+            
+        </body>
+    </apex:form>
+</apex:page>

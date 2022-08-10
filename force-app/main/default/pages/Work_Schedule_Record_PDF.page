@@ -1,0 +1,431 @@
+<apex:page controller="Work_S_R_PDF_Controller" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" >
+    <html>
+        <head>       
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                font-size:12px !important;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                }
+                @page {
+                size: 8.30in 22.00in;
+                } 
+                .table1{
+                width:100%;
+                }
+                .table1 tr td{
+                font-size:12px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#512C8D;
+                color:#fff;
+                padding:25px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr th{
+                border:1px solid #fff;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table2 tr td{
+                border:1px solid #502E87;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table3{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table3 tr td{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:left;
+                }
+                .table3 tr th{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:center;
+                }
+                a{
+                color:#502E87;
+                }
+                p,h5{
+                line-height:22px;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Page 1 ------------------------------------------------>
+                <div class="pag1">
+                    <div style="margin:-9px 5px 8px 7px;background-color:#502E87;color:#FFF;height:170px;z-index:-999;" >
+                        <table width="100%">
+                            <tr>                            
+                                <td width="50%">
+                                    <div style="height:110px;z-index:-999;">
+                                        <div style="position:relative;left:20px;bottom:15px;z-index:999;">
+                                            <h3 style="text-align:left;color:#fff;margin:0;font-size:20px;">&nbsp;WORK SCHEDULE RECORD</h3>
+                                            <table class="table1" style="border:1px solid #fff;padding:0px 6px;width:98%;margin:auto;">
+                                                <tr>
+                                                    <td>Customer Name: {!customerName}</td>
+                                                    <td>Mobile No.: {!customerMobile}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Date of visit: {!Today_Date}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Visited By: {!visitedBy}</td>
+                                                    <td>Mobile No.: {!visitedMobile}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Contractor Name: {!contractorName}</td>
+                                                    <td>Mobile No.: {!contractorMobile}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colaspn="2">Site ID: {!siteName}</td>
+                                                </tr> 
+                                            </table>
+                                            
+                                            <div style="position:absolute;color:#000;left:550px;top:20px;bottom:0px;width:100%;">
+                                                <table width="100%" style="color:#000;z-index:999;">
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Dealer Name:</b><br/>
+                                                            {!dealerName}
+                                                        </td>                                                    
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Dealer Address:</b><br/>
+                                                            <div style="width:130px;word-wrap: break-word;">{!dealerAddress}</div> 
+                                                        </td>
+                                                    </tr>                                                
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Mobile No.:</b>
+                                                            {!dealerMobile}
+                                                        </td>
+                                                        
+                                                    </tr>                                                
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td width="50%" valign="top" align="right">
+                                    <apex:image value="{!$Resource.APSPSLayoutRIghtBanner}" style="width:380px; height:185px;"  />
+                                </td>
+                            </tr>
+                        </table>  
+                    </div>
+                    <div style="margin:20px 24px -10px 24px;border:1px solid;padding:24px 26px;background:#fff;z-index:-999;" >  
+                        <p style="font-size:15px;">Greetings <u style="color:#F16469">{!customerName}</u></p>
+                        <p style="font-size:15px;">Service Tier: {!tier}</p>
+                        <p style="font-size:16px;">
+                            <b>Service Variants:</b> {!services}
+                        </p>
+                        <p style="font-size:15px;margin-top:30px;">Thank you for being our Valuable customer,</p>
+                        <p style="font-size:15px;">In reference to your home painting service please find below the Work Schedule
+                            Record.<br/> Below steps will be followed by contractor team.</p><br/>
+                        <table class="table1" style="border:1px solid #000;padding:10px 14px;width:66%;">
+                            <tr>
+                                <td style="font-size:13px;padding:6px 10px">SHC DATE:</td>
+                                <td style="font-size:13px;padding:6px 10px">{!SHCDate}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:13px;padding:6px 10px">QUOTATION DATE:</td>
+                                <td style="font-size:13px;padding:6px 10px">{!quoteApprovalDate}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;padding:6px 10px">Click here to know more:</td>
+                                <td style="font-size:15px;padding:6px 10px">
+                                	<a href="{!SHCLink}" target="_blank"> SiteHealthCard </a> &nbsp;&nbsp;
+                                	<a href="{!quoteLink}" target="_blank"> Quotation </a> &nbsp;&nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        
+                        
+                        <table class="table2" style="border-collapse:collaspe;">
+                            <tr style="background:#502E87;color:#fff;">
+                                <th style="font-size:12px;border-left:1px solid #502E87;border-right:1px solid #fff;">Sl. No.</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">Description of Area</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">Activity Details</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">Start<br/>Date</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">End <br/>Date</th>
+                                <!--<th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">Activity<br/>Completion<br/>Status</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">Delay if any<br/>reasons</th>-->
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #fff;">No.of<br/>Days</th>
+                                <th style="font-size:12px;border-left:1px solid #fff;border-right:1px solid #502E87;">% Work<br/>schedule</th>
+                            </tr>
+                            <apex:variable var="i" value="{!1}"/>
+                            <apex:repeat value="{!taskList}" var="t">
+                                <tr>
+                                    <td style="font-size:12px;line-height:18px;">{!i}</td>
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.name}"/>
+                                    </td>
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.Activity_Details__c}"/>
+                                    </td>
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.Start_Date__c}"/>
+                                    </td>
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.Due_Date__c}"/>
+                                    </td>
+                                    <!--<td style="font-size:12px;line-height:18px;">
+										<apex:outputField value="{!t.Complete__c}"/>
+									</td>
+                                    <td style="font-size:12px;line-height:18px;">
+										<apex:outputField value="{!t.Delay_if_any_reason__c}"/>
+									</td>-->
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.No_of_days__c}"/>
+                                    </td>
+                                    <td style="font-size:12px;line-height:18px;">
+                                    	<apex:outputField value="{!t.Percent_of_Work_Schedule__c}"/>
+                                    </td>
+                                </tr> 
+                                   <apex:variable var="i" value="{!i+1}"/>
+                            </apex:repeat>
+                            <!--<tr>
+                                <td style="font-size:12px;line-height:18px;">2</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">Primer+Putty Application</td>
+                                <td style="font-size:12px;line-height:18px;">18/05</td>
+                                <td style="font-size:12px;line-height:18px;">18/05</td>
+                                <td style="font-size:12px;line-height:18px;">yes</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>  
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">3</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">Putty 2nd coat</td>
+                                <td style="font-size:12px;line-height:18px;">20/05</td>
+                                <td style="font-size:12px;line-height:18px;">20/05</td>
+                                <td style="font-size:1px;line-height:18px;">yes</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr> 
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">4</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">Sanding+Primer</td>
+                                <td style="font-size:12px;line-height:18px;">21/05</td>
+                                <td style="font-size:12px;line-height:18px;">21/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>  
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">5</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">1st coat paint</td>
+                                <td style="font-size:12px;line-height:18px;">22/05</td>
+                                <td style="font-size:12px;line-height:18px;">22/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">5</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">touchup</td>
+                                <td style="font-size:12px;line-height:18px;">23/05</td>
+                                <td style="font-size:12px;line-height:18px;">23/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">6</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">touchup</td>
+                                <td style="font-size:12px;line-height:18px;">23/05</td>
+                                <td style="font-size:12px;line-height:18px;">23/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">7</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">2nd coat paint</td>
+                                <td style="font-size:12px;line-height:18px;">24/05</td>
+                                <td style="font-size:12px;line-height:18px;">24/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;">8</td>
+                                <td style="font-size:12px;line-height:18px;">Bedroom &amp; Hall Area</td>
+                                <td style="font-size:12px;line-height:18px;">post paint cleaning</td>
+                                <td style="font-size:12px;line-height:18px;">25/05</td>
+                                <td style="font-size:12px;line-height:18px;">25/05</td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">1</td>
+                                <td style="font-size:12px;line-height:18px;">13%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">0%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">0%</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;"></td>
+                                <td style="font-size:12px;line-height:18px;">0%</td>
+                            </tr>-->
+                            <tr>
+                                <td style="font-size:14px;line-height:18px;" colspan="5">Total No.of Days</td>
+                                <td style="font-size:12px;line-height:18px;">{!Total_no_Days}</td>
+                                <td style="font-size:12px;line-height:18px;">100%</td>
+                            </tr>
+                        </table><br/>
+                        <p style="margin:0">
+                            <b style="font-size:15px;">Remark:</b>
+                        </p>
+                        <div style="border:1px solid;height:70px;">
+                            {!description}
+                        </div>
+                        <p style="font-size:15px;"><b style="font-size:15px;">Disclaimer: </b><br/>The above observations are recorded during the visit and may vary as site progress &amp; Changes in Humanpower
+                            count &amp; scheduled work hours.</p>
+                    </div>
+                    <apex:image value="{!$Resource.WORK_SCHEDULE_RECORD_Banner2}" style="width:800px; height:120px;"  />
+                    <div style="margin:-10px 24px 8px 24px;border:1px solid;padding:24px 26px;background:#fff;z-index:-999;" >
+                        
+                        <p style="font-size:14px;"><b style="font-size:15px;">Escalation Matrix: </b><br/>We continuously strive to improve our services, if you have any query that needs to be answered or are
+                            unsatisfied with the progress of the work, please feel free to contact details as mentioned below</p>
+                        <br/>
+                        <table class="table2" style="padding:10px 14px;width:100%;">
+                            <tr style="background:#502E87;color:#fff;">
+                                <th style="font-size:11px;border-left:1px solid #502E87;border-right:1px solid #fff;">DESIGNATION</th>
+                                <th style="font-size:11px;border-left:1px solid #fff;border-right:1px solid #fff;">NAME</th>
+                                <th style="font-size:11px;border-left:1px solid #fff;border-right:1px solid #fff;">CONTACT DETAILS</th>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;">Associate</td>
+                                <td style="font-size:12px;">{!associate_Name}</td>
+                                <td style="font-size:12px;">{!associate_Contact}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;">Technical Associate</td>
+                                <td style="font-size:12px;">{!Tech_associate_Name}</td>
+                                <td style="font-size:12px;">{!Tech_associate_Contact}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;">Team Leader</td>
+                                <td style="font-size:12px;">{!team_Lead_Name}</td>
+                                <td style="font-size:12px;">{!team_lead_Contact}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;">Senior Executive</td>
+                                <td style="font-size:12px;"></td>
+                                <td style="font-size:12px;"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:12px;">Assistant Manager</td>
+                                <td style="font-size:12px;"></td>
+                                <td style="font-size:12px;"></td>
+                            </tr>
+                        </table>
+                        <p style="font-size:14px;">
+                            In case of any further query, you can reach us at <a href="#">customercare@asianpaints.com</a> or Call us at <a href="#" >1800-209-5678</a> 
+                        </p>
+                        <table width="100%" class="table3">  
+                            <tr>
+                                <td style="padding:6px 10px;">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" style="font-size:12px;border:none;">For More Information on Service &amp; Products, Please click on the below Links:</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Safepainting service Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Product details Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/products/paints-and-textures.html">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Waterproofing Solutions Link: </td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/products/waterproofing-solutions.html">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Product Warranty Details Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com/more/warranty.html">Register To Activate Warranty For Asian Paints Products</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;border:none;">Website Link:</td>
+                                            <td style="font-size:12px;border:none;"><a href="https://www.asianpaints.com">www.asianpaints.com</a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+                </div>
+                
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

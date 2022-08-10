@@ -1,0 +1,47 @@
+<template>
+    <lightning-card>
+        <!--<lightning-button-icon icon-name="utility:delete" alternative-text="Delete" class="test2 slds-m-left_xx-small" title="Delete"
+            onclick={deleteFromParent}
+        >
+        </lightning-button-icon> 
+        <div class="slds-p-bottom_large"> </div> -->
+        <lightning-record-edit-form object-api-name="QuoteLineItem">
+            <lightning-messages></lightning-messages>
+
+            <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+            <lightning-input type="number" field-name="Quantity" onchange={areaChange} variant="label-hidden" max-length="7">
+                </lightning-input>
+                    
+            <label class="slds-form-element__label">Pricing Model</label>    
+            <lightning-input-field field-name="Pricing_Modal__c" onchange={productModelChange} variant="label-hidden">
+                </lightning-input-field> 
+                
+            <label class="required-field1 slds-form-element__label">Price</label>
+            <lightning-input type="number" step="0.01" max="9999999" max-length="10" field-name="UnitPrice" variant="label-hidden" onchange={priceChange} >
+                </lightning-input>
+
+            <label class="required-field1 slds-form-element__label">Product</label>
+            <c-custom-lookup obj-name="Product2" selected-name={productName} product-id={productId} is-value-selected="true"
+                                       search-placeholder="Search Product" icon-name="standard:product" onlookupselected={productChange}
+                                       > 
+            </c-custom-lookup>
+            <!--<lightning-input-field field-name="Product2Id" onchange={productChange} variant="label-hidden">
+                </lightning-input-field>-->
+                
+                <!--<c-checkbox-l-w-c oncheckboxvalueupdate={handleChangeCheckbox} class-val={otherChargeRecord.productId}></c-checkbox-l-w-c> <br/>-->
+            
+              
+             <label class="required-field1 slds-form-element__label">Product Volume</label>    
+            <!--<lightning-input-field field-name="Quantity__c" onchange={quantityChange} variant="label-hidden">
+              </lightning-input-field>-->
+            <lightning-input type="number" variant="label-hidden" onchange={quantityChange}
+                max-length="4">
+            </lightning-input>
+
+            <label class="slds-form-element__label">Remarks - Painting System</label>    
+            <lightning-input-field field-name="Description" onchange={remarksChange} variant="label-hidden">
+                </lightning-input-field>
+                
+          </lightning-record-edit-form>
+    </lightning-card>
+</template>

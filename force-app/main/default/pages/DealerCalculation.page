@@ -1,0 +1,142 @@
+<apex:page controller="DealerManagementServices" sidebar="false" showHeader="false">
+    <style>
+        table, tr, td, th {
+            border-collapse: collapse;
+        	white-space : inherit;
+        }
+    </style>
+    <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+    <apex:form >
+        <center>
+            <label for="PinCode">PinCode:  </label>
+            <apex:inputText value="{!pinCode}" id="PinCode"/>
+            <br/><br/>
+            
+            <label for="selectedSkill1">Skill 1:  </label>
+            <apex:selectList multiselect="false" id="selectedSkill1" value="{!selectedSkill1}" size="1"> 
+                <apex:selectOptions value="{!getSkills}" /> 
+                <apex:param name="selectedSkill1" value="{!getSkills}" assignTo="{!selectedSkill1}"/>
+            </apex:selectList>
+            
+            <label for="selectedSkill2">Skill 2:  </label>
+            <apex:selectList multiselect="false" id="selectedSkill2" value="{!selectedSkill2}" size="1"> 
+                <apex:selectOptions value="{!getSkills}" /> 
+                <apex:param name="selectedSkill2" value="{!getSkills}" assignTo="{!selectedSkill2}"/>
+            </apex:selectList>
+            
+            <label for="selectedSkill3">Skill 3:  </label>
+            <apex:selectList multiselect="false" id="selectedSkill3" value="{!selectedSkill3}" size="1"> 
+                <apex:selectOptions value="{!getSkills}" /> 
+                <apex:param name="selectedSkill3" value="{!getSkills}" assignTo="{!selectedSkill3}"/>
+            </apex:selectList>
+            <br/><br/>
+            <apex:commandButton id="getDealer" value="Get Dealer" action="{!getDealer}" reRender="dealerInfo"/>
+            <br/><br/>
+        </center>
+        
+        <apex:outputPanel id="dealerInfo">
+            <apex:outputPanel rendered="{!dswList.size > 0}">
+                <center><h1>Dealer Details</h1></center>
+					<table id="customers">
+                    <tr>
+                        <th>Dealer</th>
+                        <th>Type</th>
+                       
+                        <th>No. of CA</th>
+                        <th>Contractor</th>
+                        <th>Open Leads</th>
+                        <th>Open Opportunities</th>
+                        <th>Last 7 Day Count</th>
+                        
+                        <th>Max Lead Count</th>
+                        <th>Total Capacity</th>
+                        <th>Open + Pipeline</th>
+                        <th>Available Capacity</th>
+                        <th>CI Boost</th>
+                        <th>Skill Boost</th>
+                        <th>Days Since Last Recived (Days)</th>
+                        <th>Seconds</th>
+                        
+                        <th>Last Assignment DateTime</th>
+                        <th>Rank with Max Limit</th>
+                        <th>Revised Total Score Without Limit + Weightage Added</th>
+                        <th>Revised Rank</th>
+                    </tr>
+                    <apex:repeat value="{!dswList}" var="d">
+                        <tr>
+                            <td><a href="/{!d.dealer.Id}" target="_blank" id="{!d.dealer.Id}" onblur="LookupHoverDetail.getHover('{!d.dealer.Id}').hide();" onfocus="LookupHoverDetail.getHover('{!d.dealer.Id}', '/{!d.dealer.Id}/m?retURL=%2F{!d.dealer.Id}&isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover('{!d.dealer.Id}').hide();" onmouseover="LookupHoverDetail.getHover('{!d.dealer.Id}', '/{!d.dealer.Id}/m?retURL=%2F{!d.dealer.Id}&isAjaxRequest=1').show();">{!d.dealer.Name}</a></td>
+                            <td>{!d.dealer.Type__c}</td>
+
+                            <td>{!d.totalCA}</td>
+                            <td>{!d.totalContractors}</td>
+                            <td>{!d.openLeads}</td>
+                            <td>{!d.openOpportunities}</td>
+                            <td>{!d.lastSevenDayCount}</td>
+                            
+                            <td>{!d.maxLeadLimit}</td>
+                            <td>{!d.totalCapacity}</td>
+                            <td>{!d.openPipeline}</td>
+                            <td>{!d.availableCapacity}</td>
+                            <td>{!d.CIBoost}</td>
+                            <td>{!d.skillBoost}</td>
+                            <td>{!d.daysLastLeadAssigned}</td>
+                            <td>{!d.secondsLastLeadAssigned}</td>
+                            
+                            <td>{!d.lastLeadAssignedFormat}</td>
+                            <td>{!d.Rank}</td>
+                            <td>{!d.revisedTotalScore}</td>
+                            <td>{!d.revisedRank}</td>
+                        </tr>
+                    </apex:repeat>
+                </table>
+                <br/><br/><br/>
+                
+                <center>
+                    <h1>Dealers CA Details</h1>
+                    <table id="customers">
+                        <tr>
+                            <th>Dealer</th>
+                            <th>CA</th>
+                            <th>Last Assignment DateTime</th>
+                        </tr>
+                        <apex:repeat value="{!dswList}" var="d">
+                            <tr>
+                                <td rowspan="{!d.CADetailWrapperList.size + 1}"><a href="/{!d.dealer.Id}" target="_blank" id="{!d.dealer.Id}" onblur="LookupHoverDetail.getHover('{!d.dealer.Id}').hide();" onfocus="LookupHoverDetail.getHover('{!d.dealer.Id}', '/{!d.dealer.Id}/m?retURL=%2F{!d.dealer.Id}&isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover('{!d.dealer.Id}').hide();" onmouseover="LookupHoverDetail.getHover('{!d.dealer.Id}', '/{!d.dealer.Id}/m?retURL=%2F{!d.dealer.Id}&isAjaxRequest=1').show();">{!d.dealer.Name}</a></td>
+                                <apex:repeat value="{!d.CADetailWrapperList}" var="c">
+                                    <tr>
+                                        <!--<td></td>-->
+                                        <td><a href="/{!c.CA.Id}" target="_blank" id="{!c.CA.Id}" onblur="LookupHoverDetail.getHover('{!c.CA.Id}').hide();" onfocus="LookupHoverDetail.getHover('{!c.CA.Id}', '/{!c.CA.Id}/m?retURL=%2F{!c.CA.Id}&isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover('{!c.CA.Id}').hide();" onmouseover="LookupHoverDetail.getHover('{!c.CA.Id}', '/{!c.CA.Id}/m?retURL=%2F{!c.CA.Id}&isAjaxRequest=1').show();">{!c.CA.Name}</a></td>
+                                        <td>{!c.lastLeadAssignedFormat}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </tr>    
+                        </apex:repeat>
+                    </table>
+                </center>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

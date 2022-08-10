@@ -1,0 +1,360 @@
+<template>
+    
+    <lightning-card  title="Schedule Appointment" if:true={alrady_Caledar_Blocked}> <!---->
+       <!-- <p style="text-align: center;" class="slds-p-horizontal_small">
+            <a href="" onclick={openCalendar} target="_blank">Open User's Calendar</a> &nbsp;&nbsp;
+            <lightning-button label="Restart" slot="actions" variant="brand" onclick={restartLWC}></lightning-button>
+        </p> -->
+        <lightning-tabset>
+            <lightning-tab label="" id="tab4" name="tab4" value="tab4" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <lightning-formatted-text value="Appointment has been scheduled. Please refer to the section below for details.">
+                    </lightning-formatted-text>
+                </p> <br/>
+                <p class="slds-p-horizontal_small" style="text-align: left;"> 
+                    <lightning-formatted-text value={lastEvent_OwnerName}> 
+                    </lightning-formatted-text> <br/>
+
+                    <lightning-formatted-text value={lastEvent_Mobile}> 
+                    </lightning-formatted-text><br/>
+
+                    <lightning-formatted-text value="Start Time: ">
+                    </lightning-formatted-text> &nbsp;&nbsp;
+                    <lightning-formatted-date-time value={lastEvent_StartDateTime}></lightning-formatted-date-time> &nbsp;
+                    <lightning-formatted-date-time value={lastEvent_StartDateTime} hour="2-digit" minute="2-digit"> </lightning-formatted-date-time>
+                    <br/>
+
+                    <lightning-formatted-text value="End Time: ">
+                    </lightning-formatted-text> &nbsp;&nbsp;
+                    <lightning-formatted-date-time value={lastEvent_EndDateTime}></lightning-formatted-date-time> &nbsp;
+                    <lightning-formatted-date-time value={lastEvent_EndDateTime} hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+                    <br/> 
+
+                    <!-- <lightning-formatted-url value="https://salesforce.com" label="Event Link" target="_blank" ></lightning-formatted-url> -->
+                    <a href="" onclick={viewRecord} target="_blank">Event Link</a>
+                </p>
+                
+                <br/>
+                <p class="slds-p-horizontal_small" style="text-align: center;"> 
+                    <lightning-button label="Modify" slot="actions" variant="brand" onclick={modifyAppointment}></lightning-button> &nbsp;&nbsp;
+                    <lightning-button label="Cancel Appointment" slot="actions" variant="brand" onclick={deleteAppointment}></lightning-button>
+                </p>
+            </lightning-tab>
+        </lightning-tabset>
+        
+    </lightning-card>
+    <lightning-card  title="Schedule Appointment" if:false={alrady_Caledar_Blocked}>
+        <p style="text-align: center;" class="slds-p-horizontal_small">
+            <a href="" onclick={openCalendar} target="_blank">Open User's Calendar</a> &nbsp;&nbsp;
+            <lightning-button label="Restart" slot="actions" variant="brand" onclick={restartLWC}></lightning-button>
+        </p>
+        <lightning-tabset active-tab-value={activeTab}>
+            <lightning-tab label="" id="tab0" name="tab0" value="tab0" class="slds-theme_shade">
+                <p style="text-align: center;" class="slds-p-horizontal_small">
+                    <!-- <lightning-button label="Schedule SA Visit" slot="actions" variant="brand" onclick={ShowSA} if:true={is_SA_Visit}></lightning-button><br/><br/>
+                    <lightning-button label="Schedule CA Visit" slot="actions" variant="brand" onclick={showCA} if:true={is_CA_Visit}></lightning-button> -->
+                   <!-- <lightning-button label="Start Scheduling" slot="actions" variant="brand" onclick={startSchedule} if:false={IS_SLEEK}></lightning-button> -->
+                    <lightning-input type="date" name="visitDate" class="visitDate" label="Enter a Visit Date" onchange={checkDate} min={todayDate}></lightning-input>
+                </p> <br/>
+                <p class="slds-p-horizontal_small" if:false={no_User_For_Pincode}>
+                    <lightning-combobox 
+                        name="SAList"
+                        label=""
+                        value={selectedSAId}
+                        placeholder="Select User"
+                        onchange={selectSA}
+                        options={statusOptions}
+                        >
+                    </lightning-combobox>
+                </p><br/><br/>
+                   
+                        <table if:false={no_User_For_Pincode}>
+                        <template for:each={mapData} for:item="mapkey">
+                            <tr key={mapkey.key}>
+                                <td class="slds-p-horizontal_small" key={mapkey.key}>
+                                   <!-- <label class="slds-p-horizontal_small" for={mapkey.key}> -->
+                                       
+                                        <lightning-formatted-date-time style="margin-left: 30px;font-weight:bold;" value={mapkey.key}></lightning-formatted-date-time>
+                                   <!-- </label> -->
+                                   <!-- <lightning-radio-group name="radioGroup"
+                                        key={mapkey.key}
+                                        label=""
+                                        options={mapkey.value}  
+                                        value={selectedSlot}
+                                        onchange={selectSlots}
+                                        type="radio" style="margin-left: 30px;"
+                                        data-id={mapkey.key}
+                                        >
+                                    </lightning-radio-group> -->
+
+                                    <c-slot-L-W-C
+                                        slot-list={mapkey}
+                                        onslotvaluechange={getSelectedDetail}
+                                    ></c-slot-L-W-C>
+                                    
+                                </td>
+                            </tr>
+                            <tr key={mapkey.key}> <td key={mapkey.key}> &nbsp;</td></tr> 
+                        </template> 
+                    </table>
+               <!-- </p> slotoptions-->
+               <table if:false={no_User_For_Pincode}>
+                   <tr>
+                       <td class="slds-p-horizontal_small" style="text-align: left;"> 
+                           <template if:false={IS_BHS}>
+                            <lightning-button label="Find another CA" slot="actions" variant="brand" onclick={fetchCA} if:true={is_CA}></lightning-button>
+                           </template>   
+                       </td>
+                       <td class="slds-p-horizontal_small" style="text-align: center;"> 
+                        <lightning-button label="Assign without Appointment" slot="actions" variant="brand" onclick={assignWithoutAppointment} if:true={is_CA}></lightning-button>
+                        <lightning-button label="Assign without Appointment" slot="actions" variant="brand" onclick={assignWithoutAppointment} if:true={IS_BHS}></lightning-button>
+                       </td>
+                       <td class="slds-p-horizontal_small" style="text-align: right;"> 
+                        <lightning-button label="Book Slot" slot="actions" variant="brand" onclick={bookSlot}></lightning-button>
+                        <br/><br/>   
+                       </td>
+                   </tr>
+
+               </table>
+               <!--<p class="slds-p-horizontal_small" style="text-align: right;" if:false={no_User_For_Pincode}>
+                     <lightning-button label="Book Slot" slot="actions" variant="brand" onclick={bookSlot}></lightning-button>
+                     <br/><br/>
+                </p> -->
+               <p class="slds-p-horizontal_small" style="text-align: center;" if:true={no_User_For_Pincode}>
+                    <lightning-formatted-text value="No Users are available for this pincode or Please ensure partner user enable for the contact.">
+                    </lightning-formatted-text> <br/>
+               </p>
+               <!-- <lightning-combobox if:true={is_SA} name="SADecline" label="Reason for SA Declined:" 
+               placeholder="None" options={declineOptions} onchange={sourceChange}>
+             </lightning-combobox> -->
+               <template if:false={no_User_For_Pincode}>
+                <lightning-card  variant="Narrow"  title="Decline SA" icon-name="standard:account" class="slds-theme_shade" if:true={is_SA}>
+                        <p class="slds-p-horizontal_small">
+                           
+
+                            <lightning-record-edit-form object-api-name={LeadAPI} if:true={is_SA}>
+                                <label for="sourceId">Reason for SA Declined: </label>
+                                <lightning-input-field  field-name={sourceField} variant="label-hidden"
+                                     onchange={sourceChange}>
+                                </lightning-input-field>
+                             </lightning-record-edit-form> 
+                        </p> <br/>
+                        <p class="slds-p-horizontal_small" style="text-align: right;">
+                            <lightning-button label="Decline SA" slot="actions" variant="brand" onclick={fetchCA} if:true={is_SA}></lightning-button>
+                        </p><br/>
+                    </lightning-card>
+               </template>
+             
+            </lightning-tab>
+
+
+
+
+
+
+
+
+
+            <!-- -------------------------- -->
+
+
+
+
+
+
+
+            <!--<lightning-tab label="" id="tab1" name="tab1" value="tab1" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small">
+                    <lightning-combobox 
+                        name="SAList"
+                        label=""
+                        value={selectedSAId}
+                        placeholder="Select User"
+                        onchange={selectSA}
+                        options={statusOptions}
+                        if:false={No_SA}>
+                    </lightning-combobox>
+                </p><br/>
+            
+                <p class="slds-p-horizontal_small" style="text-align: right;"> 
+                    <template if:true={isValidDate}>
+                      <template if:false={IS_BHS}>
+                        <lightning-button label="Next" slot="actions" variant="brand" onclick={getSlotForSA} if:false={No_SA}></lightning-button>
+                      </template>
+                    </template>
+                </p>
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <template if:false={IS_BHS}>
+                        <lightning-formatted-text value="No SAs are available for this pincode. Please click on Next to find CAs for this pincode." if:true={No_SA}>
+                        </lightning-formatted-text>
+                    </template>
+                </p><br/><br/>
+                <table class="slds-p-horizontal_small">
+                    <tr>
+                        <td style="text-align: right;">
+                            <template if:false={IS_BHS}>
+                                <lightning-button label="Next" slot="actions" variant="brand" onclick={fetchCA} if:true={No_SA}></lightning-button>
+                            </template>
+                        </td>
+                    </tr>
+                </table>
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <template if:true={IS_BHS}>
+                        <template if:true={NO_BHS_USER}>
+                          <lightning-formatted-text value="No Users are available for this pincode." if:true={No_SA}>
+                          </lightning-formatted-text>
+                        </template>
+                    </template>
+                </p>
+                <p class="slds-p-horizontal_small" style="text-align: right;">
+                    <template if:true={isValidDate}>
+                      <template if:true={IS_BHS}>
+                        <lightning-button label="Next" slot="actions" variant="brand" onclick={getSlotForBHS} if:false={NO_BHS_USER}></lightning-button>
+                      </template>  
+                    </template>  
+                </p>
+            </lightning-tab>
+
+            <lightning-tab label="" id="tab2" name="tab2" value="tab2" class="slds-theme_shade">
+                 <p class="slds-p-horizontal_small">
+                    <lightning-radio-group name="radioGroup"
+                          label="Select Slot"
+                          options={slotoptions}
+                          value={selectedSlot}
+                          onchange={selectSlots}
+                          type="radio"
+                          if:false={No_SA}> 
+                    </lightning-radio-group>
+                    <template if:false={No_CA}>
+                        <lightning-formatted-text value={dealerName} if:true={No_SA}> 
+                        </lightning-formatted-text> <br/>
+                        <lightning-formatted-text value={CAName} if:true={No_SA}> 
+                        </lightning-formatted-text>
+                    
+                        <br/><br/>
+                        <lightning-input type="date" name="visitDate2" class="visitDate2" label="Enter a Visit Date" if:true={No_SA} onchange={checkDate}></lightning-input>
+                    </template>    
+                </p> <br/><br/>
+                   
+
+                <table class="slds-p-horizontal_small">
+                    <tr>
+                        <td style="text-align: left;">
+                            <lightning-button label="Previous" slot="actions" variant="brand" onclick={previousCall} if:false={No_SA}></lightning-button>
+                        </td> 
+                        <td style="text-align: center;">
+                            <template if:true={IS_BHS}>
+                                <lightning-button label="Assign without Appointment" slot="actions" variant="brand" onclick={assignBHSWithoutAppointment}></lightning-button>
+                            </template>
+                        </td> 
+                        <td style="text-align: right;">
+                            <lightning-button label="Book Slot" slot="actions" variant="brand" onclick={bookSlot} if:false={No_SA}></lightning-button>
+                            <template if:true={isValidDate}>
+                              <template if:false={No_CA}>
+                                <lightning-button label="Next" slot="actions" variant="brand" onclick={getSlotForCA} if:true={No_SA}></lightning-button>
+                              </template>
+                            </template>
+                            
+                            <template if:true={No_CA}>
+                                <p class="slds-p-horizontal_small" style="text-align: center;">
+                                    <lightning-formatted-text value="No CAs are available for this pincode." if:true={No_SA}>
+                                    </lightning-formatted-text></p><br/>
+                                <lightning-button label="Close" slot="actions" variant="brand" onclick={close} if:true={No_SA}></lightning-button>
+                            </template>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <br/><br/>
+                <template if:false={IS_BHS}>
+                    <lightning-card  variant="Narrow"  title="Decline SA" icon-name="standard:account" class="slds-theme_shade" if:false={No_SA}>
+                        <p class="slds-p-horizontal_small">
+                            <lightning-record-edit-form object-api-name={LeadAPI} if:false={No_SA}>
+                                <label for="sss">Reason for SA Declined: </label>
+                                <lightning-input-field id="sss" field-name={sourceField} variant="label-hidden"
+                                    value={SADeclinedreason} onchange={sourceChange}>
+                                </lightning-input-field>
+                            </lightning-record-edit-form> 
+                        </p> <br/>
+                        <p class="slds-p-horizontal_small" style="text-align: right;">
+                            <lightning-button label="Decline SA" slot="actions" variant="brand" onclick={fetchCA} if:false={No_SA}></lightning-button>
+                        </p><br/>
+                    </lightning-card>
+                 </template>
+            </lightning-tab>
+
+            <lightning-tab label="" id="tab3" name="tab3" value="tab3" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small">
+                    <lightning-radio-group name="radioGroup"
+                          label="Select Slot"
+                          options={slotoptions}
+                          value={selectedSlot}
+                          onchange={selectSlots}
+                          type="radio"
+                          > 
+                    </lightning-radio-group>
+                </p> 
+                <br/><br/>
+
+                <p class="slds-p-horizontal_small" style="text-align: left;">
+                    <lightning-button label="Book Slot" slot="actions" variant="brand" onclick={bookSlot}></lightning-button>
+                </p> <br/>
+                <p class="slds-p-horizontal_small" style="text-align: left;">
+                    <lightning-button label="Find another CA" slot="actions" variant="brand" onclick={fetchCA}></lightning-button>
+                </p> <br/>
+                <p class="slds-p-horizontal_small" style="text-align: left;">
+                    <lightning-button label="Assign to CA without Appointment" slot="actions" variant="brand" onclick={assignCAWithoutAppointment}></lightning-button>
+               </p>
+               
+                
+            </lightning-tab> -->
+
+            <!--<lightning-tab label="" id="tab5" name="tab5" value="tab5" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <template if:false={isReschduleClick}>
+                        <lightning-formatted-text value="Slot Booked Successfully!!" if:true={isSuccess}>
+                        </lightning-formatted-text>
+                    </template>
+
+                    <template if:true={isReschduleClick}>
+                        <lightning-formatted-text value="Slot Rescheduled Successfully!!" if:true={isSuccess}>
+                        </lightning-formatted-text>
+                    </template>
+
+                    <lightning-formatted-text value="Some Internal error occurred." if:false={isSuccess}>
+                    </lightning-formatted-text>
+                </p>
+                <p class="slds-p-horizontal_small" style="text-align: right;">
+                    <lightning-button label="Close" slot="actions" variant="brand" onclick={close}></lightning-button>
+               </p>
+            </lightning-tab>
+
+            <lightning-tab label="" id="tab6" name="tab6" value="tab6" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <lightning-formatted-text value="User assigned successfully!!" if:true={isSuccess}>
+                    </lightning-formatted-text>
+                    <lightning-formatted-text value="Some Internal error occurred." if:false={isSuccess}>
+                    </lightning-formatted-text>
+                </p>
+                <p class="slds-p-horizontal_small" style="text-align: right;">
+                    <lightning-button label="Close" slot="actions" variant="brand" onclick={refreshComponent}></lightning-button>
+               </p>              
+            </lightning-tab>
+
+            <lightning-tab label="" id="tab7" name="tab7" value="tab7" class="slds-theme_shade">
+                <p class="slds-p-horizontal_small" style="text-align: center;">
+                    <lightning-formatted-text value="Appointment Cancelled successfully!!" if:true={isSuccess}>
+                    </lightning-formatted-text>
+                    <lightning-formatted-text value="Some Internal error occurred." if:false={isSuccess}>
+                    </lightning-formatted-text>
+                </p>
+                <p class="slds-p-horizontal_small" style="text-align: right;">
+                    <lightning-button label="Close" slot="actions" variant="brand" onclick={close}></lightning-button>
+               </p>              
+            </lightning-tab> -->
+        </lightning-tabset>
+        
+        
+    </lightning-card>
+    
+</template>

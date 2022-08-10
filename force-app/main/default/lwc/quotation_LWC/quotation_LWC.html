@@ -1,0 +1,424 @@
+<template>
+
+  <lightning-spinner size="medium"  if:true={showSpinner}></lightning-spinner>
+  <header class="slds-modal__header">
+    <table>
+      <tr>
+        <td align="left" style="font-size:medium;">
+          <lightning-button variant="base" label="Cancel" title="Cancel" onclick={cancelQuote} class="slds-m-left_x-small"></lightning-button>
+        </td>
+        <td align="center" colspan="2">
+          <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Create Quote</h2>
+        </td>
+      </tr>
+    </table>
+   
+   
+    </header>
+  <lightning-card title='' if:false={isSave}> <!-- icon-name="standard:home" -->
+  
+  <!---------  <div class="slds-p-around_medium lgc-bg">
+      <lightning-input type="text" label="Title" placeholder="Enter Quote Name..." required onchange={fetchQuoteName}></lightning-input>
+  </div> -->
+  <lightning-record-edit-form object-api-name="Quote">
+    <lightning-messages></lightning-messages>
+  
+    <lightning-input-field field-name="Name" onchange={fetchQuoteName} required>
+    </lightning-input-field>
+    <lightning-input-field field-name="Tier__c" onchange={tierChange} required>
+        </lightning-input-field>
+    <lightning-input-field field-name="New_Services__c" onchange={newServiceseChange} required>
+        </lightning-input-field>
+    <!--<p class="slds-p-horizontal_small" >-->
+        <lightning-combobox if:true={dealerMissing}
+            name="DealerList"
+            label="Select Dealer"
+            value={selectedDealer}
+            placeholder="Select Dealer"
+            onchange={dealerChange}
+            options={dealerList}
+            required
+            >
+        </lightning-combobox>
+  
+        <lightning-formatted-text value={dealerErrorMsg} if:true={issueInDealerListMethod}>
+        </lightning-formatted-text> <br/>
+    <!--</p> -->
+  
+    <!--<lightning-input-field field-name="ExpirationDate" onchange={expirationDateChange} value={expirationDate} required>
+    </lightning-input-field>  -->
+    <label class="required-field1 slds-form-element__label">Expiration Date</label>   
+    <lightning-input type="Date" variant="label-hidden" onchange={expirationDateChange} value={expirationDate} min={dateInternal}>
+    </lightning-input>
+  </lightning-record-edit-form>
+     <lightning-accordion class="Recommendation-accordion" allow-multiple-sections-open >
+      <lightning-accordion-section name="Recommendation" icon-name="standard:home" label="Recommendation">
+        <!--<div class="slds-size_1-of-2">
+          <div class="slds-box slds-theme_default">
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right slds-size_1-of-2">
+            <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                  Symptom
+              </th>
+              <th class="" scope="col">
+                  Recommendation
+            </th>
+            </tr>
+            </thead>
+            <tbody>
+            <template for:each={RecommendationList} for:item="rw">
+                <tr key={rw.Symptom} class="slds-line-height_reset">
+                    <td class="">
+                      {rw.Symptom}
+                    </td>
+                    <td class="">
+                      {rw.Recommendation}
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+          </table>
+          </div>
+        </div>-->
+  
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+          <div class="slds-size_3-of-3">
+            <div class="slds-text-align_center">
+              <table class="slds-table_bordered slds-table_col-bordered slds-border_left slds-border_right">
+                <thead>
+                  <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        Symptom
+                    </th>
+                    <th class="" scope="col">
+                        Recommendation
+                  </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <template for:each={RecommendationList} for:item="rw">
+                        <tr key={rw.Symptom} class="slds-line-height_reset">
+                            <td class="">
+                              {rw.Symptom}
+                            </td>
+                            <td class="">
+                              {rw.Recommendation}
+                            </td>
+                        </tr>
+                    </template>
+                    </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </lightning-accordion-section>
+  
+    </lightning-accordion>
+  
+    <div class="slds-form-element">&nbsp;</div>
+  
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+          <button class="slds-button slds-button_brand btnclass" onclick={showModalBox}>+ Add Room</button>
+        </div>
+    </div>
+    <lightning-accordion class="room-accordion" allow-multiple-sections-open
+        active-section-name={selectedRoom}
+    >  
+    <table>
+    <template for:each={quoteLineItemList} for:item="seq">
+      <tr key={seq.sequence}> <td>
+      <lightning-accordion-section name={seq.room} icon-name="standard:home" label={seq.room} key={seq.sequence}>
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+              <c-surface-Child-L-W-C
+              tier={tier}
+               quote-line-item-record = {seq}
+               surface-values = {surfaceValues}
+               existing-list-size={item_Size}
+               onupperproductchange={handleUpperProductChange}
+               onproductchange={handleProductList}
+               onquotelineitemschange={quoteItemsFromSurfaceLWC}
+               onareachange={areaChangeFromSurfaceLWC}
+               onpricechange={priceChangeFromSurfaceLWC}
+               onproductvalchange={productChangeFromSurfaceLWC}
+               onremarkschange={remarksChangeFromSurfaceLWC}
+               onproductmodelchange={pricingModalChangeFromSurfaceLWC}
+               onquantitychange={quantityChangeFromSurfaceLWC}
+               ondeleteitemsfromsurface={deleteItemsFromSurfaceLWC}
+                dealer-id={selectedDealer}
+              ></c-surface-Child-L-W-C>
+            </div>
+        </div>
+       
+      </lightning-accordion-section>
+    </td>
+    <td align="right" style="vertical-align: top;">
+      <!-- <lightning-button-icon icon-name="utility:delete" data-id={seq.sequence} alternative-text="Delete" class="test slds-m-left_xx-small" title="Delete"
+          onclick={deleteRoom}
+      >
+      </lightning-button-icon> -->
+    </td>
+    </tr>
+    </template>
+  </table>
+  </lightning-accordion>
+ <!---  ------------------------- Product Discount ----------------------- -->
+  <template if:false={noLineItem}>
+    <lightning-accordion class="product-discount-accordion" allow-multiple-sections-open if:true={progressValue}>    
+        <lightning-accordion-section name="Product Level Discount" icon-name="standard:home" label="Product Level Discount">
+          <div class="slds-form-element">
+              <div class="slds-form-element__control">
+                <c-Product-Discount-L-W-C
+                quote-line-item-record-list={productIds}
+                product-list={proIds}
+                ></c-Product-Discount-L-W-C>
+              </div>
+          </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+  
+    <div class="slds-form-element slds-p-bottom_large" if:true={progressValue}>
+        <div class="slds-form-element__control">
+          <button class="slds-button slds-button_brand btnproductDiscount" onclick={childValues}>+ Product Discount</button>
+        </div>
+    </div>
+  </template>
+  <!------------------------------  Quote Level Discount  -------------------- -->
+  <template if:false={noLineItem}>
+    <lightning-accordion class="quote-discount-accordion" allow-multiple-sections-open if:true={surfaceAdded}>    
+      <lightning-accordion-section name="Quote Level Discount" icon-name="standard:home" label="Quote Level Discount">
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+              <c-Quote-Discount-L-W-C></c-Quote-Discount-L-W-C>
+            </div>
+        </div>
+      </lightning-accordion-section>
+    </lightning-accordion>
+  
+    <div class="slds-form-element slds-p-bottom_large" if:true={surfaceAdded}>
+      <div class="slds-form-element__control">
+        <button class="slds-button slds-button_brand btnproductDiscount" onclick={quoteLevelDiscount}>+ Discount</button>
+      </div>
+    </div>
+  </template>
+ <!----------------------------------  OTHER CHARGE Section  --------------------------  -->
+  <lightning-accordion class="other-charge-accordion" allow-multiple-sections-open onsectiontoggle={callOtherCharge}>
+   
+      <lightning-accordion-section name="Other Charge" icon-name="standard:home" label="Other Charge">
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+              <c-other-Charge-L-W-C
+              other-charge-added={isOtherChargeAdded}
+              onotherchargeadded={handleOtherChargeEvent}
+              ></c-other-Charge-L-W-C>
+            </div>
+        </div>
+      </lightning-accordion-section>
+     
+  </lightning-accordion>
+  
+  <!----------------------------------  MASKING AND MECHANISED CHARGE Section  --------------------------  -->
+  <lightning-accordion class="masking-charge-accordion" allow-multiple-sections-open if:true={isTier}>
+   
+    <lightning-accordion-section name="Masking_Mechanised Charge" icon-name="standard:home" label="Masking & Mechanised Charge">
+      <lightning-accordion class="masking-charge-accordion" allow-multiple-sections-open>
+        <lightning-accordion-section name="Masking Charge" icon-name="standard:home" label="Masking Charge">
+          <lightning-record-edit-form object-api-name="QuoteLineItem">
+            <lightning-messages></lightning-messages>
+  
+            <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+            <lightning-input type="number" field-name="Quantity" onchange={areaChange} data-id="MaskingCharge" variant="label-hidden" max-length="7">
+                </lightning-input>
+                   
+            <label class="slds-form-element__label">Pricing Model</label>   
+            <lightning-input-field field-name="Pricing_Modal__c" onchange={productModelChange} data-id="MaskingCharge" variant="label-hidden">
+                </lightning-input-field>
+               
+            <label class="required-field1 slds-form-element__label">Price</label>
+            <lightning-input type="number" field-name="UnitPrice" variant="label-hidden" data-id="MaskingCharge" onchange={priceChange} step="0.01" max="9999999" max-length="10">
+                </lightning-input>
+  
+            <label class="slds-form-element__label">Product</label>
+            <lightning-input-field field-name="Product2Id" value={maskingProductId} disabled="true" variant="label-hidden">
+                </lightning-input-field>
+                          
+             <label class="required-field1 slds-form-element__label">Product Volume</label>   
+            <lightning-input type="number" variant="label-hidden" onchange={quantityChange} data-id="MaskingCharge"
+                max-length="4">
+            </lightning-input>
+  
+            <label class="slds-form-element__label">Remarks - Painting System</label>   
+            <lightning-input-field field-name="Description" onchange={remarksChange} variant="label-hidden" data-id="MaskingCharge">
+                </lightning-input-field>
+               
+          </lightning-record-edit-form>
+        </lightning-accordion-section>
+  
+        <lightning-accordion-section name="Mechanised Charge" icon-name="standard:home" label="Mechanised Charge">
+          <lightning-record-edit-form object-api-name="QuoteLineItem">
+            <lightning-messages></lightning-messages>
+  
+            <label for="quantity" class="required-field1 slds-form-element__label">Area (sqft)</label>
+            <lightning-input type="number" field-name="Quantity" onchange={areaChange} data-id="MechanisedCharge" variant="label-hidden" max-length="7">
+                </lightning-input>
+                   
+            <label class="slds-form-element__label">Pricing Model</label>   
+            <lightning-input-field field-name="Pricing_Modal__c" onchange={productModelChange} data-id="MechanisedCharge" variant="label-hidden">
+                </lightning-input-field>
+               
+            <label class="required-field1 slds-form-element__label">Price</label>
+            <lightning-input type="number" field-name="UnitPrice" variant="label-hidden" data-id="MechanisedCharge" onchange={priceChange} step="0.01" max="9999999" max-length="10" ></lightning-input>
+        
+  
+            <label class="slds-form-element__label">Product</label>
+            <lightning-input-field field-name="Product2Id" value={mechanisedProductId} disabled="true" variant="label-hidden">
+                </lightning-input-field>
+               
+             <label class="required-field1 slds-form-element__label">Product Volume</label>   
+            <lightning-input type="number" variant="label-hidden" onchange={quantityChange} data-id="MechanisedCharge"
+                max-length="4">
+            </lightning-input>
+  
+            <label class="slds-form-element__label">Remarks - Painting System</label>   
+            <lightning-input-field field-name="Description" onchange={remarksChange} data-id="MechanisedCharge" variant="label-hidden">
+                </lightning-input-field>
+               
+          </lightning-record-edit-form>
+        </lightning-accordion-section>
+      </lightning-accordion>
+    </lightning-accordion-section>
+   
+  </lightning-accordion>
+  
+  <!----------------------------------  Payment Details Section  --------------------------  -->
+  <lightning-accordion class="payment-details-accordion" allow-multiple-sections-open if:true={surfaceAdded}>    
+    <lightning-accordion-section name="Payment Detail" icon-name="standard:home" label="Payment Detail">
+      <div class="slds-form-element">
+          <div class="slds-form-element__control">
+            <c-payment-Detail-L-W-C></c-payment-Detail-L-W-C>
+          </div>
+      </div>
+    </lightning-accordion-section>
+  </lightning-accordion>
+  
+  <div class="slds-form-element slds-p-bottom_large" if:true={surfaceAdded}>
+    <div class="slds-form-element__control">
+      <button class="slds-button slds-button_brand btnclass" onclick={paymentdetail}>+ Payment Detail</button>
+    </div>
+  </div>
+  
+ <template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <!-- modal header start -->
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close"
+                  alternative-text="close"
+                  variant="inverse"
+                  size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Room</h2>
+          </header>
+  
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>
+                  <lightning-radio-group name="radioGroup"
+                        label=""
+                        options={roomOptions}
+                        value={selectedRoom}
+                        onchange={selectRoom}
+                        type="radio"
+                  >
+                  </lightning-radio-group>
+                </p>
+          </div>
+  
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+          </footer>
+  
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+ </template>
+   <!-- </lightning-card>
+    <lightning-card> -->
+    <lightning-accordion class="Other-Quote-Details-accordion" allow-multiple-sections-open >
+      <lightning-accordion-section name="Other Details" icon-name="standard:home" label="Other Details">
+        <lightning-record-edit-form object-api-name="Quote">
+          <lightning-messages></lightning-messages>
+  
+          <!--<lightning-input-field field-name="Tier__c" onchange={tierChange}>
+              </lightning-input-field>-->
+          <!-- <label class="slds-form-element__label">No of painters</label>  -->
+          <lightning-input class=" slds-m-horizontal_xx-small" type="number" label="No of painters"  field-name="Number_of_Painters__c" onchange={numberOfPainterChange} max-length="2">
+              </lightning-input>
+  
+          <lightning-input-field field-name="Area_Applied_per_Painter_Day__c" onchange={areaAppliedPerPainterChange}>
+              </lightning-input-field>
+         
+          <lightning-input-field field-name="Site_Type__c" onchange={siteTypeChange}>
+            </lightning-input-field>
+          
+            <!-- <label class="slds-form-element__label">Buffer Time</label>  -->
+          <lightning-input class="slds-m-horizontal_xx-small" type="percent" label="Buffer Time" field-name="Buffer_Time__c" onchange={bufferTimeChange} >
+              </lightning-input>
+  
+          <!--<lightning-input-field field-name="New_Services__c" onchange={newServiceseChange}>
+              </lightning-input-field>-->
+        </lightning-record-edit-form> 
+      </lightning-accordion-section>
+      <lightning-accordion-section name="Customer Details" icon-name="standard:home" label="Customer Details">
+        <lightning-record-edit-form object-api-name="Quote">
+          <lightning-messages></lightning-messages>
+          <!-- <label class="slds-form-element__label">Total Sq Ft Of Home</label>  -->
+          <lightning-input class="slds-m-horizontal_xx-small" type=number label="Total Sq Ft Of Home" field-name="Total_Sq_ft_of_Home__c" onchange={totalAreaSqft} max-length="7">
+              </lightning-input>
+  
+          <lightning-input-field field-name="Total_BHK__c" onchange={totalBHK}>
+              </lightning-input-field>
+  
+          <lightning-input-field field-name="Gender__c" onchange={genderSelect}>
+              </lightning-input-field>
+         
+          <lightning-input-field field-name="Age_Band__c" onchange={ageBandSelect}>
+            </lightning-input-field>
+  
+          <lightning-input-field field-name="Marital_Status__c" onchange={maritalStatusSelect}>
+              </lightning-input-field>
+  
+          <lightning-input-field field-name="Profession__c" onchange={professionSelect}>
+              </lightning-input-field>
+  
+          <lightning-input-field field-name="Family_Type__c" onchange={familytypeSelect}>
+              </lightning-input-field>
+          
+              <!-- <label class="slds-form-element__label">No. Of Kids</label>  -->
+          <lightning-input class="slds-m-horizontal_xx-small" type="number"  label="No. Of Kids" field-name="Kids__c" onchange={kidsSelect} max-length="1" >
+              </lightning-input>
+             
+        </lightning-record-edit-form>
+      </lightning-accordion-section>
+    </lightning-accordion>
+    </lightning-card>
+    <lightning-card if:true={isSave}>
+      <c-share-Panel-Global
+      obj-name="Quote"
+      record-id={quoteId}
+      hide-payment-button=true
+      ></c-share-Panel-Global>
+    </lightning-card>
+    <footer class="slds-modal__footer">
+      <p style="text-align: left;color:red"><lightning-formatted-text value={mandatoryProductMsg} ></lightning-formatted-text></p>
+      <!--<button class="slds-button slds-button_neutral" onclick={cancelQuote}>Cancel</button> -->
+      <button class="slds-button slds-button_brand" onclick={saveQuote} if:false={isSave}>
+        Save
+      </button>
+      </footer>
+ </template>

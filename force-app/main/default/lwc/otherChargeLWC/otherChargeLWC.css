@@ -1,0 +1,11 @@
+.required-field:after {
+    content:" *";
+    color: black;
+  }
+  .required-field1:before {
+    content:" *";
+    color: black;
+  }
+  .test2{
+    text-align: right;
+  }

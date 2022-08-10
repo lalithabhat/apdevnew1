@@ -1,0 +1,3 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+        <c:leadconvert recordId="{!v.recordId}" onclose="{!c.closeQA}"></c:leadconvert>
+</aura:component>

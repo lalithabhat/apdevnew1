@@ -1,0 +1,37 @@
+.table2{
+    width:100%;
+    border-collapse:collapse;
+    }
+    .table2 tr th{
+    border:1px solid black;
+    padding:8px 5px;
+    text-align:left;
+    background:#502E87;
+    color:#fff;
+    font-size: 10px;
+    }
+    .table2 tr td{
+    border:1px solid black;
+    padding:8px 5px;
+    text-align:left;
+    font-size: 9px;
+    }
+
+.table3{
+    width:100%;
+    border-collapse:collapse;
+    }
+    .table3 tr th{
+    border:1px solid black;
+    padding:8px 5px;
+    text-align:left;
+    background:#538cc6;
+    color:#fff;
+    font-size: 10px;
+    }
+    .table3 tr td{
+    border:1px solid black;
+    padding:8px 5px;
+    text-align:left;
+    font-size: 9px;
+    }

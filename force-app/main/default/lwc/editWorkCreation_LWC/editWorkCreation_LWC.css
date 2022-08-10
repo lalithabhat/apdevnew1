@@ -1,0 +1,24 @@
+.required-field:after {
+    content:" *";
+    color: black;
+  }
+  .btnclass{
+    border-radius: 15px;
+    background: #5200cc;
+    ;
+    color: #fff;
+    border: 0;
+  }
+  
+  .btnproductDiscount{
+    border-radius: 15px;
+    background: #538cc6;
+    ;
+    color: #fff;
+    border: 0;
+  }
+
+  .required-field1:before {
+    content:" *";
+    color: red;
+  }

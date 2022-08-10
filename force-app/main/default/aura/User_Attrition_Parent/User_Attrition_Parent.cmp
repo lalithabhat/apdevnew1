@@ -1,0 +1,45 @@
+<aura:component implements="force:appHostable" access="global" controller="UserAttritionController">
+    <aura:attribute name="selectedOldContact" type="String"/>
+    <aura:attribute name="selectedNewContact" type="String"/>
+    <aura:attribute name="parentAttribute1" type="String" default="oldContact"/>
+    <aura:attribute name="parentAttribute2" type="String" default="newContact"/>
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    
+    <aura:handler 
+                event="c:ContactSearch" 
+                action="{!c.handleEvent}"/>
+    <lightning:card title="User Attrition" iconName="standard:contact">
+        <div class="exampleHolder">
+            <aura:if isTrue="{! v.loaded }">
+                
+                <aura:set attribute="else">
+                    <lightning:spinner alternativeText="Loading" />
+                </aura:set>
+            </aura:if>
+        </div>
+        <lightning:layout horizontalAlign="space" multipleRows="true">
+            <lightning:layoutItem size="12"
+                              mediumDeviceSize="6"
+                              padding="around-small"
+                              title ="Select Old Contact">
+                <c:User_Attrition_AURA fromParent="{!v.parentAttribute1}" 
+                                       layoutTitle="Select Old Contact"
+                                       isRequired="true">
+    			</c:User_Attrition_AURA>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12"
+                              mediumDeviceSize="6"
+                              padding="around-small"
+                              title ="Select New Contact">
+                <c:User_Attrition_AURA fromParent="{!v.parentAttribute2}"
+                                       layoutTitle="Select New Contact"
+                                       isRequired="true">
+    			</c:User_Attrition_AURA>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <aura:set attribute="footer">
+            <lightning:button variant="brand" title="Submit" onclick="{! c.submit }"  label="Submit"/>
+        </aura:set>
+    </lightning:card>
+	
+</aura:component>

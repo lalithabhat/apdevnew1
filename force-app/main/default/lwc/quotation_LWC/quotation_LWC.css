@@ -1,0 +1,48 @@
+.required-field:after {
+    content:" *";
+    color: black;
+  }
+  .required-field1:before {
+    content:" *";
+    color: red;
+  }
+  .btnclass{
+    border-radius: 15px;
+    background: #5200cc;
+    ;
+    color: #fff;
+    border: 0;
+  }
+  
+  .btnproductDiscount{
+    border-radius: 15px;
+    background: #538cc6;
+    ;
+    color: #fff;
+    border: 0;
+  }
+  .table-CSS{
+    border-collapse: collapse;
+    empty-cells:show;
+    border:1px;
+    
+  }
+  .table-th-CSS {
+    padding: 3px;
+    vertical-align: top;
+    background-color:rgb(161, 156, 156);
+    border:1px solid black;
+    text-align: center;
+  }
+  .table-td-CSS {
+    padding: 1px;
+    vertical-align: top;
+    background-color:#b9d7f5;  
+    border:1px solid black;
+    text-align: center;
+  }
+
+  .THIS .slds-accordion__summary-heading{
+    font-weight: bold;
+    color:aliceblue;
+}

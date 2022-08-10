@@ -1,0 +1,85 @@
+<template>
+
+    <lightning-card title="Site Completion Card">
+
+        <template if:true={isError}>
+            <p class="slds-text-color_error slds-m-around_medium">{errorMessage}</p>
+        </template>
+        <template if:false={isError}>
+
+            <div class="slds-m-around_medium">
+                <lightning-button-group>
+                    <lightning-button name="siteView" variant="brand" label='View in Browser' title="View"
+                        onclick={download} icon-name="utility:new_window"></lightning-button>
+                    <lightning-button name="siteDownload" variant="brand" label='Download' title="Download"
+                        onclick={download} icon-name="utility:download"></lightning-button>
+                </lightning-button-group>
+            </div>
+            <template if:true={showShare}>
+                <div class="slds-m-around_medium">
+
+                    <lightning-button-group>
+                        <lightning-button name="SMS" variant="brand" label='Share via SMS' title="SiteCompletion"
+                            onclick={sendToOpportunity} icon-name="utility:sms"></lightning-button>
+
+                        <lightning-button name="Email" variant="brand" label='Share via Email' title="SiteCompletion"
+                            onclick={sendToOpportunity} icon-name="utility:email"></lightning-button>
+
+
+                    </lightning-button-group>
+
+                </div>
+            </template>
+
+            <div class="slds-m-around_medium">
+
+                <lightning-button-group>
+                    <lightning-button name="Generate document again" variant="brand" label='Generate document again'
+                        title="Generate document again" onclick={generatePDF} icon-name="utility:download">
+                    </lightning-button>
+
+                </lightning-button-group>
+            </div>
+        </template>
+    </lightning-card>
+    <lightning-card if:true={showWarranty} title="Warranty Card">
+        <div class="slds-m-around_medium">
+            <lightning-button-group>
+                <lightning-button name="warrantyView" variant="brand" label='View in Browser' title="View"
+                    onclick={download} icon-name="utility:new_window"></lightning-button>
+                <lightning-button name="warrantyDownload" variant="brand" label='Download' title="Download" onclick={download}
+                    icon-name="utility:download"></lightning-button>
+            </lightning-button-group>
+        </div>
+        <div class="slds-m-around_medium">
+
+            <lightning-button-group>
+                <lightning-button name="SMS" variant="brand" label='Share via SMS' title="Warranty"
+                    onclick={sendToOpportunity} icon-name="utility:sms"></lightning-button>
+                <lightning-button name="Email" variant="brand" label='Share via Email' title="Warranty"
+                    onclick={sendToOpportunity} icon-name="utility:email"></lightning-button>
+            </lightning-button-group>
+
+        </div>
+    </lightning-card>
+    <lightning-card if:true={showSan} title="San Assure Certificate">
+        <div class="slds-m-around_medium">
+            <lightning-button-group>
+                <lightning-button name="sanView" variant="brand" label='View in Browser' title="View"
+                    onclick={download} icon-name="utility:new_window"></lightning-button>
+                <lightning-button name="sanDownload" variant="brand" label='Download' title="Download" onclick={download}
+                    icon-name="utility:download"></lightning-button>
+            </lightning-button-group>
+        </div>
+        <div class="slds-m-around_medium">
+
+            <lightning-button-group>
+                <lightning-button name="SMS" variant="brand" label='Share via SMS' title="SanAssure"
+                    onclick={sendToOpportunity} icon-name="utility:sms"></lightning-button>
+                <lightning-button name="Email" variant="brand" label='Share via Email' title="SanAssure"
+                    onclick={sendToOpportunity} icon-name="utility:email"></lightning-button>
+            </lightning-button-group>
+
+        </div>
+    </lightning-card>
+</template>

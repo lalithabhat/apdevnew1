@@ -1,0 +1,635 @@
+<apex:page controller="WarrantyCardController" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head> 
+            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                font-size:12px !important;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                }
+                @page {
+                size: 8.30in 14.65in;
+                } 
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table1 tr td{
+                font-size:16px;
+                border:1px solid #837060;
+                padding:8px 25px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#512C8D;
+                color:#fff;
+                padding:30px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr td,th{
+                padding:6px 3px;
+                font-size:13px;
+                }
+                p{
+                line-height:24px;
+                padding:1px 0;
+                }
+                ol li{
+                line-height:25px;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Page 1 ---------------------------------------------->
+                <div class="page1" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.APPlatinumWarrantySPSBanner}" width="800px;" />
+                    </div>                
+                    <div style="margin:0px 38px 8px 38px;" >
+                        <table width="100%">
+                            <tr>
+                                <td width="100%"  align="right">
+                                    <span style="position:relative;bottom:10px;left:178px;color:#fff;">Date: <u>{!dateOfWarranty}</u></span>
+                                    <apex:image url="{!$Resource.APPlatinumWarrantyDateImg}" width="200px;"  />&nbsp;&nbsp;&nbsp;&nbsp;                                                  
+                                </td>                            
+                            </tr>
+                        </table> 
+                        
+                        <div style="border:2px solid #512C8D; padding:20px 25px;margin:0;position:relative;bottom:7px;border-radius:10px;">
+                            <p>Greetings <u>{!site.Account__r.Name}</u></p>
+                            <p>In Ref to your Work completed from Safe Painting Service.</p>
+                            <p>This refers to the work completion pertaining to your home painting service. We at
+                                Asian Paints have facilitated a professional experience and to that end, partnered with
+                                service providers and painting professionals all over India. The Safe Painting Service
+                                has connected you with a service provider / painting professional who has helped
+                                deliver safe and hygienic home painting services using genuine and quality Asian
+                                Paints products. The service also included free consultation with our representative in
+                                assisting in the selection of paint products, shades, textures, etc.
+                            </p>
+                            <p>
+                                As part of this service, our representative has connected with you to understand your
+                                painting needs. Based on the site evaluation and your painting requirements, has
+                                provided service provider’s quotation for painting your premises &amp; completed the Work.
+                                The service provider’s contact details are mentioned in the said Warranty Document.
+                                You may contact the service provider if in case of workmanship issues. Alternatively,
+                                you may reach out to our representative on <a href="tel:{!site.Associate_Contact_No__c}" >{!site.Associate_Contact_No__c}</a> for
+                                assistance in this regard.
+                            </p>
+                            <p>
+                                The Safe Painting Service is subject to certain terms and conditions which are
+                                mentioned herein below. By contacting the Service Provider and accepting the
+                                Warranty, you are agreeing to abide by the same.
+                            </p>
+                            <p>
+                                Sincerely,
+                            </p>
+                            <p>
+                                Team Asian Paints
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Page 2 ---------------------------------------------->
+                <div class="page2" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.APPlatinumWarrantyTnC}" width="800px;" />
+                    </div>                
+                    <div style="margin:0px 38px 8px 38px;background:#fff;z-index:000;" >                        
+                        <div style="border:2px solid #512C8D;padding:20px 25px;border-radius:10px;">
+                            <p>“Asian Paints Safe Painting Services” (“APSPS”) are subject to the below mentioned
+                                terms &amp; conditions. In proceeding with the services, you, the customer hereby accepts
+                                that you have read and understood these terms and conditions, including those
+                                incorporated herein by reference, and AGREE to the same.</p>
+                            <ol style="margin-left:20px">
+                                <li>Asian Paints’ role is limited to that of a facilitator, helping customers connect
+                                    with professionals for a seamless home painting and sanitization experience with
+                                    genuine Asian Paints products. Asian Paints’ role is restricted to that of supply of
+                                    paints only and introduction of the service provider. The final call of appointing the
+                                    service provider will rest with you, the customer.
+                                </li>
+                                <li>
+                                    Asian Paints does not receive any commission through any transaction between
+                                    the service provider and the customer. It is further clarified that any work
+                                    undertaken and performed by service provider will be in their capacity as an
+                                    independent contractor(s) and there exists no agency between Asian Paints and
+                                    the service providers. The service providers are not bound to Asian Paints in
+                                    any manner by virtue and are free to advise the customer in all respects as per
+                                    their professional opinion.
+                                </li>
+                                <li>
+                                    Asian Paints disclaims all liability in respect of any service or work undertaken and
+                                    executed by the service provider. It is expressly understood by the customer that
+                                    any service performed by the service provider, will be an independent contractual
+                                    arrangement to which Asian Paints shall bear no role or liability towards the
+                                    services.
+                                </li>
+                                <li>
+                                    Warranty for products is subject to the terms and conditions mentioned in the
+                                    warranty booklet. Kindly visit Asian Paints’ website <a href="https://www.asianpaints.com/">https://www.asianpaints.com/</a>
+                                    for more information, product details and <a href="https://www.asianpaints.com/more/">https://www.asianpaints.com/more/</a>
+                                    warranty.html for the terms and conditions for warranty.
+                                </li>
+                                <li>
+                                    LIABILITY: Asian Paints’ liability shall be limited to the warranty provided and shall be
+                                    subject to the terms and conditions of warranty for the products supplied. Under no
+                                    event shall APL be liable for any indirect, incidental, special, exemplary, punitive, or
+                                    consequential damages and quality issues, whatsoever.
+                                </li>
+                                <li>
+                                    Governing Law and Jurisdiction:<br/>
+                                    The services under APSPS shall be governed and construed in accordance with
+                                    the laws of India. Any dispute arising hereunder shall be subject to the exclusive
+                                    jurisdiction of the courts in Mumbai, India.
+                                </li>
+                                <li>
+                                    Customer may contact our representative on <a href="tel:{!site.Associate_Contact_No__c}" >{!site.Associate_Contact_No__c}</a> or <span style="color:red">1800- 209-5678</span>
+                                    or speak to the Service Provider for any queries, concerns or clarifications.
+                                </li>
+                            </ol>
+                            <br/>
+                            
+                        </div>
+                    </div>
+                </div>-->
+                <!------------------------------------------- Page 3 ---------------------------------------------->
+                <div class="page3" style="page-break-after:always;">                    
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.APPlatinumWarrantyPlainBanner}" width="800px;" style="z-index:-999;" />
+                        <div style="z-index:-999;">
+                            <div style="position:relative;left:400px;bottom:200px;">
+                                <div style="position:absolute;color:#000;margin-top:8px;width:325px;border:1px solid #fff;padding:15px;">
+                                    <table width="400" style="color:#FFF;z-index:999;">
+                                        <tr>
+                                            <td style="font-size:12px;">
+                                                <div style="height:28px;">
+                                                    <b>DEALER NAME: {!site.Dealer__r.Name}</b><br/>
+                                                </div>
+                                            </td>                                                    
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px;">
+                                                <div style="height:48px;">
+                                                  <!--  <b>ADDRESS: {!site.Dealer__r.BillingStreet}, &nbsp;   
+                                                        {!site.Dealer__r.BillingCity},&nbsp; 
+                                                        {!site.Dealer__r.BillingState},&nbsp; 
+                                                       </b>--><br/>
+                                                    <div style="width:130px;word-wrap: break-word;"></div> 
+                                                </div>
+                                            </td>
+                                        </tr>                                                
+                                        <tr>
+                                            <td style="font-size:12px;"><b>MOBILE NO.: {!site.Dealer__r.Phone}</b>
+                                                
+                                            </td>
+                                            
+                                        </tr>                                                
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                    <div style="margin:0px 38px 8px 38px;background:#fff;z-index:000;" >                        
+                        <div style="border:2px solid #512C8D;padding:10px 25px;border-radius:10px;">
+                            <p>Greetings Mr/Mrs. <u>{!site.Account__r.Name}</u></p>
+                            <p>
+                                Thank you for availing Asian Paints Safe Painting Service. Below mentioned are the
+                                warranty details.
+                            </p>
+                            <apex:image url="{!$Resource.WarrantyCardPlatinum}" width="680px;" height="30px;" />
+                            <table class="table1">
+                                <tr>
+                                    <th style="color:#502865;background:#FB9E1B;border:1px solid #837060;" align="center">Warranty details</th>
+                                </tr>
+                                <tr>
+                                    <td>1. &nbsp; Warranty No: {!site.Warranty_No__c}</td>
+                                </tr>
+                                <tr>
+                                    <td>2. &nbsp; Warranty Date: {!dateOfWarranty}</td>
+                                </tr>
+                                <tr>
+                                    <td>3. &nbsp; Valid Up to: {!validTill}</td>
+                                </tr>
+                            </table><br/>
+                            <table class="table1">
+                                <tr>
+                                    <th style="color:#502865;background:#FB9E1B;border:1px solid #837060;" align="center">Customer details</th>
+                                </tr>
+                                <tr>
+                                    <td>1. &nbsp; Customer Name: {!site.Account__r.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td>2. &nbsp; Mobile No: {!site.Account__r.PersonContact.MobilePhone}</td>
+                                </tr>
+                                <tr>
+                                    <td>3. &nbsp; Email ID: {!site.Account__r.PersonContact.Email}</td>
+                                </tr>
+                                <tr>
+                                    <td>4. &nbsp; Site ID: {!site.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="height:50px;">
+                                            5. &nbsp; Site Address: {!site.address__c}   
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <p>
+                                The warranty conditions provided on each specific product is subject to the terms
+                                &amp; conditions which may be referred in the product warranty document link below.
+                            </p>
+                            <div style="border:1px solid;padding:5px 10px;">
+                                <table class="table2">
+                                    <tr>
+                                        <td width="30%">Product Warranty Details Link:</td>
+                                        <td><a href="https://www.asianpaints.com/more/warranty.html" style="color:#512C8D;">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%">Safepainting service Link:</td>
+                                        <td><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE" style="color:#512C8D;">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%">Product details Link:</td>
+                                        <td><a href="https://www.asianpaints.com/products/paints-and-textures.html" style="color:#512C8D;">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%">Waterproofing Solutions Link:</td>
+                                        <td><a href="https://www.asianpaints.com/products/waterproofing-solutions.html" style="color:#512C8D;">Register To Activate Warranty For Asian Paints Products</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%">Website Link:</td>
+                                        <td><a href="https://www.asianpaints.com" style="color:#512C8D;">www.asianpaints.com</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table width="100%" style="margin-top:10px;">
+                                <tr>
+                                    <td valign="top" style="padding:4px;"><apex:image url="{!$Resource.ForwordIcon}" width="16px;" /></td>
+                                    <td style="padding:4px;">Subject to the terms of the Warranty as annexed hereto, the maximum liability of
+                                        APL with respect to any subject claim arising out of or in connection with the APL
+                                        products used at your site, under any contract, negligence, tort, strict liability or
+                                        other legal or equitable theory, shall be subject to the terms of the said standard
+                                        Warranty and shall be limited to the value of product and not beyond. The
+                                        CUSTOMER understands that APL as the manufacturer of the products merely
+                                        facilitates the present arrangement and the services oered and its responsibilities
+                                        herein as the manufacturer does not assume any other liability which is to be taken
+                                        by solely by the applicator / Dealer.</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:4px;" valign="top"><apex:image url="{!$Resource.ForwordIcon}" width="16px;" /></td>
+                                    <td style="padding:4px;">Please register with Asian Paints to activate warranty. To register, please call us on
+                                        1800-209-5678 / visit the link <a href="https://www.asianpaints.com/more/warranty.html">https://www.asianpaints.com/more/warranty.html</a>
+                                        and provide the required information related to your purchase.</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:4px;" valign="top"><apex:image url="{!$Resource.ForwordIcon}" width="16px;" /></td>
+                                    <td style="padding:4px;">Alternatively, you may reach out to our Associate / Team Leader for assistance in
+                                        the registration process.</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:4px;" valign="top"><apex:image url="{!$Resource.ForwordIcon}" width="16px;" /></td>
+                                    <td style="padding:4px;">Associate will be assisting in registration process of respective Product warranty.</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Page 4 ---------------------------------------------->
+                <div class="page4" style="page-break-after:always;">                    
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.WarrantyTnCBanner}" width="800px;" style="z-index:-999;" />
+                    </div>                
+                    <div style="margin:0px 38px 8px 38px;background:#fff;z-index:000;" >                        
+                        <div style="border:2px solid #512C8D;padding:6px 25px;border-radius:10px;">
+                            <ol style="margin-left:20px;">
+                                <li>Service warranty refers to and shall be limited to the rectification of affected areas only.</li>
+                                <li><b>This is a limited warranty for workmanship only valid for 1 year from the date of
+                                    Issue of Warranty Certificate</b> &amp; same shall constitute the sole &amp; only liability of
+                                    <u>{!site.Dealer__r.Name}</u>.
+                                    It shall not cover consequential loss, injury, or damage to the customer.</li>
+                                <li>This warranty is applicable for site painted by under the Safe Painting Service - <b>PLATINUM</b>.</li>
+                                <li>It shall only be valid on those sites where site inspection and Technical Audit has
+                                    been conducted and cleared for prior to painting. Provided that where any substrate
+                                    / surface issue is detected during such site inspection or audit and the Customer
+                                    does not carry out the rectification work or treatment recommended by applicator /
+                                    contractor, in such cases warranty shall not be applicable.</li>
+                                <li>For Every Site ID separate warranty will be issued.</li>
+                                <li>The Service warranty will be eective from the date of completion of painting job for
+                                    that Site ID and it shall be valid up to period of 1 year from said date.</li>
+                                <li>Where any claim arises during the warranty period, the period will not start afresh
+                                    after settlement of the claim.</li>
+                            </ol>
+                            
+                            <apex:image url="{!$Resource.WarrantyEnL}" width="680px;" height="30px;" />
+                            <div style="border:1px solid;padding:5px 10px;">                                
+                                <table width="100%">
+                                    <tr>
+                                        <td width="3%" >1</td>
+                                        <td> <u>{!site.Dealer__r.Name}</u>&nbsp; shall not assume any liability if customer
+                                            claims warranty after service period.</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="border:1px solid;padding:5px 10px;">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="3%">2</td>
+                                        <td>The warranty does not bear normal wear &amp; tear of the site. There shall be no warranty if
+                                            the time gap between any subsequent coat of paint application more than 7 days.</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table width="100%" style="border-collapse:collapse;">
+                                <tr>
+                                    <th style="text-align:center;padding:5px;border:1px solid;background:#035051;color:#fff;font-size:16px">For wood finishes</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 14px 6px; border:1px solid;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px; " valign="top"><b><apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />&nbsp;</b></td>
+                                                <td style="padding:4px 2px;">There shall be no warranty on movable and / or outdoor furniture or wooden surfaces exposed to continuous seepage</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp;</td>
+                                                <td style="padding:4px 2px;">Normal wear &amp; tear like, scratch marks, yellowing over a period of time, paint chipping
+                                                    from wooden joints &amp; edges are also out of warranty purview.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center;padding:5px;background:#035051;border:1px solid;color:#fff;font-size:16px">Warranty shall be void in following events</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 14px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td colspan="2" style="padding:4px 2px;">Surface is subject to:</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top"><b><apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />&nbsp; </b></td>
+                                                <td style="padding:4px 2px;" valign="top">Dampness or presence of moisture, if moisture treatment / waterproofing has not been
+                                                    carried out with Asian Paints Smart care range of products for the affected areas or if
+                                                    area is prone to continuous seepage.</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:2px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:2px 2px;" valign="top">Fungal &amp; Algal growth</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:1px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:1px 2px;" valign="top">Structural &amp; Joint cracks</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:0px 2px;" valign="top">Natural Calamities such as earthquakes, cyclones, fire, tempest</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:0px 2px;" valign="top">Vandalism</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:2px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:2px 2px;" valign="top">Failure or defects in structure, moss and other vegetative growth, excessive bird
+                                                    droppings / spitting, water leakage and seeping within the building structure &amp;
+                                                    continuous dampness of the structure, staining due to plant pots; damage of film due
+                                                    to high abrasion of the surface with furniture, nails or other sharp objects</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:0px 2px;" valign="top">Acts of God or Force Majeure</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0px 2px;" valign="top"><apex:image url="{!$Resource.ForwordSlash}" width="16px;" />&nbsp; </td>
+                                                <td style="padding:0px 2px;" valign="top">Abuse or Negligence by customer</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Page 4 ---------------------------------------------->
+                <div class="page5" >                    
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.WarrantyTnCBanner}" width="800px;" style="z-index:-999;" />
+                    </div>                
+                    <div style="margin:0px 38px 8px 38px;background:#fff;z-index:000;" >                        
+                        <div style="border:2px solid #512C8D;padding:6px 25px;border-radius:10px;">
+                            <apex:image url="{!$Resource.WarrantyEnL}" width="680px;" height="30px;" /><br/>
+                            
+                            <table width="100%" style="border-collapse:collapse;">
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div> &nbsp;
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top"> Under any and all circumstances  <u>{!site.Dealer__r.Name}</u>’s
+                                                    maximum liability under this service and / or warranty shall not be greater than the total
+                                                    amount paid by customer to  <u>{!site.Dealer__r.Name}</u> under particular
+                                                    Site ID for Painting works.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />&nbsp; 
+                                                    </div> &nbsp;
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">  <u>{!site.Dealer__r.Name}</u> will not provide refund of money to customers
+                                                    in any circumstances; this warranty is restricted to Rectification of affected area only.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top"> Any repair, structural corrections or surface preparations required to be undertaken by
+                                                    customer will not extend the warranty period specified in Warranty card.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">Any subsequent repairs structural works or civil works after the execution of painting
+                                                    work that may have resulted in defects, water seepage or leakage or dampness shall
+                                                    make the warranty void.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">Original invoice of  <u>{!site.Dealer__r.Name}</u> for the service needs to be
+                                                    furnished along with any claim.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">  <u>{!site.Dealer__r.Name}</u> reserves the right to accept or reject any claim
+                                                    and its decision will be final and binding upon the party.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">The customer is requested to take due care of all valuable items, documents, jewelry
+                                                    items while the painting work is on. <u>{!site.Dealer__r.Name}</u> will not be
+                                                    responsible for loss, misplacement, or breakage of any such items.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 6px;border:1px solid #000;">
+                                        <table width="100%" style="border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding:4px 2px;" valign="top">
+                                                    <div style="margin-top:4px;">
+                                                        <apex:image url="{!$Resource.ForwordSlash}" width="16px;" height="14px" />
+                                                    </div>
+                                                    &nbsp; 
+                                                </td>
+                                                <td style="padding:4px 2px;line-height:24px;" valign="top">All claims and / or disputes shall be subject to Mumbai Jurisdiction only.</td>
+                                            </tr>                                            
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table><br/>
+                            <table width="100%" style="border-spacing: 10px;">
+                                <tr>
+                                    <td width="50%" style="background:#ddd;padding:10px;">
+                                        <table width="100%" >
+                                            <tr>
+                                                <th valign="top"  style="font-size:16px;color:#512C8D;">A.</th>
+                                                <td valign="top">
+                                                    <div style="margin-top:6px;">
+                                                        This Warranty disclaims any liabilities
+                                                        in contract, tort or otherwise including
+                                                        negligence and strict liability and the
+                                                         <u>{!site.Dealer__r.Name}</u>
+                                                        makes no warranty or merchantability
+                                                        or of fitness for any particular purpose
+                                                        whatsoever for painting system.
+                                                        There are no warranties expressed or
+                                                        implied under law, which extend beyond
+                                                        the warranty set out herein.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="50%" style="background:#ddd;padding:10px;">
+                                        <table width="100%">
+                                            <tr>
+                                                <th valign="top" style="font-size:16px;color:#512C8D;">B.</th>
+                                                <td valign="top">
+                                                    <div style="margin-top:6px;">
+                                                        This Warranty disclaims any liabilities
+                                                        in contract, tort or otherwise including
+                                                        negligence and strict liability and the
+                                                         <u>{!site.Dealer__r.Name}</u>
+                                                        makes no warranty or merchantability
+                                                        or of fitness for any particular purpose
+                                                        whatsoever for painting system.
+                                                        There are no warranties expressed or
+                                                        implied under law, which extend beyond
+                                                        the warranty set out herein.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

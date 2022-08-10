@@ -1,0 +1,67 @@
+<!-- sldsValidatorIgnore -->
+
+<template>
+  <lightning-card title="Bh Store Selection"></lightning-card> 
+  <div class="slds-grid slds-gutters slds-align_absolute-center slds-var-m-around_large">
+    <lightning-layout vertical-align="end">
+        <lightning-layout-item  flexibility="grow" >
+            <lightning-button label="Show Available Stores" variant="brand" onclick={showStore}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+</div> 
+ 
+<template if:true={table}>
+  <div >
+    <lightning-datatable key-field="id" data={storedata} columns={columns}
+        hide-checkbox-column="true"  
+        show-row-number-column="true" 
+        column-widths-mode="auto" 
+        sortable="false"
+        onrowaction={handleRowAction}  >
+    </lightning-datatable>
+</div>
+</template>
+<template if:true={chk}>
+  <lightning-card>
+    <div class={color} >
+      <lightning-input disabled={color1} type="Checkbox" label="Furniture"></lightning-input>
+    </div>
+   <div class=" slds-align_absolute-center slds-var-m-around_large {color2}" >
+      <lightning-input ddisabled={color2} type="Checkbox" label="Furnishing"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color3}">
+      <lightning-input disabled={color3} type="Checkbox" label="Lights"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color4}">
+      <lightning-input disabled={color4} type="Checkbox" label="Home Automation"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color5}">
+      <lightning-input disabled={color5} type="Checkbox" label="Rugs"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color6}">
+      <lightning-input disabled={color6} type="Checkbox" label="Madeups"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color7}">
+      <lightning-input disabled={color7} type="Checkbox" label="Wooden Flooring"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color8}">
+      <lightning-input disabled={color8} type="Checkbox" label="Tiles"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color9}">
+      <lightning-input disabled={color9} type="Checkbox" label="Kitchen"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color10}">
+      <lightning-input disabled={color10} type="Checkbox" label="Bath Fittings"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color11}">
+      <lightning-input disabled={color11} type="Checkbox" label="UPVC"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color12}">
+      <lightning-input disabled={color12} type="Checkbox" label="Paint"></lightning-input>
+    </div>
+    <div class=" slds-align_absolute-center slds-var-m-around_large {color13}">
+      <lightning-input disabled={color13} type="Checkbox" label="Sleek"></lightning-input>
+    </div>
+  </lightning-card>
+</template>
+</template>

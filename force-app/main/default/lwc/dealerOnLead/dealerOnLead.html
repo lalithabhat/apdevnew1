@@ -1,0 +1,22 @@
+<template>
+<lightning-card title="Select Dealer">
+    <lightning-spinner if:true={showSpinner} size="medium"></lightning-spinner>
+    <p if:true={noDealer} class="slds-text-color_error slds-var-m-horizontal_medium">No Dealer Found</p>
+    <template if:false={noDealer}>
+    <lightning-radio-group name="radioGroup"
+    label="Radio Group"
+    options={options}
+    value={value}
+    variant="label-hidden"
+    type="radio"
+    class="slds-m-horizontal_medium"
+    onchange={handleChange}
+    ></lightning-radio-group>
+
+<div slot="footer">
+    <lightning-button class="slds-m-top_small" label="Save" variant="brand" onclick={save} disabled={disabled}>
+    </lightning-button>
+</div>
+</template>
+</lightning-card>
+</template>

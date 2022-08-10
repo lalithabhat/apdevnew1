@@ -1,0 +1,49 @@
+<template>
+    <lightning-card>
+
+        <lightning-spinner size="small" if:true={showSpinner} alternative-text="Loading"></lightning-spinner>
+
+        <lightning-input type="checkbox" label={test} name="checked" checked={checked} onchange={handleCB}></lightning-input>
+
+
+        <template if:true={checked}>
+            <!-- <lightning-input type="text" name="observation" label="Observations" onchange={handleIp} ></lightning-input> -->
+            <lightning-combobox name="severity" value={dataWrap.severity} label="Severity" required options={options} onchange={handleIp}>
+            </lightning-combobox>
+            <template if:true={affectedArea}>
+            <lightning-input type="number" step="1"  max-length="4" name="affectedArea" value={dataWrap.affectedArea} label="Affected Area (sqft)" onchange={handleIp}>
+          
+            </lightning-input>
+            </template>
+            <template if:false={affectedArea}>
+                <lightning-input type="number" step="1"  max-length="4" name="affectedArea" label="Affected Area (sqft)" onchange={handleIp}>
+                </lightning-input>
+                </template>
+            <!-- <lightning-input type="text" label="Recomendation"></lightning-input> -->
+            <p class="slds-m-bottom_xxx-small"> Recommendation </p>
+            <template if:false={showRecoBox}>
+
+                <span style="color: #FFBF00;"> {recoMsg} </span>
+            </template>
+            <template if:true={showRecoBox}>
+                <lightning-record-edit-form object-api-name={childObjectApiName}>
+
+                    <lightning-input-field variant="label-hidden" field-name={targetFieldApiName} required
+                        value={dataWrap.recoProduct} onchange={handleChangeReco} disabled={disabled}>
+                    </lightning-input-field>
+
+
+                </lightning-record-edit-form>
+            </template>
+
+            <p class="slds-m-bottom_xxx-small"> Additional Product </p>
+            <lightning-record-edit-form object-api-name={childObjectApiName}>
+
+                <lightning-input-field variant="label-hidden" value ={dataWrap.addProduct} field-name={targetFieldApiName} onchange={handleChange}>
+                </lightning-input-field>
+
+
+            </lightning-record-edit-form>
+        </template>
+    </lightning-card>
+</template>

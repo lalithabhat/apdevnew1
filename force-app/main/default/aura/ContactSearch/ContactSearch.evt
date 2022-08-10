@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="selectedContact" type="String"/>
+    <aura:attribute name="contactType" type="String"/>
+</aura:event>

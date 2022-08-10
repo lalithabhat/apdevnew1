@@ -1,0 +1,343 @@
+<apex:page controller="Work_Progress_Card_PDF" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" >
+    <html>
+        <head>       
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                font-size:12px !important;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                }
+                @page {
+                size: 8.30in 15.00in;
+                } 
+                .table1{
+                width:100%;
+                }
+                .table1 tr td{
+                font-size:10px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#512C8D;
+                color:#fff;
+                padding:25px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr th{
+                border:1px solid #502E87;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table2 tr td{
+                border:1px solid #502E87;
+                padding:8px 5px;
+                text-align:left;
+                }
+                .table3{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table3 tr td{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:left;
+                }
+                .table3 tr th{
+                border:1px solid #502E87;
+                padding:3px 5px;
+                text-align:center;
+                }
+                a{
+                color:#502E87;
+                }
+                p,h5{
+                line-height:22px;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Page 1 ------------------------------------------------>
+                <div>
+                    <div style="margin:-9px 5px 8px 7px;background-color:#502E87;color:#FFF;height:150px;z-index:-999;" >
+                        <table width="100%">
+                            <tr>                            
+                                <td width="50%">
+                                    <div style="height:110px;z-index:-999;">
+                                        <div style="position:relative;left:20px;bottom:15px;z-index:999;">
+                                            <h3 style="text-align:left;color:#fff;margin:0;font-size:16px;">&nbsp;WORK PROGRESS CARD</h3>
+                                            <table class="table1" style="border:1px solid #fff;padding:0px 6px;width:98%;margin:auto;">
+                                                <tr>
+                                                    <td>Customer Name: {!customerName}</td>
+                                                    <td>Mobile No.: {!customerMobile}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Date of visit: {!Today_Date}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Visited By: {!visitedBy}</td>
+                                                    <td>Mobile No.: {!visitedMobile}</td>
+                                                </tr>
+                                              <!--  <tr>
+                                                    <td>Contractor Name: {!contractorName}</td>
+                                                    <td>Mobile No.: {!contractorMobile}</td>
+                                                </tr>-->
+                                                <tr>
+                                                    <td>Site ID: {!siteName}</td>
+                                                    
+                                                </tr> 
+                                            </table>
+                                            
+                                            <div style="position:absolute;color:#000;left:550px;top:20px;bottom:0px;width:100%;">
+                                                <table width="100%" style="color:#000;z-index:999;">
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Dealer Name:</b><br/>
+                                                            {!dealerName}
+                                                        </td>                                                    
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Dealer Address:</b><br/>
+                                                            <div style="width:130px;word-wrap: break-word;">{!dealerAddress}</div> 
+                                                        </td>
+                                                    </tr>                                                
+                                                    <tr>
+                                                        <td style="font-size:9px;"><b>Mobile No.:</b>
+                                                            {!dealerMobile}
+                                                        </td>
+                                                        
+                                                    </tr>                                                
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td width="50%" valign="top" align="right">
+                                    <apex:image value="{!$Resource.APSPSLayoutRIghtBanner}" style="width:375px;"  />
+                                </td>
+                            </tr>
+                        </table>  
+                    </div>
+                    <div style="margin:20px 24px 8px 24px;border:1px solid;padding:24px 26px;background:#fff;z-index:-999;" >  
+                        <p style="font-size:12px;">Greetings <u style="color:#F16469">{!customerName}</u></p>
+                        <p style="font-size:12px;">Service Tier: {!tier}</p>
+                        <h5 style="font-size:13px;">
+                            Service Variants: {!services}
+                        </h5>
+                        <p style="font-size:12px;margin-top:14px;background:#FBB624;padding:3px 5px;font-weight:bold;">
+                            WORK IN PROGRESS STEPS TO AID BEAUTIFICATION OF YOUR HOME.
+                        </p>
+                        <p style="font-size:12px;">Thank you for being our Valuable customer,</p>
+                        <p style="font-size:12px;">In reference to your home painting service please find below the Work Progress Card. Below steps will be followed by
+                            contractor team.</p><br/>
+                        
+                        <apex:variable value="{!1}" var="i"/>
+                        <apex:repeat value="{!areaSpecifications}" var="workId">
+                            <span style="font-size:14px;margin-top:14px;background:#FBB624;padding:12px 20px;font-weight:bold;">WORK ID {!areaSpecifications[workId].workId}</span>
+                            <br/><br/>
+                            <th style="font-size:10px; solid #fff">Contractor Name: {!areaSpecifications[workId].contractorName} &nbsp; &nbsp;
+                                Mobile No: {!areaSpecifications[workId].contractorMobile}<br/>
+                              Work Progress: {!areaSpecifications[workId].percentComplete}%</th>
+                            
+                          <!--  <apex:image value="{!$Resource.workProgressImg1}" style="width:450px;height:30px;"  />  -->
+                            <br/>
+                            <table class="table2" style="border-collapse:collaspe;">
+                                <tr>
+                                    <th style="font-size:9px;">SURFACE PREPARATION</th>
+                                    <th style="font-size:9px;" colspan="8">AREA SPECIFICATIONS: {!areaSpecifications[workId].areaSpecsName}</th>
+                                </tr>
+                                <tr  style="background:#502E87;color:#fff;">
+                                    <td width="18%" style="font-size:10px;border-right:1px solid #fff;text-align:left;">Evaluation Area</td>
+                                    <apex:repeat value="{!areaNameMap[workId]}" var="wp">
+                                        <td style="font-size:10px;border-left:1px solid #fff;border-right:1px solid #fff;text-align:center;" colspan="2">
+                                        	Area: {!wp}
+                                        </td>
+                                    </apex:repeat>
+                                    <!--
+                                    <td style="font-size:10px;border-left:1px solid #fff;border-right:1px solid #fff;text-align:center;" colspan="2">___________</td>
+                                    <td style="font-size:10px;border-left:1px solid #fff;border-right:1px solid #fff;text-align:center;" colspan="2">___________</td>
+                                    <td style="font-size:10px;border-left:1px solid #fff;border-right:1px solid #fff;text-align:center;" colspan="2">___________</td>
+                                    <td style="font-size:10px;border-left:1px solid #fff;text-align:center;" colspan="2">___________</td>-->
+                                </tr>
+                                <tr>
+                                    <td style="font-size:10px;">Activities</td>
+                                    <apex:repeat value="{!areaNameMap[workId]}" var="wp">
+                                        <td width="8%" style="font-size:10px;">Status<br/>(Yes /No/<br/>NA)</td>
+                                    	<td style="font-size:10px;">Comments</td>
+                                    </apex:repeat>
+                                    
+                                </tr>
+                                
+                                <apex:repeat value="{!activityList_ONE}" var="act">
+                                    <tr>
+                                        <td style="font-size:10px;line-height:18px;">{!act}</td> 
+                                        <apex:repeat value="{!TABLE_ONE_MAP_D[workId]}" var="tb">
+                                            <td width="8%" style="font-size:10px;line-height:18px;">{!TABLE_ONE_MAP_D[workId][tb][act].status}</td>
+                                        	<td style="font-size:10px;line-height:18px;">{!TABLE_ONE_MAP_D[workId][tb][act].comment}</td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat>
+                                 
+                            </table>
+                            <table class="table2" style="border-collapse:collaspe;margin-top:5px;">
+                                <tr>
+                                    <td width="18%" style="font-size:12px;line-height:35px;">Observations:</td>
+                                    <td style="font-size:10px;padding:10px 5px;line-height:35px;">{!areaSpecifications[workId].observation}</td>
+                                </tr>
+                            </table>
+                            <table class="table2" style="border-collapse:collaspe;margin-top:5px;">
+                                <tr>
+                                    <th style="font-size:9px;">BASE COAT &amp; TOP COAT<br/>APPLICATION</th>
+                                    <th style="font-size:9px;" colspan="8">AREA SPECIFICATIONS: {!areaSpecifications[workId].areaSpecsName}</th>
+                                </tr>
+                                <tr  style="background:#502E87;color:#fff;">
+                                    <td width="18%" style="font-size:10px;border-right:1px solid #fff;text-align:left;">Evaluation Area</td>
+                                    <apex:repeat value="{!areaNameMap[workId]}" var="wp">
+                                        <td style="font-size:10px;border-left:1px solid #fff;border-right:1px solid #fff;text-align:center;" colspan="2">
+                                        	Area: {!wp}
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:10px;">Activities: Fresh Works</td>
+                                    <apex:repeat value="{!areaNameMap[workId]}" var="wp">
+                                        <td width="8%" style="font-size:10px;">Status<br/>(Yes /No/<br/>NA)</td>
+                                    	<td style="font-size:10px;">Comments</td>
+                                    </apex:repeat>
+                                    
+                                </tr>
+                                
+                                <apex:repeat value="{!activityList_TWO}" var="act">
+                                    <tr>
+                                        <td style="font-size:10px;line-height:18px;">{!act}</td> 
+                                        <apex:repeat value="{!TABLE_TWO_MAP_D[workId]}" var="tb">
+                                            <td width="8%" style="font-size:10px;line-height:18px;">{!TABLE_TWO_MAP_D[workId][tb][act].status}</td>
+                                        	<td style="font-size:10px;line-height:18px;">{!TABLE_TWO_MAP_D[workId][tb][act].comment}</td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                            <table class="table2" style="border-collapse:collaspe;margin-top:5px;page-break-after:always;">
+                                <tr>
+                                    <td width="18%" style="font-size:12px;line-height:35px;">Observations:</td>
+                                    <td style="font-size:10px;padding:10px 5px;line-height:35px;">{!areaSpecifications[workId].observation}</td>
+                                </tr>
+                            </table><br/><br/>
+                            <apex:variable value="{!i+1}" var="i"/>
+                        </apex:repeat>
+                    </div> 
+                </div>
+                
+                <!------------------------------------------- Page 2 ------------------------------------------------>
+                <div >
+                    <div style="margin:-9px 5px 8px 7px;background-color:#502E87;height:154px;z-index:-999;" >
+                        <table width="100%">
+                            <tr>
+                                <td width="100%" valign="top" align="center">
+                                    <apex:image value="{!$Resource.WorkProgressCardBanner1}" style="width:800px;"  />
+                                </td>
+                            </tr>
+                        </table>  
+                    </div>
+                    <div style="margin:20px 24px 8px 24px;border:1px solid;padding:20px 26px;background:#fff;z-index:-999;" >
+                        <table class="table2">
+                            <tr>
+                                <td style="font-size:10px;text-align:left;border:1px solid;padding:5px;">SITE IMAGE:</td>
+                                <td style="font-size:10px;text-align:left;border:1px solid;padding:5px;">CONFIRMATION CHECK:</td>
+                                <td style="font-size:10px;text-align:left;border:1px solid;padding:5px;">OK / NA</td>
+                            </tr>
+                        </table>
+                        <apex:outputPanel rendered="{!isData}">
+                            <apex:repeat value="{!areaSpecifications}" var="workId">
+                                <apex:outputPanel rendered="{!imageUploaded[workId]}">
+                                    <table class="table3" style="margin-top:15px;">
+                                    <apex:repeat value="{!imageMap[workId]}" var="img">
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Area Name: {!img}</td>
+                                            <td style="font-size:10px;border:none;">Area Name: {!img}</td>
+                                        </tr>
+                                    <apex:repeat value="{!imageMap[workId][img]}" var="v" >                                        
+                                        <tr>
+                                            <th style="font-size:10px;background:#502E87;color:#fff;border-right:1px solid #fff;">BEFORE WORK IMAGE:</th>
+                                            <th style="font-size:10px;background:#502E87;color:#fff;border-left:1px solid #fff;">AFTER WORK IMAGE:</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="font-size:10px;padding:60px 20px;">
+                                                <apex:image url="{!v.beforeImageLink}" height="100px" width="100px"/>
+                                            </th>
+                                            <th style="font-size:10px;padding:60px 20px;">
+                                                <apex:image url="{!v.afterImageLink}" height="100px" width="100px"/>
+                                            </th>
+                                        </tr>
+                                        
+                                    </apex:repeat>
+                                    </apex:repeat> 
+                                    </table>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </apex:outputPanel><br/>
+                        <p style="font-size:10px;"><b style="font-size:12px;">Disclaimer: </b><br/>Colours &amp; Shades shown in the image are Indicative only. Pleases refer to Asian Paints colour spectra / Cosmos, for exact colour reference.
+                            The above observations are recorded during the time of visit and may vary in actual.</p>
+                        <p style="font-size:10px;">In case of any further query, you can reach us at <a href="mailto:customercare@asianpaints.com">customercare@asianpaints.com</a> or Call us at <a href="#">1800-209-5678</a></p>
+                        <table width="100%" class="table3">  
+                            <tr>
+                                <td style="padding:6px 10px;">
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" style="font-size:10px;border:none;">For More Information on Service &amp; Products, Please click on the below Links:</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Safepainting service Link:</td>
+                                            <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/campaign/asian-paints-safe-painting-service/index-new-service.html?cid=PS_GA_DM_A&utm_source=Google_Search_Brand&utm_medium=cpc&utm_campaign=&utm_adgroup=Asian_Paints_New&utm_term=%2Basian%20%2Bpaints%20%2Bservices&utm_term=b-c&gclid=CjwKCAjwzOqKBhAWEiwArQGwaLKQVK2V-QHkI-3y-oSHPNUsccCeBW2VLoSW7MLwkw2mwifLOsf4yxoCu9gQAvD_BwE">Safe Home Painting Services: Overview, Process &amp; FAQ - Asian Paints</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Product details Link:</td>
+                                            <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/products/paints-and-textures.html">Paints &amp; Textures for Interior &amp; Exterior Walls - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Waterproofing Solutions Link: </td>
+                                            <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/products/waterproofing-solutions.html">Waterproofing Paints &amp; Services for Waterproofing Solutions - Asian Paints </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Product Warranty Details Link:</td>
+                                            <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com/more/warranty.html">Register To Activate Warranty For Asian Paints Products</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px;border:none;">Website Link:</td>
+                                            <td style="font-size:10px;border:none;"><a href="https://www.asianpaints.com">www.asianpaints.com</a></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

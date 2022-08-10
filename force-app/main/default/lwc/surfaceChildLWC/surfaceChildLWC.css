@@ -1,0 +1,16 @@
+.required-field:after {
+  content:" *";
+  color: red;
+  }
+  .required-field1:before {
+    content:" *";
+    color: red;
+  }
+
+  .btnclass{
+    border-radius: 15px;
+    background: #ff6600;
+    ;
+    color: #fff;
+    border: 0;
+  }

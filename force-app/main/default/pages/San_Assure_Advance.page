@@ -1,0 +1,459 @@
+<apex:page controller="SanAssureController" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <head> 
+            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
+            <style type="text/css" media="print">
+                @page {
+                size: A4;
+                margin:-04mm;
+                
+                background:#CFF6F4;
+                color:#002D31;
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                body{
+                font-family: Verdana, sans-serif;
+                font-size:17px !important;
+                }
+                @page {
+                size: 8.30in 14.65in;
+                } 
+                .table1{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table1 tr td{
+                font-size:16px;
+                border:1px solid #837060;
+                padding:8px 25px;
+                }
+                @page {
+                @top-center {
+                content: element(header,first-except);
+                }
+                @bottom-center {
+                content: element(footer,first-except);
+                }
+                } 
+                .footer{
+                position:fixed;
+                bottom:0;
+                width:100%;
+                background-color:#115570;
+                color:#fff;
+                padding:30px 25px;
+                z-index:-999;
+                }
+                .table2{
+                width:100%;
+                border-collapse:collapse;
+                }
+                .table2 tr td,th{
+                padding:6px 3px;
+                font-size:13px;
+                }
+                p{
+                line-height:24px;
+                padding:1px 0;
+                }
+                ol li{
+                line-height:25px;
+                }
+                ol.overlineRange li{
+                line-height:21px !important;
+                }
+            </style>  
+        </head>
+        <apex:form >            
+            <body>
+                <!------------------------------------------- Header & Footer----------------------------------------------------->
+                <div class="footer">
+                    <div>
+                        <h4>&nbsp;</h4>                    
+                    </div>
+                </div>
+                <!------------------------------------------- Page 1 ---------------------------------------------->
+                <div class="page1" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureAdvanceImg1}" width="800px;" />
+                    </div>                
+                    <div style="margin:35px 50px 8px 50px;" >                      
+                        
+                        <div style="border:2px solid #115570; padding:15px 38px;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <p>The painting process has been carried out by trained professionals, ensuring the
+                                most effective performance** of the products.</p>
+                            <p>The paints contain Silver Ion Technology, killing 99% #bacteria that come in contact
+                                with the painted surface, thus providing anti-bacterial performance of painted
+                                surface. To know more about the paint please refer to the terms and conditions of
+                                warranty mentioned below.</p>
+                            <p>Your premises have rightly been given the San Assure Advanced Warranty
+                                Certification.
+                            </p>
+                            <table width="100%" class="table12">
+                                <tr>
+                                    <td width="23%" style="padding:5px;line-height:26px;">Date:</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:26px;padding:5px;">{!cDate}</td>
+                                </tr>
+                                 <tr>
+                                    <td width="23%" style="padding:5px;line-height:26px;">Customer Name :</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:26px;padding:5px;">{!site.Account__r.Name}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td width="23%" style="padding:5px;line-height:26px;">Product Name :</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:26px;padding:5px;">	{!products}</td>
+                                </tr>
+                                <tr>
+                                    <td width="23%" style="padding:5px;line-height:26px;">Dealer Name :</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:26px;padding:5px;">{!site.Dealer__r.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td width="23%" style="padding:5px;line-height:26px;">&nbsp;</td>
+                                    <td style="border-bottom:1px solid #115570;line-height:26px;padding:5px;">	</td>
+                                </tr>
+                            </table>
+                            <p>
+                                *These claims are pertaining to the RHS CC
+                            </p>
+                            <p>
+                                **Please note: Sanitization service has to be carried out regularly for complete
+                                protection, especially
+                            </p>
+                            <p>
+                                for spaces which witness frequently accessed areas and common contact
+surfaces. The Sanitization services are not intended to treat, cure or prevent any
+diseases and the services are not meant to substitute medical advice and / or care.
+                            </p>
+                            <p>
+                                For complete disclaimer and more information, please visit<br/>
+                                <a href="www.asianpaints.com/healthshield" style="text-decoration:none;color:#002D31;">www.asianpaints.com/healthshield</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------- Page 2 ---------------------------------------------->
+                <div class="page2" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureAdvanceImg1}" width="800px;" />
+                    </div> 
+                    <div style="margin:35px 50px 8px 50px;" >                      
+                        
+                        <div style="border:2px solid #115570; padding:15px 38px;padding-top:0;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <center><apex:image url="{!$Resource.SanAssureAdvanceImg2}" width="240px;" />
+                            <h2 style="color:#115570;line-height:30px;">
+                                WARRANTY DOCUMENT FOR ANTI BACTERIAL<br/>                                
+                                PERFORMANCE
+                            </h2></center>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg3}" width="330px;" />
+                            <p>This warranty document covers Royale Health Shield Luxury Emulsion range of
+                                products as mentioned below:</p>
+                            <ul type="square" style="margin-left:15px;">
+                                <li style="line-height:24px;">Royale Health Shield Clear – Soft Sheen / Gloss (Prod Code: 1A02, 1A03)</li>
+                                <li style="line-height:24px;">ezyCR8 Health Shield – Single Coat (Prod Code: 1A09)</li>
+                            </ul>
+                            <br/>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg4}" width="330px;" />
+                            <p>
+                                Royale Health Shield range of products with Silver Ion Technology, kills 99%#
+                                bacteria on painted surfaces within 2 hours of contact, thus providing Anti- Bacterial
+                                performance.
+                            </p>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg5}" width="620px;" />
+                            <table width="100%">
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">i.</td>
+                                    <td style="line-height:24px;">Ensure that the surface is clean and free from dust or dirt. The topcoat on which
+                                        Royale Health Shield Clear Coat is being applied should be in defect free
+                                        condition with no peeling, lifting, efflorescence or rust.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">ii.</td>
+                                    <td style="line-height:24px;">Mix the undiluted Royale Health Shield Clear Coat thoroughly before use. Thin
+                                        1 litre of Royale Health Shield Clear Coat with 400-450 ml of water. Mix the
+                                        diluted material uniformly.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">iii.</td>
+                                    <td style="line-height:24px;">Apply one uniform coat of the diluted material. Allow the material to dry for
+                                        4-6 hours. Avoid application of thicker coat. For best results use Asian Paints
+                                        Royale Roller 950.</td>
+                                </tr>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <!------------------------------------------- Page 3 ---------------------------------------------->
+                <div class="page2" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureAdvanceImg1}" width="800px;" />
+                    </div> 
+                    <div style="margin:35px 50px 8px 50px;" >                      
+                        
+                        <div style="border:2px solid #115570; padding:15px 38px;padding-top:0;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <br/><br/>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg6}" width="620px;" />
+                            <table width="100%">
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">i.</td>
+                                    <td style="line-height:24px;">Ensure that the surface is clean and free from dust or dirt.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">ii.</td>
+                                    <td style="line-height:24px;">The surface on which the paint is to be applied, should be in defect free condition
+                                        with no peeling, lifting, chalking or efflorescence.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">iii.</td>
+                                    <td style="line-height:24px;">Sand the surface with TruStar Sanding Paper No. 320 or 400 to remove the
+                                        minor undulations on the walls. Wipe the wall clean to ensure that there are no
+                                        dust or loose particles.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">iv.</td>
+                                    <td style="line-height:24px;">Mix the undiluted ezyCR8 Health Shield Single Coat Luxury Emulsion thoroughly
+                                        before use. Product is supplied in ready to apply consistency. Apply one liberal
+                                        coat using ezyCR8 Health Shield Roller.</td>
+                                </tr>
+                            </table>
+                            <h3 style="border-bottom:1px solid;color:#115878;">
+                                Spread rate for paint should not be exceeding prescribed<br/>
+                                as follows
+                            </h3>
+                            <ul type="square" style="margin-left:15px;">
+                                <li style="line-height:30px;">Royale Health Shield Clear (Soft Sheen / Gloss) - 220 sq. fts. / lit.</li>
+                                <li style="line-height:30px;">ezyCR8 Health Shield (Single coat Luxury Emulsion) - 140 sq. fts. / lit.</li>
+                            </ul>
+                            <p>
+                                Painted surface is not subject to cleaning with harsh chemicals or cleaning agents
+                                based on acid / alkali, peroxides or corrosive materials. Cleaning with mild
+                                detergent solution is accepted.
+                            </p>
+                            <br/>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg7}" width="330px;" />
+                            <p>
+                                Anti-Bacterial performance by killing 99%# of bacteria within 2 hours of contact
+                                with the painted surface.
+                            </p>
+                            <p>
+                                Different products offer different degree of performance and the efficacy changes
+                                with time.
+                            </p>
+							<h3 style="color:#115878;">
+                                Same has been tabulated below:
+                            </h3> 
+                            <table width="100%"  class="table1">
+                                <tr style="background:#115878;color:#fff;">
+                                	<th style="padding:10px 24px;font-size:16px;border-left:1px solid #115878; border-right:1px solid #fff;">Product</th>
+                                    <th style="padding:10px 24px;font-size:16px;border-left:1px solid #fff; border-right:1px solid #fff;">Year of warranty</th>
+                                    <th style="padding:10px 24px;font-size:16px;border-left:1px solid #fff; border-right:1px solid #115878;">Anti-Bacterial<br/>Performance</th>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" style="font-size:16px;">Royale Health Shield<br/>Clear (Soft Sheen /<br/>Gloss)</td>
+                                    <td style="font-size:16px;">1</td>
+                                    <td style="font-size:16px;">99%# kill</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">2</td>
+                                    <td style="font-size:16px;">99%# kill</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3" style="font-size:17px;">ezyCR8 Health Shield<br/>(Single Coat)</td>
+                                    <td style="font-size:16px;">1</td>
+                                    <td style="font-size:16px;">99%# kill</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">2</td>
+                                    <td style="font-size:16px;">99%# kill</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">3</td>
+                                    <td style="font-size:16px;">99%# kill</td>
+                                </tr>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <!------------------------------------------- Page 4 ---------------------------------------------->
+                <div class="page4" style="page-break-after:always;">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureAdvanceImg1}" width="800px;" />
+                    </div> 
+                    <div style="margin:35px 50px 8px 50px;" >                      
+                        
+                        <div style="border:2px solid #115570; padding:15px 38px;padding-top:0;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <br/>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg8}" width="330px;" />
+                            <br/>
+                            <p>
+                                The Warranty will cover only manufacturing defects of Royale Health Shield Range
+                                of Coating Systems &amp; will not cover any defects arising out of factors out of control
+                                of the Warrantor, including but not limited to:
+                            </p>
+                            <table width="100%">
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">i.</td>
+                                    <td style="line-height:24px;">Paint failure due to structural defects/cracks &amp; damage of film due to high abrasion
+                                        of the surface with furniture, nails or other sharp objects.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">ii.</td>
+                                    <td style="line-height:24px;">Abuse or negligence by the customer.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">iii.</td>
+                                    <td style="line-height:24px;">De-bonding of the base (material used for levelling in ceiling) from the surface &amp;
+                                        cracks formation on the same. Failure of underlying plaster which in turn causes
+                                        a failure of the paint film.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">iv.</td>
+                                    <td style="line-height:24px;">The substrate is affected by high alkalinity, water seepage, constant/rising
+                                        dampness in the substrate, Frosting or Efflorescence, constant submersion in
+                                        water or water condensation resulting from temperature gradients.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">v.</td>
+                                    <td style="line-height:24px;">Paint applied on the surface which is contaminated, improper painting system
+                                        followed or inadequate curing time for the paint film to dry.</td>
+                                </tr>
+                                <tr>
+                                	<td style="line-height:24px;" width="2%" valign="top">vi.</td>
+                                    <td style="line-height:24px;">Usage of improper shade recipes or incorrect bases for tinting colours
+                                        (other than white shade).</td>
+                                </tr>                                
+                            </table>
+                            <p>
+                                Damage to the coating system caused by external factors including, but not limited
+                                to, deterioration of the systems caused by external factors including, but not limited
+                                to, normal wear and tear, vandalism, improper cleaning or improper use, point loads
+                                or mechanical causes, fire, explosion, vibration, structural defects and/or movement,
+                                lightning, thunderbolt, Acts of God, Natural calamities such as Earthquake and all
+                                other unusual occurrences.
+                            </p>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg9}" width="330px;" />
+                            <p>
+                                Anti-Bacterial performance is linked to integrity of film. In event of peeling of film or
+                                fungal growth, the Anti-Bacterial performance shall be compromised.
+                            </p>
+                            <p>
+                                The company’s warranty liability will reduce over the warranty period according to
+                                the mentioned scale.
+                            </p>                            
+                            
+                            <table width="100%"  class="table1">
+                                <tr style="background:#115878;color:#fff;">
+                                	<th style="padding:10px 24px;font-size:16px;border-left:1px solid #115878; border-right:1px solid #fff;">Product</th>
+                                    <th style="padding:10px 24px;font-size:16px;border-left:1px solid #fff; border-right:1px solid #fff;">Duration after the<br/>commencement date</th>
+                                    <th style="padding:10px 24px;font-size:16px;border-left:1px solid #fff; border-right:1px solid #115878;">Percentage of<br/>repainting cost</th>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" style="font-size:16px;">Royale Health Shield<br/>Clear (Soft Sheen /<br/>Gloss)</td>
+                                    <td style="font-size:16px;">0-12 months</td>
+                                    <td style="font-size:16px;">100%</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">13-24 months</td>
+                                    <td style="font-size:16px;">50%</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3" style="font-size:17px;">ezyCR8 Health Shield<br/>(Single Coat)</td>
+                                    <td style="font-size:16px;">0-12 months</td>
+                                    <td style="font-size:16px;">100%</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">213-24 months</td>
+                                    <td style="font-size:16px;">75%</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;">25-36 months</td>
+                                    <td style="font-size:16px;">50%</td>
+                                </tr>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <!------------------------------------------- Page 5 ---------------------------------------------->
+                <div class="page5">
+                    <div style="margin:-9px 8px 8px 6px;z-index:-999;" >
+                        <apex:image url="{!$Resource.SanAssureAdvanceImg1}" width="800px;" />
+                    </div> 
+                    <div style="margin:35px 50px 4px 50px;">
+                        <div style="border:2px solid #115570; padding:10px 38px;padding-top:0;margin:0;background:#E9F1F1;position:relative;bottom:7px;border-radius:10px;color:#002D31;">
+                            <br/>
+                            <p style="line-height:20px;">
+                                The replacement cost shall be the cost of the Paint that has been applied. The
+                                maximum liability of Asian Paints shall never exceed as mentioned in table above
+                                under Liability, as applicable.
+                            </p>
+                            <p style="line-height:20px;">
+                                The company will not be liable for any indirect or consequential loss or damages to
+                                the customer.
+                            </p>
+                            <p style="line-height:20px;">
+                                *Fomite Infections(bacteria) can spread through infected walls among other indoor
+                                surfaces in homes and offices.
+                            </p>
+                            <p style="line-height:20px;">
+                                #Royale Health Shield range of product with Silver Ion Technology, within 2 hours of
+                                exposure kills 99% bacteria on walls.
+                            </p>
+                            <p style="line-height:20px;">
+                                Refer to ‘Antibacterial Silver’, 1994, School of Chemistry &amp; App Chemistry, University
+                                of Wales by Julia Clement &amp; Penelope Jarrett.
+                            </p>
+                            <p style="line-height:20px;">
+                                For complete disclaimer and more information, please visit www.asianpaints.com/
+                                healthshield.
+                            </p>
+                            <apex:image url="{!$Resource.SanAssureAdvanceImg10}" width="620px;" />
+                            <br/>
+                            <ol style="margin-left:28px;" class="overlineRange">
+                                <li style="line-height:30px;">Acinetobacter Baumanii ATCC 19606</li>
+                                <li style="line-height:30px;">Bacillus Cereus ATCC 6633</li>
+                                <li style="line-height:30px;">Burkholderiacepacia ATCC 25416</li>
+                                <li style="line-height:30px;">Corynebacterium Minutissumum ATCC 23348</li>
+                                <li style="line-height:30px;">Corynebacterium Xerosis ATCC 7711</li>
+                                <li style="line-height:30px;">Enterobacter Aerogenes ATCC 13048</li>
+                                <li style="line-height:30px;">Enterobacter Aerogenes ATCC 13048</li>
+                                <li style="line-height:30px;">Enterocococushirae ATCC 10541</li>
+                                <li style="line-height:30px;">Escherichia Coli ATCC 25922</li>
+                                <li style="line-height:30px;">Klebsiella Pneumoniae ATCC 1705-KPC</li>
+                                <li style="line-height:30px;">Klebsiella Pneumoniae ATCC 2146 – MBL Strain</li>
+                                <li style="line-height:30px;">Klebsiella Pneumoniae ATCC 4352</li>
+                                <li style="line-height:30px;">Klebsiella Pneumoniae ATCC 700603 ESBL Strain</li>
+                                <li style="line-height:30px;">Listeria Moncytogenes ATCC 23074</li>
+                                <li style="line-height:30px;">Meticillin Resistant Staphylococcus Aureus ATCC 43300</li>
+                                <li style="line-height:30px;">Micrococcus Luteus ATCC 10240</li>
+                                <li style="line-height:30px;">Proteus Mirabilis ATCC 14153</li>
+                                <li style="line-height:30px;">Proteus Vulgaris ATCC 13315</li>
+                                <li style="line-height:30px;">Pseudomonas Aeruginosa ATCC 9027</li>
+                                <li style="line-height:30px;">Pseudomonas Putida ATCC 12633</li>
+                                <li style="line-height:30px;">Salmonella Typhi ATCC 10749</li>
+                                <li style="line-height:30px;">Serratia Marcescens ATCC 14756</li>
+                                <li style="line-height:30px;">Shigella Flexneri ATCC 9199</li>
+                                <li style="line-height:30px;">Staphylococcus Aureus ATCC 6538</li>
+                                <li style="line-height:30px;">Staphylococcus Faecalis ATCC 9790</li>
+                                <li style="line-height:30px;">Staphylococcus Mutans ATCC 25175</li>
+                                <li style="line-height:30px;">Vancomycin Resistant Enterococcus AATCC 51299</li>
+                                <li style="line-height:30px;">Vancomycin Resistant Enterococcus ATCC 2006</li>
+                                <li style="line-height:30px;">Vancomycin Resistant Enterococcus ATCC 2006</li>
+                            </ol>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+            </body>
+        </apex:form>
+    </html>
+</apex:page>

@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" >
+    
+ <!--   <lightning:button variant="brand" label="Brand" title="Brand action" onclick="{!c.handleClick}" /> -->
+	<c:schedule_Appointment_LWC recordId="{!v.recordId}"/>
+</aura:component>

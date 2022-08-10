@@ -1,0 +1,9 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global">
+    <aura:attribute name="OTPVerify" type="Boolean"/>
+ <!--  <c:generate_PDF_Generic_LWC recordId="{!v.recordId}" objName="Milestone1_Project__c" buttonName="Site Completion Card">
+    
+    </c:generate_PDF_Generic_LWC>  -->
+    
+    <c:siteCompletionDocument recordId="{!v.recordId}" objName="Milestone1_Project__c" buttonName="Site Completion Card"></c:siteCompletionDocument>
+    
+</aura:component>

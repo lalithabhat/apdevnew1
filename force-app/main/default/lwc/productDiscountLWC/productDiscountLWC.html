@@ -1,0 +1,49 @@
+<template>
+   <!-- <lightning-card> -->
+    <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+        <tbody>
+            <template for:each={discountList} for:item="d">
+                <tr key={d.sequence} class="slds-line-height_reset">
+                    <td width="43%"> 
+                        <lightning-combobox name={d.sequence} key={d.sequence}
+                                            value={d.selectedProduct} 
+                                            onchange={productselect} 
+                                            options={productList}
+                                            placeholder="Select Product"
+                                            data-id={d.sequence}
+                                            label="Product">
+                        </lightning-combobox>
+                        <!--<div class="slds-truncate"></div> --></td>
+
+                    <td width="33%">
+                        <div class="slds-truncate">
+                            <lightning-input type="number" data-id={d.sequence} name="input1" placeholder="Value.." label="Value" 
+                            value={d.discountPrice}
+                            onchange={discountAmountSelect}
+                            >
+
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td width="22%">
+                        <lightning-combobox name={d.sequence} key={d.sequence}
+                                            value={d.discountType} 
+                                            onchange={discountTypeselect} 
+                                            options={discountTypeList}
+                                            placeholder={d.discountType}
+                                            data-id={d.sequence}
+                                            label="Type">
+                        </lightning-combobox>
+                    </td>
+                    <td width="2%" class="slds-m-top_xx-large">
+                        <lightning-button-icon icon-name="utility:close" data-id={d.sequence} variant="bare" size="medium" alternative-text="Delete" title="Delete"
+                        onclick={deleteDiscount}
+                        ></lightning-button-icon>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+<!--</lightning-card>-->
+</template>

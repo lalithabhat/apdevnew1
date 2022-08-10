@@ -1,0 +1,48 @@
+<template>
+    <lightning-card>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label required-field" for="form-element-help-01">Total Percentage should be 100%</label>
+        </div>   
+    <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+        <tbody>
+            <template for:each={paymentDetailList} for:item="pd">
+                <tr key={pd.sequence} class="slds-line-height_reset">
+                    <td width="43%"> 
+                        <div class="slds-truncate">
+                            <lightning-input type="number" data-id={pd.sequence} name="input1"  label="Percentage" 
+                            value={pd.milestonePercentage}
+                            onchange={percentageSelect}
+                            onblur={calculatePercentage}
+                            >
+
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td width="33%">
+                        <div class="slds-truncate">
+                            <lightning-input type="text" data-id={pd.sequence} name="input2" label="Stage" 
+                            value={pd.milestoneStage}
+                            onchange={stageSelect}
+                            >
+
+                            </lightning-input>
+                        </div>
+                    </td>
+
+                    <td width="2%" class="slds-m-top_xx-large">
+                        <lightning-button-icon icon-name="utility:close" data-id={pd.sequence} variant="bare" size="medium" alternative-text="Delete" title="Delete"
+                        onclick={deleteRow}
+                        ></lightning-button-icon>
+                    </td>
+
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <div class="slds-form-element" if:false={isListEmpty}>
+        <label class="slds-form-element__label required-field" for="form-element-help-01">Percentage Added:</label>
+        <label class={percentageCSS} for="form-element-help-01" style="font-weight: bold;"> {percentage_added} %</label>
+    </div>
+</lightning-card>
+</template>

@@ -1,0 +1,23 @@
+:host .addColor{
+    background-color:#7CBCC5;
+    /*display:inline-block;*/
+    fill: #7CBCC5;
+    background:#7CBCC5;
+    color: white;
+    border-collapse: separate;
+    }
+:host .removeColor{
+    /*display:inline-block;*/
+    border-left-color: #7CBCC5;
+    border-bottom-color:  #7CBCC5;
+    border-right-color:  #7CBCC5;
+    border-top-color:   #7CBCC5; 
+    color:  #7CBCC5;
+    border-collapse: separate;
+    
+    }
+:host button{
+    border-radius: 5px;
+    padding: 2px 4px;
+    font-size:10px;
+}

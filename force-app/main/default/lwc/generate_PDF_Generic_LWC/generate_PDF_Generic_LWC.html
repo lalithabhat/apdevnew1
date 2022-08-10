@@ -1,0 +1,80 @@
+<template>
+<br>
+<br>
+<br>
+<br>
+    <lightning-card>
+        <lightning-spinner size="medium" if:true={showSpinner}></lightning-spinner>
+     <template if:true={isError}>
+        <p class="slds-text-color_error slds-m-around_medium">{errorMessage}</p>
+        <!-- <div class="slds-m-around_medium">
+            <lightning-button name="Generate Document" variant="brand" label='Generate Document' title="Generate Document"
+            onclick={generatePDF} ></lightning-button>
+        </div> -->
+    </template>
+    <template if:false={isError}>
+        <!--<template if:true={showPaymentButton}>
+            <div class="slds-m-around_medium">
+                 
+         <lightning-button name="Go to Site Health Card" variant="brand" label='Go to Site Health Card' title="Download"
+         onclick={openSHCRecord} ></lightning-button>
+         </div>
+     
+        </template> -->
+     <!--<template if:false={hideGoToQuote}>
+        <div class="slds-m-around_medium">
+                    
+            <lightning-button name="Go to Site Health Card" variant="brand" label='Go to Quote' title="Download"
+            onclick={openRecord} ></lightning-button>
+            </div>
+        
+    </template>-->
+         <div class="slds-m-around_medium">
+                    <lightning-button-group>
+                     <lightning-button name="ViewInbrowser" variant="brand" label='View in Browser' title="View"
+                     onclick={download} icon-name="utility:new_window"></lightning-button>
+                 <lightning-button name="Download" variant="brand" label='Download' title="Download"
+                     onclick={download} icon-name="utility:download"></lightning-button>
+             </lightning-button-group>
+         </div>
+ 
+         <div class="slds-m-around_medium">
+ 
+             <lightning-button-group>
+                 <lightning-button name="SMS" variant="brand" label='Share via SMS' title="Send SMS"
+                     onclick={sendToOpportunity} icon-name="utility:sms"></lightning-button>
+ 
+                 <lightning-button name="Email" variant="brand" label='Share via Email' title="Send Email"
+                     onclick={sendToOpportunity} icon-name="utility:email"></lightning-button>
+ 
+                
+             </lightning-button-group>
+         </div>
+
+         <div class="slds-m-around_medium">
+ 
+            <lightning-button-group>
+                <lightning-button name="Generate document again" variant="brand" label='Generate document again' title="Generate document again"
+                    onclick={generatePDF} icon-name="utility:download"></lightning-button>
+               
+            </lightning-button-group>
+        </div>
+         <!--<template if:false={hidePaymentButton}>
+         <div class="slds-m-around_medium">
+             <lightning-button name="Payment" variant="brand" label='Send Payment Link' title="Send Payment Link"
+             onclick={sendToOpportunity} icon-name="utility:currency"></lightning-button>
+         </div>
+         </template>
+ 
+         <template if:false={hideQuoteApproval}>
+             <div class="slds-m-around_medium">
+                 <lightning-button name="Approval" variant="brand" label='Send Quotation For Approval' title="Send Quotation For Approval"
+                 onclick={sendToOpportunity} icon-name="utility:currency"></lightning-button>
+             </div>
+             </template>-->
+     </template>
+       
+         
+    
+     </lightning-card> 
+ </template>

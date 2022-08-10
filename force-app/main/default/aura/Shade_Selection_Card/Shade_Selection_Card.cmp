@@ -1,0 +1,13 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global">
+    <aura:attribute name="OTPVerify" type="Boolean"/>
+    
+   <!-- <c:shadeSelectionCard recordId="{!v.recordId}" objName="Milestone1_Project__c" buttonName="Shade Selection Card"></c:shadeSelectionCard>
+    -->
+  <!--  <c:sharePanelGlobal recordId="{!v.recordId}" hideGoToQuote = "true"
+    hidePaymentButton = "true"
+     hideQuoteApproval = "true" objName="Milestone1_Project__c" buttonName="Shade Selection Card"></c:sharePanelGlobal>-->
+    <c:generate_PDF_Generic_LWC recordId="{!v.recordId}" objName="Milestone1_Project__c" buttonName="Shade Selection Card">
+    
+    </c:generate_PDF_Generic_LWC>
+
+</aura:component>

@@ -1,0 +1,24 @@
+<apex:page controller="WorkApprovalClass" action="{!getWorkDetails}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"> 
+    
+    <div align="center" draggable="false" style="width:100% background: rgb(91,43,192); color: #ffffff; padding: 20px;
+                                                 background: linear-gradient(140deg, rgba(91,43,192,1) 0%, rgba(91,43,192,1) 35%, rgba(249,188,38,1) 100%);">
+        
+        
+        <h1 style="text-align:center; font-family: sans-serif; padding: 20px;  ">
+            Asian Paints Safe Painting Service
+        </h1> 
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+               <apex:pageMessages ></apex:pageMessages>
+            </apex:pageBlockSection>
+            
+    </apex:pageBlock>
+    </div>
+   
+    <div>
+        &nbsp;
+        
+    </div>
+    
+    
+</apex:page>

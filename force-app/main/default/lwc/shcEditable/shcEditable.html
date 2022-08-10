@@ -1,0 +1,272 @@
+<template>
+    <lightning-card title="New Site Health Card" icon-name="custom:custom86">
+
+        <lightning-spinner size="large" if:true={showSpinner} alternative-text="Loading"></lightning-spinner>
+        <template if:false={showPostSave}>
+            <lightning-accordion class="outer-accordion" active-section-name="A">
+
+                <lightning-accordion-section name="A" label="Symptoms of Interior Surfaces">
+
+                    <!-- <div class="slds-m-horizontal_small">
+
+                        <lightning-button name="Add Area" variant="brand" label='Add Area' title="Add Area"
+                            disabled={disableInterior} onclick={add} data-type="interior" data-ad="a"
+                            icon-name="utility:add"></lightning-button>
+
+                    </div> -->
+
+                    <lightning-accordion class="inner-accordion" allow-multiple-sections-open active-section-name="0">
+                        <template for:each={interiorSymptomList} for:item="i">
+                            <lightning-accordion-section key={i.index} name={i.tIndex} label={i.Area}>
+
+
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-col slds-size_10-of-12">
+                                        <template if:false={isEdit}>
+                                            <lightning-input key={i.index} type="text" label="Area Name" name={i.index}
+                                                required data-type="interior" onchange={handleChange}>
+                                            </lightning-input>
+                                        </template>
+                                        <template if:true={isEdit}>
+                                            <lightning-input key={i.index} type="text" label="Area Name" name={i.index}
+                                                required data-type="interior" value={i.Area} onchange={handleChange}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12">
+                                        <lightning-button-icon label="Delete" icon-name="utility:delete" onclick={add}
+                                            data-type="interior" data-ad="d" data-index={i.index}>
+                                        </lightning-button-icon>
+                                    </div>
+
+                                </div>
+
+                                <template if:false={isEdit}>
+                                    <template for:each={symptomTypeOptions.data} for:item="s">
+                                        <c-symptom key={s} test={s} index={i.index} area={i.Area} intext="int"
+                                            onchange={handleChildChange}></c-symptom>
+                                    </template>
+                                </template>
+                                <template if:true={isEdit}>
+                                    <template if:true={i.symptomDisplay}>
+                                        <template for:each={i.symptomDisplay} for:item="s">
+                                            <c-symptom key={s} test={s.label} index={i.index} area={i.Area} intext="int" reco-product={s.recoProduct} add-product={s.addProduct}
+                                                checked={s.checked} severity={s.severity} affected-area={s.affectedArea}
+                                                onchange={handleChildChange}></c-symptom>
+
+                                        </template>
+                                    </template>
+                                    <template if:false={i.symptomDisplay}>
+                                        <template for:each={symptomTypeOptions.data} for:item="s">
+                                            <c-symptom key={s} test={s} index={i.index} area={i.Area} intext="int"
+                                                onchange={handleChildChange}></c-symptom>
+                                        </template>
+                                    </template>
+                                </template>
+
+
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion>
+
+                    <div class="slds-m-horizontal_small">
+
+                        <lightning-button name="Add Area" variant="brand" label='Add Area' title="Add Area"
+                            disabled={disableInterior} onclick={add} data-type="interior" data-ad="a"
+                            icon-name="utility:add"></lightning-button>
+
+                    </div>
+                    <lightning-textarea name="interior" value={shcDetails.obvInterior} onchange={handleObvChange}
+                        label="Interior Surface Observations" placeholder="Observations" maxlength="255"
+                        message-when-too-long="Character Limit of 255 Exceeded"></lightning-textarea>
+
+
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="B" label="Symptoms of Exterior Surfaces">
+                    <!-- <div class="slds-m-horizontal_small">
+
+                        <lightning-button name="Add Area" variant="brand" label='Add Area' title="Add Area"
+                            disabled={disableExterior} onclick={add} data-type="exterior" data-ad="a"
+                            icon-name="utility:add"></lightning-button>
+                    </div> -->
+
+
+                    <lightning-accordion class="inner-accordion" allow-multiple-sections-open active-section-name="0">
+                        <template for:each={exteriorSymptomList} for:item="i">
+                            <lightning-accordion-section key={i.index} name={i.tIndex} label={i.Area}>
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-col slds-size_10-of-12">
+                                        <template if:false={isEdit}>
+                                            <lightning-input key={i.index} type="text" label="Area Name" name={i.index}
+                                                required data-type="exterior" onchange={handleChange}></lightning-input>
+                                        </template>
+                                        <template if:true={isEdit}>
+                                            <lightning-input key={i.index} type="text" label="Area Name" name={i.index}
+                                                required data-type="exterior" value={i.Area} onchange={handleChange}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12">
+                                        <lightning-button-icon label="Add" icon-name="utility:delete" onclick={add}
+                                            data-type="exterior" data-ad="d" data-index={i.index}>
+                                        </lightning-button-icon>
+                                    </div>
+
+                                </div>
+
+
+                                <template if:false={isEdit}>
+                                    <template for:each={symptomsExterior.data} for:item="s">
+                                        <c-symptom key={s} test={s} index={i.index} area={i.Area} intext="ext"
+                                            onchange={handleChildChange}></c-symptom>
+
+                                    </template>
+                                </template>
+                                <template if:true={isEdit}>
+                                    <template if:true={i.symptomDisplay}>
+                                        <template for:each={i.symptomDisplay} for:item="s">
+                                            <c-symptom key={s} test={s.label} index={i.index} area={i.Area} intext="ext" reco-product={s.recoProduct} add-product={s.addProduct}
+                                                checked={s.checked} severity={s.severity} affected-area={s.affectedArea}
+                                                onchange={handleChildChange}></c-symptom>
+
+                                        </template>
+                                    </template>
+                                    <template if:false={i.symptomDisplay}>
+                                        <template for:each={symptomsExterior.data} for:item="s">
+                                            <c-symptom key={s} test={s} index={i.index} area={i.Area} intext="ext"
+                                                onchange={handleChildChange}></c-symptom>
+
+                                        </template>
+                                    </template>
+                                </template>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion>
+
+                    <div class="slds-m-horizontal_small">
+
+                        <lightning-button name="Add Area" variant="brand" label='Add Area' title="Add Area"
+                            disabled={disableExterior} onclick={add} data-type="exterior" data-ad="a"
+                            icon-name="utility:add"></lightning-button>
+                    </div>
+                    
+                    <lightning-textarea name="exterior" value={shcDetails.obvExterior} onchange={handleObvChange}
+                        label="Exterior Surface Observations" placeholder="Observations" maxlength="255"
+                        message-when-too-long="Character Limit of 255 Exceeded"></lightning-textarea>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="C" label="Other Solutions">
+                    <template if:false={isEdit}>
+                        <template for:each={smartCare.data} for:item="s">
+                            <lightning-textarea key={s} name={s} value="" onchange={handleSmartCare} label={s}
+                                placeholder="Recommendations" maxlength="255"
+                                message-when-too-long="Character Limit of 255 Exceeded"></lightning-textarea>
+                        </template>
+                    </template>
+                    <template if:true={isEdit}>
+                        <template for:each={smartCareDisplay} for:item="s">
+                            <lightning-textarea key={s} name={s.label} value={s.value} onchange={handleSmartCare}
+                                label={s.label} placeholder="Recommendations" maxlength="255"
+                                message-when-too-long="Character Limit of 255 Exceeded"></lightning-textarea>
+                        </template>
+                    </template>
+
+                    <lightning-textarea name="smart" value={shcDetails.obvSmartcare} onchange={handleObvChange}
+                        label="Other Solutions Observations" placeholder="Observations" maxlength="255"
+                        message-when-too-long="Character Limit of 255 Exceeded"></lightning-textarea>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="D" label="Images">
+
+                    <lightning-file-upload class="slds-m-bottom_medium" label="Add Image" name="image"
+                        accept={acceptedFormats} disabled={disableFiles} onuploadfinished={handleUploadFinished}>
+                    </lightning-file-upload>
+
+                    <template for:each={fileList} for:item="f">
+                        <div key={f} class="slds-grid slds-grid_vertical-align-start slds-m-top_x-small">
+                            <div class="slds-col slds-size_10-of-12">
+
+                                <lightning-input required type="text" variant="label-hidden" value={f.name}
+                                    data-index={f.index} data-cd={f.docId} label="Enter some text"
+                                    onchange={handleFileName}></lightning-input>
+
+                            </div>
+                            <div class="slds-col slds-size_2-of-12">
+                                <lightning-button-icon label="Remove" name={f.docId} data-index={f.index}
+                                    icon-name="standard:first_non_empty" onclick={handleRemoveFile}>
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                    </template>
+
+
+
+                    <!-- <div class="slds-m-horizontal_small">
+                        <template for:each={fileList} for:item="f">
+                            <lightning-file-upload key={f} label={f.label} name={f.index} accept={acceptedFormats}
+                                onuploadfinished={handleUploadFinished}>
+                            </lightning-file-upload>
+                            <span key={f} style="color: red;"> {f.name} &nbsp; </span>
+                        </template>
+
+
+                    </div> -->
+                </lightning-accordion-section>
+
+            </lightning-accordion>
+
+            <div slot="footer">
+                <lightning-button if:false={isClone} class="slds-m-top_small" label="Save" variant="brand"
+                    name="current" onclick={save}>
+                </lightning-button>
+                <lightning-button if:true={isClone} class="slds-m-top_small" label="Save As New" variant="brand"
+                    name="current" onclick={save}>
+                </lightning-button>
+
+                <!-- <lightning-button  if:true={isEdit} class="slds-m-top_small slds-m-horizontal_small" label="Save as New" variant="brand"
+                    name="clone" onclick={save}>
+                </lightning-button> -->
+            </div>
+
+        </template>
+
+
+        <template if:true={showPostSave}>
+            <div class="slds-m-around_medium">
+
+                <lightning-button name="Go to Site Health Card" variant="brand" label='Go to Site Health Card'
+                    title="Download" onclick={openSHCRecord}></lightning-button>
+            </div>
+            <div class="slds-m-around_medium">
+
+
+                <lightning-button-group>
+                    <lightning-button name="ViewInbrowser" variant="brand" label='View in Browser' title="View"
+                        onclick={download} icon-name="utility:new_window"></lightning-button>
+                    <lightning-button name="Download" variant="brand" label='Download' title="Download"
+                        onclick={download} icon-name="utility:download"></lightning-button>
+                </lightning-button-group>
+            </div>
+
+            <div class="slds-m-around_medium">
+
+                <lightning-button-group>
+                    <lightning-button name="SMS" variant="brand" label='Share via SMS' title="Send SMS"
+                        onclick={sendToOpportunity} icon-name="utility:sms"></lightning-button>
+
+                    <lightning-button name="Email" variant="brand" label='Share via Email' title="Send Email"
+                        onclick={sendToOpportunity} icon-name="utility:email"></lightning-button>
+
+
+                </lightning-button-group>
+            </div>
+            
+
+
+
+
+        </template>
+
+    </lightning-card>
+
+</template>
